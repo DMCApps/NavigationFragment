@@ -28,7 +28,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        addFragment(NavigationManagerFragment.newInstance());
+        if (mNavigationFragmentTag == null) {
+            addFragment(NavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack")));
+        }
+        else {
+            showFragment(mNavigationFragmentTag);
+        }
     }
 
     @Override
@@ -49,29 +54,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addFragment(NavigationManagerFragment fragment)  {
-        if (!showFragment(mNavigationFragmentTag)) {
-            mNavigationFragmentTag = UUID.randomUUID().toString();
+        mNavigationFragmentTag = UUID.randomUUID().toString();
 
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.main_container, fragment, mNavigationFragmentTag);
-            ft.commit();
-
-            fragment.setRootFragment(SampleFragment.newInstance("Root Fragment in the Stack"));
-        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.main_container, fragment, mNavigationFragmentTag);
+        ft.commit();
     }
 
-    private boolean showFragment(String tag)  {
+    private void showFragment(String tag)  {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
-        if (fragment != null) {
-            if (fragment.isDetached()) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.attach(fragment);
-                ft.commit();
-            }
-            return true;
+        if (fragment != null && fragment.isDetached()) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.attach(fragment);
+            ft.commit();
         }
-        return false;
     }
 
     @Override

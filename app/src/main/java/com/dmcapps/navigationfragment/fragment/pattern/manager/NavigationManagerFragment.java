@@ -23,30 +23,37 @@ import java.util.Stack;
  * and no overlap will occur in the class.
  */
 public class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements INavigationManager {
+    private static final int NO_ANIMATION = 0;
 
+    private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
+    private static final String ARG_VIEW_ID = "VIEW_ID";
+
+    // TODO: This isn't guarenteed unique and it could overlap items in the generated R.id file.
     private static int mUniqueViewIdGenerator;
-    private int mViewId;
 
     private FrameLayout mFragmentFrame;
     private Stack<String> mFragmentTags;
     private NavigationFragment mRootFragment;
 
     // TODO: Instatiate with the rootFragment?
-    public static NavigationManagerFragment newInstance() {
-        return new NavigationManagerFragment();
+    public static NavigationManagerFragment newInstance(NavigationFragment rootFragment) {
+        NavigationManagerFragment managerFragment = new NavigationManagerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_ROOT_FRAGMENT, rootFragment);
+        bundle.putInt(ARG_VIEW_ID, ++mUniqueViewIdGenerator);
+        managerFragment.setArguments(bundle);
+        return managerFragment;
     }
 
     public NavigationManagerFragment() {
-        mViewId = ++mUniqueViewIdGenerator;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mFragmentFrame == null) {
             mFragmentFrame = new FrameLayout(getActivity());
             mFragmentFrame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            mFragmentFrame.setId(mViewId);
+            mFragmentFrame.setId(getArguments().getInt(ARG_VIEW_ID));
         }
         return mFragmentFrame;
     }
@@ -55,11 +62,17 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     public void onResume() {
         super.onResume();
 
+        // No Fragments have been added. Attach the root.
         if (getFragmentTags().size() == 0) {
-            pushFragment(mRootFragment);
+            pushFragment(getRootFragment());
         }
+        // Fragments are in the stack, resume at the top.
         else {
-            // TODO: attach top fragment?
+            FragmentManager childFragManager = getRetainedChildFragmentManager();
+            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+            childFragTrans.commit();
         }
     }
 
@@ -67,11 +80,11 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     public void onPause() {
         super.onPause();
 
-        // TODO: detach top fragment?
-    }
-
-    public void setRootFragment(NavigationFragment rootFragment) {
-        mRootFragment = rootFragment;
+        FragmentManager childFragManager = getRetainedChildFragmentManager();
+        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+        childFragTrans.commit();
     }
 
     public void pushFragment(NavigationFragment navFragment) {
@@ -88,11 +101,8 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
         if (getFragmentTags().size() > 0) {
             childFragTrans.setCustomAnimations(animationIn, animationOut);
             Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
-
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
-            if (topFrag != null) {
-                childFragTrans.detach(topFrag);
-            }
+            childFragTrans.detach(topFrag);
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
@@ -119,6 +129,7 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
         else {
             // TODO: Nothing to dismiss ... Exception? Call activity onBackPressed()? what to do?
             // TODO: Dismiss root and self?
+            getActivity().onBackPressed();
         }
     }
 
@@ -134,6 +145,13 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
         }
 
         return false;
+    }
+
+    private NavigationFragment getRootFragment() {
+        if (mRootFragment == null) {
+            mRootFragment = (NavigationFragment)getArguments().getSerializable(ARG_ROOT_FRAGMENT);
+        }
+        return mRootFragment;
     }
 
     private void addFragmentToStack(NavigationFragment navFragment) {

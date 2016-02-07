@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.fragment.pattern.manager.INavigationManager;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -13,7 +14,7 @@ import java.util.UUID;
  * and maintain a constant TAG for the class allowing the navigation manager to
  * effectively store and present the Fragments as needed.
  */
-public abstract class NavigationFragment extends Fragment {
+public abstract class NavigationFragment extends Fragment implements Serializable {
 
     private INavigationManager mNavigationManager;
     private final String TAG;
