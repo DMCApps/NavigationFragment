@@ -29,6 +29,7 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     private static final String ARG_VIEW_ID = "VIEW_ID";
 
     // TODO: This isn't guarenteed unique and it could overlap items in the generated R.id file.
+    // How else should I do this to not overlap ...
     private static int mUniqueViewIdGenerator;
 
     private FrameLayout mFragmentFrame;
