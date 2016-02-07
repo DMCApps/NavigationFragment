@@ -13,18 +13,22 @@
         android:text="@string/hello_blank_fragment" />
 
     <EditText
+        android:id="@+id/sample_et_text_1"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     <EditText
+        android:id="@+id/sample_et_text_2"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     <EditText
+        android:id="@+id/sample_et_text_3"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
     <Button
+        android:id="@+id/sample_btn_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Continue"/>

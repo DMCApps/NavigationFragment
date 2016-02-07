@@ -23,8 +23,25 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mNavigationFragmentTag = savedInstanceState.getString("NavTag");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         addFragment(NavigationManagerFragment.newInstance());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Detach topmost fragment otherwise it will not be correctly displayed
+        // after orientation change
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
+        ft.detach(fragment);
+        ft.commit();
     }
 
     @Override
@@ -36,13 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void addFragment(NavigationManagerFragment fragment)
     {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (!showFragment(ft)) {
+        boolean didShowFragment = showFragment(mNavigationFragmentTag);
+        if (!didShowFragment) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             addFragment(fragment, ft);
-        }
-        ft.commit();
+            ft.commit();
 
-        fragment.presentFragment(SampleFragment.newInstance("This is a title of the fragment to show"));
+            fragment.setRootFragment(SampleFragment.newInstance("Root Fragment in the Stack"));
+        }
     }
 
     private void addFragment(NavigationManagerFragment fragment, FragmentTransaction ft)
@@ -51,13 +69,18 @@ public class MainActivity extends AppCompatActivity {
         ft.add(android.R.id.content, fragment, mNavigationFragmentTag);
     }
 
-    private boolean showFragment(FragmentTransaction ft)
+    private boolean showFragment(String tag)
     {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
-        boolean fragmentExists = fragment != null;
-        if (fragmentExists) {
-            ft.attach(fragment);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+
+        if (fragment != null) {
+            if (fragment.isDetached()) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.attach(fragment);
+                ft.commit();
+            }
+            return true;
         }
-        return fragmentExists;
+        return false;
     }
 }

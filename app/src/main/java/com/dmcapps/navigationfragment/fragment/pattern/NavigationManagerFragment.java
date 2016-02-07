@@ -22,7 +22,8 @@ public class NavigationManagerFragment extends Fragment {
     private int mViewId;
 
     private FrameLayout mFragmentFrame;
-    private Stack<NavigationFragment> mFragments;
+    private Stack<String> mFragmentTags;
+    private NavigationFragment mRootFragment;
 
     /**
      * Use this factory method to create a new instance of
@@ -32,8 +33,6 @@ public class NavigationManagerFragment extends Fragment {
      */
     public static NavigationManagerFragment newInstance() {
         NavigationManagerFragment fragment = new NavigationManagerFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -45,9 +44,11 @@ public class NavigationManagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mFragmentFrame = new FrameLayout(getActivity());
-        mFragmentFrame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mFragmentFrame.setId(mViewId);
+        if (mFragmentFrame == null) {
+            mFragmentFrame = new FrameLayout(getActivity());
+            mFragmentFrame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            mFragmentFrame.setId(mViewId);
+        }
         return mFragmentFrame;
     }
 
@@ -56,43 +57,62 @@ public class NavigationManagerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
-        presentFragment(getFragments().peek());
     }
 
-    public void presentFragment(NavigationFragment fragment) {
-        if (mFragmentFrame == null) {
-            // Add the fragment to the stack as the first fragment to load once the frame is ready.
-            getFragments().add(fragment);
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getFragmentTags().size() == 0) {
+            presentFragment(mRootFragment);
         }
         else {
-            NavigationFragment navFragment = (NavigationFragment)fragment;
-
-            navFragment.setNavigationManager(this);
-            FragmentManager childFragManager = getChildFragmentManager();
-            FragmentTransaction fragTrans = childFragManager.beginTransaction();
-
-            NavigationFragment topFrag = getFragments().peek();
-
-            if (childFragManager.findFragmentByTag(topFrag.getNavTag()) == null) {
-                fragTrans.add(mFragmentFrame.getId(), fragment, navFragment.getNavTag());
-            }
-            else {
-                fragTrans.detach(topFrag);
-            }
-
-            fragTrans.commit();
+            // TODO: Resume state how to do this.
         }
+    }
+
+    public void setRootFragment(NavigationFragment rootFragment) {
+        mRootFragment = rootFragment;
+    }
+
+    public void presentFragment(NavigationFragment navFragment) {
+        navFragment.setNavigationManager(this);
+        FragmentManager childFragManager = getChildFragmentManager();
+        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+
+        // TODO: Better way to do this?
+        if (getFragmentTags().size() > 0) {
+            Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
+            if (topFrag != null) {
+                childFragTrans.detach(topFrag);
+            }
+        }
+
+        childFragTrans.add(mFragmentFrame.getId(), navFragment, navFragment.getNavTag());
+        addFragmentToStack(navFragment);
+
+        childFragTrans.commit();
     }
 
     public void dismissTopFragment() {
-
+        if (getFragmentTags().size() > 1) {
+            FragmentManager childFragManager = getChildFragmentManager();
+            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
+            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+            childFragTrans.commit();
+        }
     }
 
-    public Stack<NavigationFragment> getFragments() {
-        if (mFragments == null) {
-            mFragments = new Stack<>();
+    private void addFragmentToStack(NavigationFragment navFragment) {
+        getFragmentTags().add(navFragment.getNavTag());
+    }
+
+    private Stack<String> getFragmentTags() {
+        if (mFragmentTags == null) {
+            mFragmentTags = new Stack<>();
         }
-        return mFragments;
+        return mFragmentTags;
     }
 
 }
