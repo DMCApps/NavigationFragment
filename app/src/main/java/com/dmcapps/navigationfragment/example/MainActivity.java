@@ -1,14 +1,11 @@
 package com.dmcapps.navigationfragment.example;
 
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.SampleFragment;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.manager.NavigationManagerFragment;
 
 import java.util.UUID;
 
@@ -36,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        // Detach topmost fragment otherwise it will not be correctly displayed
-        // after orientation change
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
         ft.detach(fragment);
@@ -51,26 +46,19 @@ public class MainActivity extends AppCompatActivity {
         outState.putString("NavTag", mNavigationFragmentTag);
     }
 
-    private void addFragment(NavigationManagerFragment fragment)
-    {
-        boolean didShowFragment = showFragment(mNavigationFragmentTag);
-        if (!didShowFragment) {
+    private void addFragment(NavigationManagerFragment fragment)  {
+        if (!showFragment(mNavigationFragmentTag)) {
+            mNavigationFragmentTag = UUID.randomUUID().toString();
+
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            addFragment(fragment, ft);
+            ft.add(android.R.id.content, fragment, mNavigationFragmentTag);
             ft.commit();
 
             fragment.setRootFragment(SampleFragment.newInstance("Root Fragment in the Stack"));
         }
     }
 
-    private void addFragment(NavigationManagerFragment fragment, FragmentTransaction ft)
-    {
-        mNavigationFragmentTag = UUID.randomUUID().toString();
-        ft.add(android.R.id.content, fragment, mNavigationFragmentTag);
-    }
-
-    private boolean showFragment(String tag)
-    {
+    private boolean showFragment(String tag)  {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
 
         if (fragment != null) {

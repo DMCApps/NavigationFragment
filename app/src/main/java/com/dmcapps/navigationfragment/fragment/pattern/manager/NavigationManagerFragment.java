@@ -1,25 +1,27 @@
-package com.dmcapps.navigationfragment.fragment.pattern;
+package com.dmcapps.navigationfragment.fragment.pattern.manager;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.dmcapps.navigationfragment.R;
+import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
 
 import java.util.Stack;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link NavigationManagerFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This Fragment manages the stack of single navigation on fragments.
+ * The class allows for easy adding and removing of fragments as the user
+ * traverses the screens. A self-contained class that requires no resources
+ * in order to function. Each time a new manager is made a separate stack will be created
+ * and no overlap will occur in the class.
  */
-public class NavigationManagerFragment extends Fragment {
+public class NavigationManagerFragment extends Fragment implements INavigationManager {
 
     private static int mUniqueViewIdGenerator;
     private int mViewId;
@@ -28,19 +30,11 @@ public class NavigationManagerFragment extends Fragment {
     private Stack<String> mFragmentTags;
     private NavigationFragment mRootFragment;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment NavigationManagerFragment.
-     */
     public static NavigationManagerFragment newInstance() {
-        NavigationManagerFragment fragment = new NavigationManagerFragment();
-        return fragment;
+        return new NavigationManagerFragment();
     }
 
     public NavigationManagerFragment() {
-        // Required empty public constructor
         mViewId = ++mUniqueViewIdGenerator;
     }
 
@@ -70,8 +64,15 @@ public class NavigationManagerFragment extends Fragment {
             presentFragment(mRootFragment);
         }
         else {
-            // TODO: Resume state how to do this.
+            // TODO: attach top fragment?
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // TODO: detach top fragment?
     }
 
     public void setRootFragment(NavigationFragment rootFragment) {
@@ -79,35 +80,49 @@ public class NavigationManagerFragment extends Fragment {
     }
 
     public void presentFragment(NavigationFragment navFragment) {
+        presentFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    }
+
+    @Override
+    public void presentFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
         if (getFragmentTags().size() > 0) {
-            childFragTrans.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+            childFragTrans.setCustomAnimations(animationIn, animationOut);
             Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
+
+            // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
             if (topFrag != null) {
                 childFragTrans.detach(topFrag);
             }
         }
 
+        // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
         childFragTrans.add(mFragmentFrame.getId(), navFragment, navFragment.getNavTag());
         addFragmentToStack(navFragment);
 
         childFragTrans.commit();
+
     }
 
     public void dismissTopFragment() {
+        dismissTopFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    }
+
+    public void dismissTopFragment(int animationIn, int animationOut) {
         if (getFragmentTags().size() > 1) {
             FragmentManager childFragManager = getChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+            childFragTrans.setCustomAnimations(animationIn, animationOut);
             childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
             childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
             childFragTrans.commit();
-
-            Log.i("NavigationManager", "Fragments in child stack " + childFragManager.getFragments().size());
+        }
+        else {
+            // TODO: Nothing to dismiss ... exception? Call activity onBackPressed()? what to do?
         }
     }
 
@@ -130,9 +145,4 @@ public class NavigationManagerFragment extends Fragment {
         }
         return mFragmentTags;
     }
-
-    private class FragmentTransitionHelper {
-        //public static Animation
-    }
-
 }

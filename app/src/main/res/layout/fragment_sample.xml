@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dmcapps.navigationfragment.fragment.SampleFragment">
+    tools:context="com.dmcapps.navigationfragment.example.SampleFragment">
 
     <TextView
         android:id="@+id/sample_tv_text"

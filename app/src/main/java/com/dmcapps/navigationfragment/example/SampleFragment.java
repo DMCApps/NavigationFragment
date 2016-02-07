@@ -1,7 +1,5 @@
-package com.dmcapps.navigationfragment.fragment;
+package com.dmcapps.navigationfragment.example;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
@@ -129,7 +127,7 @@ public class SampleFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.getNavigationManager().presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
+                SampleFragment.this.presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
             }
         });
 
