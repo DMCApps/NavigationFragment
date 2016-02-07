@@ -99,5 +99,6 @@ We can see here that if the onBackPressed() of the NavigationManagerFragment ret
 
 ##Future Plans and Examples
 
-1. Tabs
+1. Make into Maven project
 2. Master-Detail
+3. Tabs
