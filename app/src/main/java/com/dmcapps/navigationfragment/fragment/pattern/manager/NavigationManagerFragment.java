@@ -35,7 +35,6 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     private Stack<String> mFragmentTags;
     private NavigationFragment mRootFragment;
 
-    // TODO: Instatiate with the rootFragment?
     public static NavigationManagerFragment newInstance(NavigationFragment rootFragment) {
         NavigationManagerFragment managerFragment = new NavigationManagerFragment();
         Bundle bundle = new Bundle();

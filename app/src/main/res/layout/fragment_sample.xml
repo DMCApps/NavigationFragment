@@ -27,10 +27,27 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
-    <Button
-        android:id="@+id/sample_btn_continue"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continue"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/sample_btn_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Back"/>
+
+        <Button
+            android:id="@+id/sample_btn_continue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Continue"/>
+
+    </LinearLayout>
 
 </LinearLayout>

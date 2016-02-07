@@ -12,15 +12,16 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String mNavigationFragmentTag;
+    private static final String STATE_NAV_TAG = "NAV_TAG";
+
+    private String mNavigationManagerFragmentTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_example_single_navigation_stack);
 
         if (savedInstanceState != null) {
-            mNavigationFragmentTag = savedInstanceState.getString("NavTag");
+            mNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
         }
     }
 
@@ -28,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (mNavigationFragmentTag == null) {
+        if (mNavigationManagerFragmentTag == null) {
             addFragment(NavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack")));
         }
         else {
-            showFragment(mNavigationFragmentTag);
+            showFragment(mNavigationManagerFragmentTag);
         }
     }
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
         ft.detach(fragment);
         ft.commit();
     }
@@ -50,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("NavTag", mNavigationFragmentTag);
+        outState.putString(STATE_NAV_TAG, mNavigationManagerFragmentTag);
     }
 
     private void addFragment(NavigationManagerFragment fragment)  {
-        mNavigationFragmentTag = UUID.randomUUID().toString();
+        mNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.main_container, fragment, mNavigationFragmentTag);
+        ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
         ft.commit();
     }
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
+        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

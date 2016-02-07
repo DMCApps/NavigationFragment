@@ -124,6 +124,13 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
+        ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SampleFragment.this.dismissFragment();
+            }
+        });
+
         ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
