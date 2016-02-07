@@ -4,6 +4,11 @@
 
 Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
+##Current Version Information
+
+0.0.1 
+This project uses the android support libraries for implementation.
+
 ##Introduction
 
 The purpose of this manager is to handle a single stack flow of fragments on the screen so that the developer can easily create flows without having to worry about using the FragmentManager and ChildFragmentManager. The single instance of the NavigationManagerFragment will easily handle the presenting and dismissing of Fragments as they are created and added or removed from the stack.
@@ -91,3 +96,8 @@ public void onBackPressed() {
 ```
 
 We can see here that if the onBackPressed() of the NavigationManagerFragment returns false then there are no more fragments in the stack to go back from and hence we perform the default behaviour of the Activity.
+
+##Future Plans and Examples
+
+1. Tabs
+2. Master-Detail
