@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.dmcapps.navigationfragment.R;
 
 import java.util.Stack;
 
@@ -82,6 +85,7 @@ public class NavigationManagerFragment extends Fragment {
 
         // TODO: Better way to do this?
         if (getFragmentTags().size() > 0) {
+            childFragTrans.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
             Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
             if (topFrag != null) {
                 childFragTrans.detach(topFrag);
@@ -98,10 +102,22 @@ public class NavigationManagerFragment extends Fragment {
         if (getFragmentTags().size() > 1) {
             FragmentManager childFragManager = getChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
             childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
             childFragTrans.commit();
+
+            Log.i("NavigationManager", "Fragments in child stack " + childFragManager.getFragments().size());
         }
+    }
+
+    public boolean onBackPressed() {
+        if (getFragmentTags().size() > 1) {
+            dismissTopFragment();
+            return true;
+        }
+
+        return false;
     }
 
     private void addFragmentToStack(NavigationFragment navFragment) {
@@ -113,6 +129,10 @@ public class NavigationManagerFragment extends Fragment {
             mFragmentTags = new Stack<>();
         }
         return mFragmentTags;
+    }
+
+    private class FragmentTransitionHelper {
+        //public static Animation
     }
 
 }

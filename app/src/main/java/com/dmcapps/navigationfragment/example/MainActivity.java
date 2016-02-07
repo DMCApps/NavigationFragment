@@ -83,4 +83,12 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationFragmentTag);
+        if (!fragment.onBackPressed()) {
+            super.onBackPressed();
+        }
+    }
 }
