@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.helper.RetainedChildFragmentManagerFragment;
 
 import java.util.Stack;
 
@@ -21,7 +22,7 @@ import java.util.Stack;
  * in order to function. Each time a new manager is made a separate stack will be created
  * and no overlap will occur in the class.
  */
-public class NavigationManagerFragment extends Fragment implements INavigationManager {
+public class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements INavigationManager {
 
     private static int mUniqueViewIdGenerator;
     private int mViewId;
@@ -48,13 +49,6 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
             mFragmentFrame.setId(mViewId);
         }
         return mFragmentFrame;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setRetainInstance(true);
     }
 
     @Override
@@ -87,7 +81,7 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
     @Override
     public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
-        FragmentManager childFragManager = getChildFragmentManager();
+        FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
@@ -115,7 +109,7 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
 
     public void popFragment(int animationIn, int animationOut) {
         if (getFragmentTags().size() > 1) {
-            FragmentManager childFragManager = getChildFragmentManager();
+            FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animationIn, animationOut);
             childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
@@ -130,7 +124,7 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
 
     @Override
     public NavigationFragment topFragment() {
-        return (NavigationFragment)getChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
+        return (NavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
     }
 
     public boolean onBackPressed() {

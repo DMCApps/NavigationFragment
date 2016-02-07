@@ -35,18 +35,18 @@ public abstract class NavigationFragment extends Fragment {
     }
 
     public void presentFragment(NavigationFragment navFragment) {
-        mNavigationManager.presentFragment(navFragment);
+        mNavigationManager.pushFragment(navFragment);
     }
 
     public void presentFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        mNavigationManager.presentFragment(navFragment, animationIn, animationOut);
+        mNavigationManager.pushFragment(navFragment, animationIn, animationOut);
     }
 
     public void dismissTopFragment() {
-        mNavigationManager.dismissTopFragment();
+        mNavigationManager.popFragment();
     }
 
     public void dismissTopFragment(int animationIn, int animationOut) {
-        mNavigationManager.dismissTopFragment(animationIn, animationOut);
+        mNavigationManager.popFragment(animationIn, animationOut);
     }
 }

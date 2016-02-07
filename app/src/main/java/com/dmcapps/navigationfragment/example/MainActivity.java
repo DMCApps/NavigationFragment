@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragment.pattern.manager.NavigationManagerFragment;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_example_single_navigation_stack);
 
         if (savedInstanceState != null) {
             mNavigationFragmentTag = savedInstanceState.getString("NavTag");
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             mNavigationFragmentTag = UUID.randomUUID().toString();
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, fragment, mNavigationFragmentTag);
+            ft.add(R.id.main_container, fragment, mNavigationFragmentTag);
             ft.commit();
 
             fragment.setRootFragment(SampleFragment.newInstance("Root Fragment in the Stack"));
