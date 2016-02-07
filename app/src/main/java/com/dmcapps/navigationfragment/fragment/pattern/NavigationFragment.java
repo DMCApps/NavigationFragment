@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * This is the NavigationFragment that all classes in the stack must implement
  * The extension of this class in the child fragments allows access to the presenting
- * and dismissing of existing {#link Fragment} in the stack. The class will also generate
+ * and dismissing of existing {@link Fragment} in the stack. The class will also generate
  * and maintain a constant TAG for the class allowing the navigation manager to
  * effectively store and present the Fragments as needed.
  */

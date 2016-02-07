@@ -30,6 +30,7 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
     private Stack<String> mFragmentTags;
     private NavigationFragment mRootFragment;
 
+    // TODO: Instatiate with the rootFragment?
     public static NavigationManagerFragment newInstance() {
         return new NavigationManagerFragment();
     }
@@ -61,7 +62,7 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
         super.onResume();
 
         if (getFragmentTags().size() == 0) {
-            presentFragment(mRootFragment);
+            pushFragment(mRootFragment);
         }
         else {
             // TODO: attach top fragment?
@@ -79,12 +80,12 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
         mRootFragment = rootFragment;
     }
 
-    public void presentFragment(NavigationFragment navFragment) {
-        presentFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    public void pushFragment(NavigationFragment navFragment) {
+        pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
     @Override
-    public void presentFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
+    public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -108,11 +109,11 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
 
     }
 
-    public void dismissTopFragment() {
-        dismissTopFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+    public void popFragment() {
+        popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
-    public void dismissTopFragment(int animationIn, int animationOut) {
+    public void popFragment(int animationIn, int animationOut) {
         if (getFragmentTags().size() > 1) {
             FragmentManager childFragManager = getChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -122,13 +123,19 @@ public class NavigationManagerFragment extends Fragment implements INavigationMa
             childFragTrans.commit();
         }
         else {
-            // TODO: Nothing to dismiss ... exception? Call activity onBackPressed()? what to do?
+            // TODO: Nothing to dismiss ... Exception? Call activity onBackPressed()? what to do?
+            // TODO: Dismiss root and self?
         }
+    }
+
+    @Override
+    public NavigationFragment topFragment() {
+        return (NavigationFragment)getChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
     }
 
     public boolean onBackPressed() {
         if (getFragmentTags().size() > 1) {
-            dismissTopFragment();
+            popFragment();
             return true;
         }
 
