@@ -1,13 +1,8 @@
 package com.dmcapps.navigationfragment.fragment.pattern.manager;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
@@ -16,89 +11,57 @@ import com.dmcapps.navigationfragment.fragment.pattern.helper.RetainedChildFragm
 import java.util.Stack;
 
 /**
- * This Fragment manages the stack of single navigation on fragments.
- * The class allows for easy adding and removing of fragments as the user
- * traverses the screens. A self-contained class that requires no resources
- * in order to function. Each time a new manager is made a separate stack will be created
- * and no overlap will occur in the class.
+ * A simple {@link Fragment} subclass.
  */
-public class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements INavigationManager {
-    private static final int NO_ANIMATION = 0;
+public abstract class  NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+    protected static final int NO_ANIMATION = 0;
 
-    private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
-    private static final String ARG_VIEW_ID = "VIEW_ID";
-
-    // TODO: This isn't guarenteed unique and it could overlap items in the generated R.id file.
-    // How else should I do this to not overlap ...
-    private static int mUniqueViewIdGenerator;
-
-    private FrameLayout mFragmentFrame;
     private Stack<String> mFragmentTags;
-    private NavigationFragment mRootFragment;
-
-    public static NavigationManagerFragment newInstance(NavigationFragment rootFragment) {
-        NavigationManagerFragment managerFragment = new NavigationManagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_ROOT_FRAGMENT, rootFragment);
-        bundle.putInt(ARG_VIEW_ID, ++mUniqueViewIdGenerator);
-        managerFragment.setArguments(bundle);
-        return managerFragment;
-    }
 
     public NavigationManagerFragment() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mFragmentFrame == null) {
-            mFragmentFrame = new FrameLayout(getActivity());
-            mFragmentFrame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            mFragmentFrame.setId(getArguments().getInt(ARG_VIEW_ID));
-        }
-        return mFragmentFrame;
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        // No Fragments have been added. Attach the root.
-        if (getFragmentTags().size() == 0) {
-            pushFragment(getRootFragment());
-        }
-        // Fragments are in the stack, resume at the top.
-        else {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-            childFragTrans.commit();
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-        childFragTrans.commit();
     }
 
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     */
     public void pushFragment(NavigationFragment navFragment) {
         pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
-    @Override
-    public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
+    /**
+     * Push a new Fragment onto the stack {@link NavigationFragment} and present it using
+     * the animations defined.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     * @param
+     *      animationIn -> The animation of the fragment about to be shown.
+     * @param
+     *      animationOut -> The animation of the fragment that is being sent to the back.
+     */
+    public abstract void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut);
+
+    public void pushFragmentDetachAboveInContainer(int stackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
-        if (getFragmentTags().size() > 0) {
+        if (getFragmentTags().size() > stackSize) {
             childFragTrans.setCustomAnimations(animationIn, animationOut);
             Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
@@ -106,19 +69,32 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(mFragmentFrame.getId(), navFragment, navFragment.getNavTag());
+        childFragTrans.add(containerId, navFragment, navFragment.getNavTag());
         addFragmentToStack(navFragment);
 
         childFragTrans.commit();
-
     }
 
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it.
+     */
     public void popFragment() {
         popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
-    public void popFragment(int animationIn, int animationOut) {
-        if (getFragmentTags().size() > 1) {
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it using
+     * the animations defined.
+     *
+     * @param
+     *      animationIn -> The animation of the fragment about to be shown.
+     * @param
+     *      animationOut -> The animation of the fragment that is being dismissed.
+     */
+    public abstract void popFragment(int animationIn, int animationOut);
+
+    protected void popFragmentAboveStackSize(int stackSize, int animationIn, int animationOut) {
+        if (getFragmentTags().size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animationIn, animationOut);
@@ -133,35 +109,32 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
         }
     }
 
-    @Override
-    public NavigationFragment topFragment() {
-        return (NavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
-    }
+    /**
+     * Access the fragment that is on the top of the navigation stack.
+     *
+     * @return
+     *      {@link NavigationFragment} that is on the top of the stack.
+     */
+    public abstract NavigationFragment topFragment();
 
-    public boolean onBackPressed() {
-        if (getFragmentTags().size() > 1) {
-            popFragment();
-            return true;
-        }
+    /**
+     * Remove the {@link NavigationFragment} that is on the top of the stack.
+     *
+     * @return
+     *      true -> A {@link NavigationFragment} has been removed
+     *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
+     */
+    public abstract boolean onBackPressed();
 
-        return false;
-    }
-
-    private NavigationFragment getRootFragment() {
-        if (mRootFragment == null) {
-            mRootFragment = (NavigationFragment)getArguments().getSerializable(ARG_ROOT_FRAGMENT);
-        }
-        return mRootFragment;
-    }
-
-    private void addFragmentToStack(NavigationFragment navFragment) {
+    protected void addFragmentToStack(NavigationFragment navFragment) {
         getFragmentTags().add(navFragment.getNavTag());
     }
 
-    private Stack<String> getFragmentTags() {
+    protected Stack<String> getFragmentTags() {
         if (mFragmentTags == null) {
             mFragmentTags = new Stack<>();
         }
         return mFragmentTags;
     }
+
 }

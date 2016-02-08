@@ -2,7 +2,7 @@ package com.dmcapps.navigationfragment.fragment.pattern;
 
 import android.support.v4.app.Fragment;
 
-import com.dmcapps.navigationfragment.fragment.pattern.manager.INavigationManager;
+import com.dmcapps.navigationfragment.fragment.pattern.manager.NavigationManagerFragment;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 public abstract class NavigationFragment extends Fragment implements Serializable {
 
-    private INavigationManager mNavigationManager;
+    private NavigationManagerFragment mNavigationManager;
     private final String TAG;
 
     public NavigationFragment() {
@@ -27,11 +27,11 @@ public abstract class NavigationFragment extends Fragment implements Serializabl
         return TAG;
     }
 
-    public void setNavigationManager(INavigationManager navigationManager) {
+    public void setNavigationManager(NavigationManagerFragment navigationManager) {
         mNavigationManager = navigationManager;
     }
 
-    public INavigationManager getNavigationManager() {
+    public NavigationManagerFragment getNavigationManager() {
         return mNavigationManager;
     }
 

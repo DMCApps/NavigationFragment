@@ -1,82 +1,44 @@
 package com.dmcapps.navigationfragment.example;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.pattern.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.example.MasterDetailExample.MasterDetailNavigationExampleActivity;
+import com.dmcapps.navigationfragment.example.SingleStackExample.SingleStackNavigationExampleActivity;
 
-import java.util.UUID;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static final String STATE_NAV_TAG = "NAV_TAG";
-
-    private String mNavigationManagerFragmentTag;
+public class MainActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        if (savedInstanceState != null) {
-            mNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
-        }
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("Single Stack Example");
+        items.add("Master Detail Example");
+        // TODO: Tab Example
+        // items.add("Tab Example");
+        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items));
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
 
-        if (mNavigationManagerFragmentTag == null) {
-            addFragment(NavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack")));
+        if (position == 0) {
+            Intent intent = new Intent(this, SingleStackNavigationExampleActivity.class);
+            startActivity(intent);
         }
-        else {
-            showFragment(mNavigationManagerFragmentTag);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
-        ft.detach(fragment);
-        ft.commit();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putString(STATE_NAV_TAG, mNavigationManagerFragmentTag);
-    }
-
-    private void addFragment(NavigationManagerFragment fragment)  {
-        mNavigationManagerFragmentTag = UUID.randomUUID().toString();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
-        ft.commit();
-    }
-
-    private void showFragment(String tag)  {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-
-        if (fragment != null && fragment.isDetached()) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.attach(fragment);
-            ft.commit();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
-        if (!fragment.onBackPressed()) {
-            super.onBackPressed();
+        else if (position == 1) {
+            Intent intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
+            startActivity(intent);
         }
     }
 }
