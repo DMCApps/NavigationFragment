@@ -13,14 +13,14 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
 
     private static final String STATE_NAV_TAG = "NAV_TAG";
 
-    private String mNavigationManagerFragmentTag;
+    private String mSingleStackNavigationManagerFragmentTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            mNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
+            mSingleStackNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
         }
     }
 
@@ -28,11 +28,11 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (mNavigationManagerFragmentTag == null) {
+        if (mSingleStackNavigationManagerFragmentTag == null) {
             addFragment(SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack")));
         }
         else {
-            showFragment(mNavigationManagerFragmentTag);
+            showFragment(mSingleStackNavigationManagerFragmentTag);
         }
     }
 
@@ -41,7 +41,7 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
         super.onPause();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
         ft.detach(fragment);
         ft.commit();
     }
@@ -50,14 +50,14 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(STATE_NAV_TAG, mNavigationManagerFragmentTag);
+        outState.putString(STATE_NAV_TAG, mSingleStackNavigationManagerFragmentTag);
     }
 
     private void addFragment(SingleStackNavigationManagerFragment fragment)  {
-        mNavigationManagerFragmentTag = UUID.randomUUID().toString();
+        mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
+        ft.add(android.R.id.content, fragment, mSingleStackNavigationManagerFragmentTag);
         ft.commit();
     }
 
@@ -73,7 +73,7 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        SingleStackNavigationManagerFragment fragment = (SingleStackNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        SingleStackNavigationManagerFragment fragment = (SingleStackNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

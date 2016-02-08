@@ -172,5 +172,4 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
         return mFragmentTags;
     }
-
 }
