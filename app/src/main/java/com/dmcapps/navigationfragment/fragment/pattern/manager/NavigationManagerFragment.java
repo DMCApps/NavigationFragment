@@ -13,7 +13,7 @@ import java.util.Stack;
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class  NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
     protected static final int NO_ANIMATION = 0;
 
     private Stack<String> mFragmentTags;
@@ -55,13 +55,30 @@ public abstract class  NavigationManagerFragment extends RetainedChildFragmentMa
      */
     public abstract void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut);
 
-    public void pushFragmentDetachAboveInContainer(int stackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
+    /**
+     * Push a new Fragment onto the stack {@link NavigationFragment} and present it using
+     * the animations defined.
+     * Detaching the top fragment if the stack is at or above stackSize
+     * Adding the new fragment to the containerId
+     *
+     * @param
+     *      detachStackSize -> The size of the stack required before detaching begins
+     * @param
+     *      containerId -> The id of the container the fragment should be attached to.
+     * @param
+     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     * @param
+     *      animationIn -> The animation of the fragment about to be shown.
+     * @param
+     *      animationOut -> The animation of the fragment that is being sent to the back.
+     */
+    public void pushFragmentDetachAboveInContainer(int detachStackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
-        if (getFragmentTags().size() > stackSize) {
+        if (getFragmentTags().size() >= detachStackSize) {
             childFragTrans.setCustomAnimations(animationIn, animationOut);
             Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
@@ -93,6 +110,17 @@ public abstract class  NavigationManagerFragment extends RetainedChildFragmentMa
      */
     public abstract void popFragment(int animationIn, int animationOut);
 
+    /**
+     * Pop the current fragment off the top of the stack given it is above
+     * the passed in stackSize. Dismiss it using the animations defined.
+     *
+     * @param
+     *      stackSize -> The stack size that the fragment should handle
+     * @param
+     *      animationIn -> The animation of the fragment about to be shown.
+     * @param
+     *      animationOut -> The animation of the fragment that is being dismissed.
+     */
     protected void popFragmentAboveStackSize(int stackSize, int animationIn, int animationOut) {
         if (getFragmentTags().size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
@@ -125,6 +153,14 @@ public abstract class  NavigationManagerFragment extends RetainedChildFragmentMa
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     public abstract boolean onBackPressed();
+
+    public abstract void clearNavigationStackToRoot();
+
+    protected void clearNavigationStackToPosition(int stackPosition) {
+        while (getFragmentTags().size() > stackPosition) {
+            popFragment(NO_ANIMATION, NO_ANIMATION);
+        }
+    }
 
     protected void addFragmentToStack(NavigationFragment navFragment) {
         getFragmentTags().add(navFragment.getNavTag());

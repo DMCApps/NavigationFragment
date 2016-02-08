@@ -15,16 +15,11 @@ import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.DeviceUtil;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.ViewUtil;
 
-import java.util.Stack;
-
-// TODO: Change INavigationManager into an abstract class with similarities from the SingleStackNavigationManagerFragment
-// TODO: Change SingleStackNavigationManagerFragment into SingleStackNavigationManagerFragment.
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
-    private static final int NO_ANIMATION = 0;
+    private static final int ACTIONABLE_STACK_SIZE = 2;
 
     private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
     private static final String ARG_DETAIL_FRAGMENT = "DETAIL_FRAGMENT";
@@ -33,7 +28,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private FrameLayout mMasterFrame;
     private FrameLayout mDetailFrame;
 
-    private Stack<String> mFragmentTags;
     private NavigationFragment mMasterFragment;
     private NavigationFragment mDetailFragment;
 
@@ -136,7 +130,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragmentDetachAboveInContainer(1, mDetailFrame.getId(), navFragment, animationIn, animationOut);
+        pushFragmentDetachAboveInContainer(ACTIONABLE_STACK_SIZE, mDetailFrame.getId(), navFragment, animationIn, animationOut);
     }
 
     @Override
@@ -146,7 +140,12 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public void popFragment(int animationIn, int animationOut) {
-        popFragmentAboveStackSize(2, animationIn, animationOut);
+        popFragmentAboveStackSize(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
+    }
+
+    @Override
+    public void clearNavigationStackToRoot() {
+        clearNavigationStackToPosition(ACTIONABLE_STACK_SIZE);
     }
 
     @Override
@@ -156,7 +155,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public boolean onBackPressed() {
-        if (getFragmentTags().size() > 2) {
+        if (getFragmentTags().size() > ACTIONABLE_STACK_SIZE) {
             popFragment();
             return true;
         }

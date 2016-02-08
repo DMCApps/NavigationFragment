@@ -23,12 +23,11 @@ import java.util.Stack;
  * and no overlap will occur in the class.
  */
 public class SingleStackNavigationManagerFragment extends NavigationManagerFragment {
-    private static final int NO_ANIMATION = 0;
+    private static final int ACTIONABLE_STACK_SIZE = 1;
 
     private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
 
     private FrameLayout mFragmentFrame;
-    private Stack<String> mFragmentTags;
     private NavigationFragment mRootFragment;
 
     public static SingleStackNavigationManagerFragment newInstance(NavigationFragment rootFragment) {
@@ -87,7 +86,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragmentDetachAboveInContainer(0, mFragmentFrame.getId(), navFragment, animationIn, animationOut);
+        pushFragmentDetachAboveInContainer(ACTIONABLE_STACK_SIZE, mFragmentFrame.getId(), navFragment, animationIn, animationOut);
     }
 
     public void popFragment() {
@@ -95,7 +94,12 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
     }
 
     public void popFragment(int animationIn, int animationOut) {
-        popFragmentAboveStackSize(1, animationIn, animationOut);
+        popFragmentAboveStackSize(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
+    }
+
+    @Override
+    public void clearNavigationStackToRoot() {
+        clearNavigationStackToPosition(ACTIONABLE_STACK_SIZE);
     }
 
     @Override
@@ -105,7 +109,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public boolean onBackPressed() {
-        if (getFragmentTags().size() > 1) {
+        if (getFragmentTags().size() > ACTIONABLE_STACK_SIZE) {
             popFragment();
             return true;
         }

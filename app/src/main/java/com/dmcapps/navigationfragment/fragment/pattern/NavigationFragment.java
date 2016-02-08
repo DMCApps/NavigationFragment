@@ -43,6 +43,10 @@ public abstract class NavigationFragment extends Fragment implements Serializabl
         mNavigationManager.pushFragment(navFragment, animationIn, animationOut);
     }
 
+    public void dismissToRoot() {
+        mNavigationManager.clearNavigationStackToRoot();
+    }
+
     public void dismissFragment() {
         mNavigationManager.popFragment();
     }
