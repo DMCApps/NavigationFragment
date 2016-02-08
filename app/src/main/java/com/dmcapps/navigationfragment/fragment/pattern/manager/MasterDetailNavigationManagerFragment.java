@@ -130,7 +130,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragmentDetachAboveInContainer(ACTIONABLE_STACK_SIZE, mDetailFrame.getId(), navFragment, animationIn, animationOut);
+        pushFragment(ACTIONABLE_STACK_SIZE, mDetailFrame.getId(), navFragment, animationIn, animationOut);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public void popFragment(int animationIn, int animationOut) {
-        popFragmentAboveStackSize(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
+        popFragment(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
     }
 
     @Override

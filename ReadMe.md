@@ -21,7 +21,7 @@ Every Fragment in the Navigation Stack must extend NavigationFragment in order t
 
 This manager is used to manage a single flow of Fragments in a stack. The stack presents and dismisses in a linear flow from start to end.
 
-##Creating and Displaying the Manager
+###Creating and Displaying the Manager
 
 In order to create an instance of the SingleStackNavigationManagerFragment, the root fragment must be created along side this and given to the manager for use. We do this with the use of the following:
 
@@ -44,7 +44,7 @@ In the above we are adding the SingleStackNavigationManagerFragment to the scree
 
 Now that the SingleStackNavigationManagerFragment has been added to the screen, we should see the contents of the SampleFragment shown on the screen. From here we can go through screen rotations and see that the fragment will be retained and the stack untouched. 
 
-##Presenting a Fragment
+###Presenting a Fragment
 
 Now that the SingleStackNavigationManagerFragment is being put to work, we need to make sure that we are presenting and dismissing fragments from the appropriate methods. Since all fragment in the stack must extend NavigationFragment, we will have access to the appropriate methods for doing so. In order to present a new fragment we have two options. We can use the default animations (slide in right and slide out left).
 
@@ -64,7 +64,7 @@ OR if you would like to provide your own animations you can use the same as the 
 presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
 ```
 
-##Dismissing a Fragment
+###Dismissing a Fragment
 
 In order to remove fragments from the screen we must follow a similar style as presenting. To dismiss the fragments we call the dismissFragment() on the NavigationFragment that we are in. We can use the default animations (slide out right and slide in left).
 
@@ -84,7 +84,7 @@ OR if you would like to provide your own animations your can use the same as the
 dismissFragment(int animationIn, int animationOut);
 ``
 
-##Keeping the Back Button Functional
+###Keeping the Back Button Functional
 
 In order to use the back button for dismissing the fragments, we will need to add in some custom code to allow the SingleStackNavigationManagerFragment to perform its own back action. To do so we will need to get a hold of the SingleStackNavigationManagerFragment in the onBackPressed and then execute the back action of the Fragment. To do so we use the saved String tag for the SingleStackNavigationManagerFragment and retrieve it from the FragmentManager. 
 

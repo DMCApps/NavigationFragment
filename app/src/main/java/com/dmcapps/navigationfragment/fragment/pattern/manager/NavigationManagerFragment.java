@@ -72,7 +72,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      animationOut -> The animation of the fragment that is being sent to the back.
      */
-    public void pushFragmentDetachAboveInContainer(int detachStackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
+    public void pushFragment(int detachStackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -121,7 +121,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragmentAboveStackSize(int stackSize, int animationIn, int animationOut) {
+    protected void popFragment(int stackSize, int animationIn, int animationOut) {
         if (getFragmentTags().size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -158,7 +158,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     protected void clearNavigationStackToPosition(int stackPosition) {
         while (getFragmentTags().size() > stackPosition) {
-            popFragment(NO_ANIMATION, NO_ANIMATION);
+            popFragment(stackPosition, NO_ANIMATION, NO_ANIMATION);
         }
     }
 
