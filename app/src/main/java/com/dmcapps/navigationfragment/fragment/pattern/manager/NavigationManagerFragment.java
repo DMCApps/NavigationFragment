@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.RetainedChildFragmentManagerFragment;
 
 import java.util.Stack;
@@ -36,27 +36,29 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Push a new Fragment onto the stack and presenting it to the screen
      *
      * @param
-     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
-    public void pushFragment(NavigationFragment navFragment) {
+    public void pushFragment(INavigationFragment navFragment) {
         pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
 
     /**
-     * Push a new Fragment onto the stack {@link NavigationFragment} and present it using
+     * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
      * the animations defined.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      * @param
      *      animationIn -> The animation of the fragment about to be shown.
      * @param
      *      animationOut -> The animation of the fragment that is being sent to the back.
      */
-    public abstract void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut);
+    public void pushFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
+        pushFragment(getMinStackSize(), getPushStackFrameId(), navFragment, animationIn, animationOut);
+    }
 
     /**
-     * Push a new Fragment onto the stack {@link NavigationFragment} and present it using
+     * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
      * the animations defined.
      * Detaching the top fragment if the stack is at or above stackSize
      * Adding the new fragment to the containerId
@@ -66,13 +68,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      containerId -> The id of the container the fragment should be attached to.
      * @param
-     *      navFragment -> The Fragment to show. It must extend {@link NavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      * @param
      *      animationIn -> The animation of the fragment about to be shown.
      * @param
      *      animationOut -> The animation of the fragment that is being sent to the back.
      */
-    public void pushFragment(int detachStackSize, int containerId, NavigationFragment navFragment, int animationIn, int animationOut) {
+    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animationIn, int animationOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -86,7 +88,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(containerId, navFragment, navFragment.getNavTag());
+        childFragTrans.add(containerId, (Fragment)navFragment, navFragment.getNavTag());
         addFragmentToStack(navFragment);
 
         childFragTrans.commit();
@@ -108,7 +110,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
-    public abstract void popFragment(int animationIn, int animationOut);
+    public void popFragment(int animationIn, int animationOut) {
+        popFragment(getMinStackSize(), animationIn, animationOut);
+    }
 
     /**
      * Pop the current fragment off the top of the stack given it is above
@@ -141,20 +145,40 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Access the fragment that is on the top of the navigation stack.
      *
      * @return
-     *      {@link NavigationFragment} that is on the top of the stack.
+     *      {@link INavigationFragment} that is on the top of the stack.
      */
-    public abstract NavigationFragment topFragment();
+    public INavigationFragment topFragment() {
+        return (INavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
+    }
 
     /**
-     * Remove the {@link NavigationFragment} that is on the top of the stack.
+     * Remove the {@link INavigationFragment} that is on the top of the stack.
      *
      * @return
-     *      true -> A {@link NavigationFragment} has been removed
+     *      true -> A {@link INavigationFragment} has been removed
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
-    public abstract boolean onBackPressed();
+    public boolean onBackPressed() {
+        if (getFragmentTags().size() > getMinStackSize()) {
+            popFragment();
+            return true;
+        }
 
-    public abstract void clearNavigationStackToRoot();
+        return false;
+    }
+
+    public void clearNavigationStackToRoot() {
+        clearNavigationStackToPosition(getMinStackSize());
+    }
+
+    public void replaceRootFragment(INavigationFragment navFragment) {
+        clearNavigationStackToPosition(getMinStackSize() - 1);
+        pushFragment(navFragment, NO_ANIMATION, NO_ANIMATION);
+    }
+
+    public abstract int getPushStackFrameId();
+
+    public abstract int getMinStackSize();
 
     protected void clearNavigationStackToPosition(int stackPosition) {
         while (getFragmentTags().size() > stackPosition) {
@@ -162,7 +186,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
-    protected void addFragmentToStack(NavigationFragment navFragment) {
+    protected void addFragmentToStack(INavigationFragment navFragment) {
         getFragmentTags().add(navFragment.getNavTag());
     }
 

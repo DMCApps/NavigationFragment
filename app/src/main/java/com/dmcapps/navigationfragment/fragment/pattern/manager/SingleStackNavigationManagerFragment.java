@@ -1,7 +1,6 @@
 package com.dmcapps.navigationfragment.fragment.pattern.manager;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -9,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.ViewUtil;
 
-import java.util.Stack;
 
 /**
  * This Fragment manages the stack of single navigation on fragments.
@@ -23,14 +20,15 @@ import java.util.Stack;
  * and no overlap will occur in the class.
  */
 public class SingleStackNavigationManagerFragment extends NavigationManagerFragment {
+    // TODO: This should be abstract method. Would allow me to pull ALL methods into the parent.
     private static final int ACTIONABLE_STACK_SIZE = 1;
 
     private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
 
     private FrameLayout mFragmentFrame;
-    private NavigationFragment mRootFragment;
+    private INavigationFragment mRootFragment;
 
-    public static SingleStackNavigationManagerFragment newInstance(NavigationFragment rootFragment) {
+    public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
         SingleStackNavigationManagerFragment managerFragment = new SingleStackNavigationManagerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_ROOT_FRAGMENT, rootFragment);
@@ -80,46 +78,19 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         childFragTrans.commit();
     }
 
-    public void pushFragment(NavigationFragment navFragment) {
-        pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    @Override
+    public int getMinStackSize() {
+        return ACTIONABLE_STACK_SIZE;
     }
 
     @Override
-    public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragment(ACTIONABLE_STACK_SIZE, mFragmentFrame.getId(), navFragment, animationIn, animationOut);
+    public int getPushStackFrameId() {
+        return mFragmentFrame.getId();
     }
 
-    public void popFragment() {
-        popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-    }
-
-    public void popFragment(int animationIn, int animationOut) {
-        popFragment(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
-    }
-
-    @Override
-    public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(ACTIONABLE_STACK_SIZE);
-    }
-
-    @Override
-    public NavigationFragment topFragment() {
-        return (NavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        if (getFragmentTags().size() > ACTIONABLE_STACK_SIZE) {
-            popFragment();
-            return true;
-        }
-
-        return false;
-    }
-
-    private NavigationFragment getRootFragment() {
+    private INavigationFragment getRootFragment() {
         if (mRootFragment == null) {
-            mRootFragment = (NavigationFragment)getArguments().getSerializable(ARG_ROOT_FRAGMENT);
+            mRootFragment = (INavigationFragment)getArguments().getSerializable(ARG_ROOT_FRAGMENT);
         }
         return mRootFragment;
     }

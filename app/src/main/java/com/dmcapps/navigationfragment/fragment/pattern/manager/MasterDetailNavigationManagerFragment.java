@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.DeviceUtil;
 import com.dmcapps.navigationfragment.fragment.pattern.helper.ViewUtil;
 
@@ -19,6 +18,7 @@ import com.dmcapps.navigationfragment.fragment.pattern.helper.ViewUtil;
  * A simple {@link Fragment} subclass.
  */
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
+    // TODO: This should be abstract method. Would allow me to pull ALL methods into the parent.
     private static final int ACTIONABLE_STACK_SIZE = 2;
 
     private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
@@ -28,10 +28,10 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private FrameLayout mMasterFrame;
     private FrameLayout mDetailFrame;
 
-    private NavigationFragment mMasterFragment;
-    private NavigationFragment mDetailFragment;
+    private INavigationFragment mMasterFragment;
+    private INavigationFragment mDetailFragment;
 
-    public static MasterDetailNavigationManagerFragment newInstance(NavigationFragment masterFragment, NavigationFragment detailFragment) {
+    public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
         MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_MASTER_FRAGMENT, masterFragment);
@@ -67,7 +67,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         // Layout Master
         RelativeLayout.LayoutParams masterParams = (RelativeLayout.LayoutParams)mMasterFrame.getLayoutParams();
         masterParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        masterParams.width = DeviceUtil.getPixelValueFromDp(getActivity(), 200);
+        masterParams.width = DeviceUtil.getPixelValueFromDp(getActivity(), 300);
         masterParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, mMasterFrame.getId());
         mMasterFrame.setLayoutParams(masterParams);
 
@@ -94,7 +94,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-            childFragTrans.add(mMasterFrame.getId(), getMasterFragment(), getMasterFragment().getNavTag());
+            childFragTrans.add(mMasterFrame.getId(), (Fragment)getMasterFragment(), getMasterFragment().getNavTag());
             addFragmentToStack(getMasterFragment());
             childFragTrans.commit();
 
@@ -124,55 +124,25 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public void pushFragment(NavigationFragment navFragment) {
-        pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+    public int getPushStackFrameId() {
+        return mDetailFrame.getId();
     }
 
     @Override
-    public void pushFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragment(ACTIONABLE_STACK_SIZE, mDetailFrame.getId(), navFragment, animationIn, animationOut);
+    public int getMinStackSize() {
+        return ACTIONABLE_STACK_SIZE;
     }
 
-    @Override
-    public void popFragment() {
-        popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-    }
-
-    @Override
-    public void popFragment(int animationIn, int animationOut) {
-        popFragment(ACTIONABLE_STACK_SIZE, animationIn, animationOut);
-    }
-
-    @Override
-    public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(ACTIONABLE_STACK_SIZE);
-    }
-
-    @Override
-    public NavigationFragment topFragment() {
-        return (NavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        if (getFragmentTags().size() > ACTIONABLE_STACK_SIZE) {
-            popFragment();
-            return true;
-        }
-
-        return false;
-    }
-
-    private NavigationFragment getMasterFragment() {
+    private INavigationFragment getMasterFragment() {
         if (mMasterFragment == null) {
-            mMasterFragment = (NavigationFragment)getArguments().getSerializable(ARG_MASTER_FRAGMENT);
+            mMasterFragment = (INavigationFragment)getArguments().getSerializable(ARG_MASTER_FRAGMENT);
         }
         return mMasterFragment;
     }
 
-    private NavigationFragment getDetailFragment() {
+    private INavigationFragment getDetailFragment() {
         if (mDetailFragment == null) {
-            mDetailFragment = (NavigationFragment)getArguments().getSerializable(ARG_DETAIL_FRAGMENT);
+            mDetailFragment = (INavigationFragment)getArguments().getSerializable(ARG_DETAIL_FRAGMENT);
         }
         return mDetailFragment;
     }

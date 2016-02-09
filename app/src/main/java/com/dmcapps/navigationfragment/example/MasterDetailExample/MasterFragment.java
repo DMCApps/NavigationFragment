@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.example.SingleStackExample.SampleFragment;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.fragments.NavigationFragment;
 
 public class MasterFragment extends NavigationFragment {
 
@@ -37,7 +37,7 @@ public class MasterFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.master_btn_replace)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MasterFragment.this.dismissToRoot();
+                MasterFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment"));
             }
         });
 

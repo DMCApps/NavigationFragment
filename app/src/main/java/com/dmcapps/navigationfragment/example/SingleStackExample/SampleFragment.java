@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragment.pattern.NavigationFragment;
+import com.dmcapps.navigationfragment.fragment.pattern.fragments.NavigationFragment;
 
 import java.io.Serializable;
 
@@ -128,6 +128,13 @@ public class SampleFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 SampleFragment.this.dismissFragment();
+            }
+        });
+
+        ((Button)view.findViewById(R.id.sample_btn_replace_root)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment"));
             }
         });
 

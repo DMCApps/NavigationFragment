@@ -1,10 +1,9 @@
-package com.dmcapps.navigationfragment.fragment.pattern;
+package com.dmcapps.navigationfragment.fragment.pattern.fragments;
 
 import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.fragment.pattern.manager.NavigationManagerFragment;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -14,7 +13,7 @@ import java.util.UUID;
  * and maintain a constant TAG for the class allowing the navigation manager to
  * effectively store and present the Fragments as needed.
  */
-public abstract class NavigationFragment extends Fragment implements Serializable {
+public class NavigationFragment extends Fragment implements INavigationFragment {
 
     private NavigationManagerFragment mNavigationManager;
     private final String TAG;
@@ -35,11 +34,11 @@ public abstract class NavigationFragment extends Fragment implements Serializabl
         return mNavigationManager;
     }
 
-    public void presentFragment(NavigationFragment navFragment) {
+    public void presentFragment(INavigationFragment navFragment) {
         mNavigationManager.pushFragment(navFragment);
     }
 
-    public void presentFragment(NavigationFragment navFragment, int animationIn, int animationOut) {
+    public void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
         mNavigationManager.pushFragment(navFragment, animationIn, animationOut);
     }
 
@@ -53,5 +52,9 @@ public abstract class NavigationFragment extends Fragment implements Serializabl
 
     public void dismissFragment(int animationIn, int animationOut) {
         mNavigationManager.popFragment(animationIn, animationOut);
+    }
+
+    public void replaceRootFragment(INavigationFragment navFragment) {
+        mNavigationManager.replaceRootFragment(navFragment);
     }
 }
