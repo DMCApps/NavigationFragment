@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dmcapps.navigationfragment" >
+    package="com.dmcapps.navigationfragmentexample" >
 
     <application
         android:allowBackup="true"
@@ -8,15 +8,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".example.MainActivity" >
+        <activity android:name="com.dmcapps.navigationfragmentexample.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".example.SingleStackExample.SingleStackNavigationExampleActivity" />
-        <activity android:name=".example.MasterDetailExample.MasterDetailNavigationExampleActivity" >
+        <activity android:name="com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity" />
+        <activity android:name="com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity" >
         </activity>
     </application>
 
