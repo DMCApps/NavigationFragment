@@ -106,7 +106,14 @@ We can see here that if the onBackPressed() of the SingleStackNavigationManagerF
 1. Master-Detail
 2. Make into Maven project
 3. Tabs
+4. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
+## Uploading updates to jCenter and Maven:
+In Android Studio Terminal use:
+```
+./gradlew install
+./gradlew bintrayUpload
+```
 #License
 
-Copyright (c) 2016 DMCApps [MIT-License](https://opensource.org/licenses/MIT)
+Copyright (c) 2016 DMCApps [MIT License](https://opensource.org/licenses/MIT)

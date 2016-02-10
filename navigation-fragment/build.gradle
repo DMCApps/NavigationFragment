@@ -8,14 +8,16 @@ ext {
     libraryName = 'NavigationFragment'
     artifact = 'navigation-fragment'
 
-    libraryDescription = 'A wrapper for Facebook Native Like Button (LikeView) on Android'
+    libraryDescription = 'The purpose of this manager is to handle a single stack flow of fragments on the screen so that the developer can easily create flows without having to worry about using the inner details of the Fragment Manager and the ChildFragmentManager. \n' +
+            '\n' +
+            'It makes use of a main Fragment as a container and presents and hides fragments within it at children. '
 
     siteUrl = 'https://github.com/DMCApps/NavigationFragment'
     gitUrl = 'https://github.com/DMCApps/NavigationFragment.git'
 
     libraryVersion = '0.0.1'
 
-    developerId = 'DMCApps'
+    developerId = 'dmcapps'
     developerName = 'Daniel Carmo'
     developerEmail = 'dcarmo@alumni.uoguelph.ca'
 

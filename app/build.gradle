@@ -19,6 +19,10 @@ android {
     }
 }
 
+// Skip building javadoc:
+// http://stackoverflow.com/questions/29809868/android-studio-how-to-remove-or-disable-javadoc-generation-from-project-build
+tasks.findByPath(":navigation-fragment:javadoc").enabled = false
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
