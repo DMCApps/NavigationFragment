@@ -106,3 +106,7 @@ We can see here that if the onBackPressed() of the SingleStackNavigationManagerF
 1. Master-Detail
 2. Make into Maven project
 3. Tabs
+
+#License
+
+Copyright (c) 2016 DMCApps [MIT-License][https://opensource.org/licenses/MIT]
