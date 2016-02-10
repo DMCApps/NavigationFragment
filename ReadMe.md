@@ -109,4 +109,4 @@ We can see here that if the onBackPressed() of the SingleStackNavigationManagerF
 
 #License
 
-Copyright (c) 2016 DMCApps [MIT-License][https://opensource.org/licenses/MIT]
+Copyright (c) 2016 DMCApps [MIT-License](https://opensource.org/licenses/MIT)
