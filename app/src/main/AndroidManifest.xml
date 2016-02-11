@@ -8,15 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.dmcapps.navigationfragmentexample.MainActivity" >
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity" />
-        <activity android:name="com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity" >
+        <activity android:name=".SingleStackExample.SingleStackNavigationExampleActivity" />
+        <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity" >
+        </activity>
+        <activity
+            android:name=".TabExample.TabNavigationExample"
+            android:label="@string/title_activity_tab_navigation_example"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

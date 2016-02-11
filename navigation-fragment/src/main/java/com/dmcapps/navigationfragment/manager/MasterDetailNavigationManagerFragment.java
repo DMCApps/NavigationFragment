@@ -145,7 +145,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         }
     }
 
-    // TODO: Animations 
+    // TODO: Animations
     public void hideMaster() {
         if (shouldMasterToggle()) {
             mMasterFrame.setVisibility(View.GONE);

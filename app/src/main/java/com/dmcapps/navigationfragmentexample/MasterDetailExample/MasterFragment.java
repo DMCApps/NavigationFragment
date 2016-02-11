@@ -30,14 +30,16 @@ public class MasterFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.master_btn_add)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MasterFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to the Stack"));
+                // Just for the example so that we can keep the count correct.
+                int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
+                MasterFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1));
             }
         });
 
         ((Button)view.findViewById(R.id.master_btn_replace)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MasterFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment"));
+                MasterFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
             }
         });
 

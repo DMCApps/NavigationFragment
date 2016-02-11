@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
+import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExample;
 
 import java.util.ArrayList;
 
@@ -28,8 +29,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         ArrayList<String> items = new ArrayList<String>();
         items.add("Single Stack Example");
         items.add("Master Detail Example");
-        // TODO: Tab Example
-        // items.add("Tab Example");
+        items.add("Tab Example");
         mList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
     }
@@ -42,6 +42,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
         else if (position == 1) {
             Intent intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
+            startActivity(intent);
+        }
+        else if (position == 2) {
+            Intent intent = new Intent(this, TabNavigationExample.class);
             startActivity(intent);
         }
     }

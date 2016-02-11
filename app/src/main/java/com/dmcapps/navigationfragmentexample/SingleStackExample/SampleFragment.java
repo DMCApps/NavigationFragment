@@ -23,12 +23,13 @@ import java.io.Serializable;
  */
 public class SampleFragment extends NavigationFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";
+    private static final String ARG_FRAG_COUNT = "ARG_FRAG_COUNT";
 
-    private String mParam1;
+    private String mFragText;
     private SampleModel model;
 
-    static int fragCount = 1;
+    private int mFragCount;
 
     /**
      * Use this factory method to create a new instance of
@@ -38,10 +39,11 @@ public class SampleFragment extends NavigationFragment {
      * @return A new instance of fragment SampleFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SampleFragment newInstance(String param1) {
+    public static SampleFragment newInstance(String param1, int fragCount) {
         SampleFragment fragment = new SampleFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_FRAG_TEXT, param1);
+        args.putInt(ARG_FRAG_COUNT, fragCount);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +57,8 @@ public class SampleFragment extends NavigationFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mFragText = getArguments().getString(ARG_FRAG_TEXT);
+            mFragCount = getArguments().getInt(ARG_FRAG_COUNT);
         }
     }
 
@@ -65,7 +68,7 @@ public class SampleFragment extends NavigationFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sample, container, false);
 
-        ((TextView)view.findViewById(R.id.sample_tv_text)).setText(mParam1);
+        ((TextView)view.findViewById(R.id.sample_tv_text)).setText((mFragCount + 1) + " " + mFragText);
 
         EditText edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
         edit1.setText(model.text1);
@@ -134,18 +137,22 @@ public class SampleFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.sample_btn_replace_root)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment"));
+                SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
             }
         });
 
         ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
+                SampleFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
             }
         });
 
         return view;
+    }
+
+    public int getFragCount() {
+        return mFragCount;
     }
 
     private class SampleModel implements Serializable {
