@@ -4,9 +4,29 @@
 
 Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
-##Current Version Information
+##Current Version
 
-0.0.1 
+0.0.2
+
+##Change Log
+
+0.0.2
+- Single Stack Fragment Manager improvements.
+- All Managers now use layout files instead of programmatically creating view
+- Improvements to the Master-Detail manager
+- Master-Detail now shows and hides the Master based on orientation
+- Master-Detail now manages fragments appropriately for a phone having only a single stack which starts at the given Master in NewInstance call.
+- Added in Example for Tabs (see git for examples).
+
+COMING SOON
+- Master-Detail animations for showing and hiding the master when in portrait
+- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed.
+
+0.0.1
+- Implementation of SingleStackNavigationManagerFragment
+- Handles single stack of fragments pushing and popping in a linear manner.
+- Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
+
 This project uses the android support libraries for implementation.
 
 ##Introduction
