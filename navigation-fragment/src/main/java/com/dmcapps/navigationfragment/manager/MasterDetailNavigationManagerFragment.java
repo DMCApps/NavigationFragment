@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.DeviceUtil;
 import com.dmcapps.navigationfragment.helper.ViewUtil;
@@ -23,10 +24,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
     private static final String ARG_DETAIL_FRAGMENT = "DETAIL_FRAGMENT";
-
-    private RelativeLayout mMainLayout;
-    private FrameLayout mMasterFrame;
-    private FrameLayout mDetailFrame;
 
     private INavigationFragment mMasterFragment;
     private INavigationFragment mDetailFragment;
@@ -47,41 +44,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (mMainLayout == null) {
-            mMainLayout = new RelativeLayout(getActivity());
-            mMainLayout.setId(ViewUtil.generateViewId());
-            mMainLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-            mMasterFrame = new FrameLayout(getActivity());
-            mMasterFrame.setId(ViewUtil.generateViewId());
-
-            mDetailFrame = new FrameLayout(getActivity());
-            mDetailFrame.setId(ViewUtil.generateViewId());
-
-            mMainLayout.addView(mMasterFrame);
-            mMainLayout.addView(mDetailFrame);
-        }
-
-        // TODO: Depends on orientation
-
-        // Layout Master
-        RelativeLayout.LayoutParams masterParams = (RelativeLayout.LayoutParams)mMasterFrame.getLayoutParams();
-        masterParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        masterParams.width = DeviceUtil.getPixelValueFromDp(getActivity(), 300);
-        masterParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, mMasterFrame.getId());
-        mMasterFrame.setLayoutParams(masterParams);
-
-        RelativeLayout.LayoutParams detailParams = (RelativeLayout.LayoutParams)mDetailFrame.getLayoutParams();
-        detailParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        detailParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        detailParams.addRule(RelativeLayout.RIGHT_OF, mMasterFrame.getId());
-        detailParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, mDetailFrame.getId());
-        mDetailFrame.setLayoutParams(detailParams);
-
-        mMainLayout.invalidate();
-        mMainLayout.requestLayout();
-
-        return mMainLayout;
+        return inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
     }
 
     @Override
@@ -94,7 +57,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-            childFragTrans.add(mMasterFrame.getId(), (Fragment)getMasterFragment(), getMasterFragment().getNavTag());
+            childFragTrans.add(R.id.master_detail_container_master, (Fragment)getMasterFragment(), getMasterFragment().getNavTag());
             addFragmentToStack(getMasterFragment());
             childFragTrans.commit();
 
@@ -125,7 +88,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public int getPushStackFrameId() {
-        return mDetailFrame.getId();
+        return R.id.master_detail_container_detail;
     }
 
     @Override

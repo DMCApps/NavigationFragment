@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.ViewUtil;
 
@@ -25,7 +26,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
 
-    private FrameLayout mFragmentFrame;
     private INavigationFragment mRootFragment;
 
     public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
@@ -41,12 +41,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mFragmentFrame == null) {
-            mFragmentFrame = new FrameLayout(getActivity());
-            mFragmentFrame.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            mFragmentFrame.setId(ViewUtil.generateViewId());
-        }
-        return mFragmentFrame;
+        return inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
     }
 
     @Override
@@ -85,7 +80,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public int getPushStackFrameId() {
-        return mFragmentFrame.getId();
+        return R.id.single_stack_content;
     }
 
     private INavigationFragment getRootFragment() {
