@@ -6,15 +6,15 @@
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/master_detail_container_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
         android:id="@+id/master_detail_container_master"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:visibility="gone"/>
-
-    <FrameLayout
-        android:id="@+id/master_detail_container_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </RelativeLayout>

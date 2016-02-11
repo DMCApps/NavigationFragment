@@ -2,10 +2,13 @@ package com.dmcapps.navigationfragmentexample.MasterDetailExample;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 
 import java.util.UUID;
@@ -22,6 +25,10 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
         }
+
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeButtonEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -55,6 +62,17 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         outState.putString(STATE_NAV_TAG, mNavigationManagerFragmentTag);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            MasterDetailNavigationManagerFragment fragment = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+            fragment.toggleMaster();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void addFragment(MasterDetailNavigationManagerFragment fragment)  {
         mNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
@@ -75,7 +93,7 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        MasterDetailNavigationManagerFragment fragment = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

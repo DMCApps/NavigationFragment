@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,8 @@ import com.dmcapps.navigationfragment.helper.ViewUtil;
  * A simple {@link Fragment} subclass.
  */
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
-    // TODO: This should be abstract method. Would allow me to pull ALL methods into the parent.
+    private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
+
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 
@@ -120,6 +122,34 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     @Override
     public int getMinStackSize() {
         return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
+    }
+
+    public void toggleMaster() {
+        if (shouldMasterToggle()) {
+            if (mMasterFrame.getVisibility() == View.GONE) {
+                showMaster();
+            } else {
+                hideMaster();
+            }
+        }
+    }
+
+    public boolean shouldMasterToggle() {
+        return mIsTablet && mIsPortrait;
+    }
+
+    // TODO: Animations
+    public void showMaster() {
+        if (shouldMasterToggle()) {
+            mMasterFrame.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // TODO: Animations 
+    public void hideMaster() {
+        if (shouldMasterToggle()) {
+            mMasterFrame.setVisibility(View.GONE);
+        }
     }
 
     private INavigationFragment getMasterFragment() {
