@@ -27,9 +27,17 @@ COMING SOON
 - Handles single stack of fragments pushing and popping in a linear manner.
 - Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
 
-This project uses the android support libraries for implementation.
+##Adding the library to your android studio project
+
+In your app build.gradle file add the following to your dependencies
+
+```
+compile 'com.dmcapps:navigation-fragment:0.0.2'
+```
 
 ##Introduction
+
+This project uses the android support libraries for implementation.
 
 The purpose of this manager is to handle a single stack flow of fragments on the screen so that the developer can easily create flows without having to worry about using the FragmentManager and ChildFragmentManager. The single instance of the NavigationManagerFragment will easily handle the presenting and dismissing of Fragments as they are created and added or removed from the stack.
 
