@@ -22,6 +22,15 @@ import com.dmcapps.navigationfragment.helper.ViewUtil;
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
+    // TODO: Should this manager take care of making the home up enabled show?
+
+    // TODO: I think I need callbacks to the activity to tell it that the stack
+    // size is small and hence it needs to show the home button for the master view
+    // and also to tell the activity that a view has been pushed and hence to now show
+    // the home button anymore.
+    // TODO: Also need to send information about orientation changes so that it can adjust
+    // it's button showing.
+
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 

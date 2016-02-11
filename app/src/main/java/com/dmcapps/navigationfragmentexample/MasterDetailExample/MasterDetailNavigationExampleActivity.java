@@ -25,10 +25,6 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             mNavigationManagerFragmentTag = savedInstanceState.getString(STATE_NAV_TAG);
         }
-
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -43,6 +39,10 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         else {
             showFragment(mNavigationManagerFragmentTag);
         }
+
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeButtonEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
