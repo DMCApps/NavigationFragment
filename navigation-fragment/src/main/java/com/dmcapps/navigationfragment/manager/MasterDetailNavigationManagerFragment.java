@@ -20,13 +20,19 @@ import com.dmcapps.navigationfragment.helper.ViewUtil;
  */
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     // TODO: This should be abstract method. Would allow me to pull ALL methods into the parent.
-    private static final int ACTIONABLE_STACK_SIZE = 2;
+    private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
+    private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 
     private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
     private static final String ARG_DETAIL_FRAGMENT = "DETAIL_FRAGMENT";
 
     private INavigationFragment mMasterFragment;
     private INavigationFragment mDetailFragment;
+
+    private FrameLayout mMasterFrame;
+
+    private boolean mIsTablet;
+    private boolean mIsPortrait;
 
     public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
         MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
@@ -42,9 +48,17 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+
+        mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
+        mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
+
+        if (mIsTablet) {
+            mMasterFrame = (FrameLayout)view.findViewById(R.id.master_detail_container_master);
+        }
+
+        return view;
     }
 
     @Override
@@ -56,19 +70,29 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             getMasterFragment().setNavigationManager(this);
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-            childFragTrans.add(R.id.master_detail_container_master, (Fragment)getMasterFragment(), getMasterFragment().getNavTag());
-            addFragmentToStack(getMasterFragment());
+            if (mIsTablet) {
+                // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
+                childFragTrans.add(R.id.master_detail_container_master, (Fragment) getMasterFragment(), getMasterFragment().getNavTag());
+                addFragmentToStack(getMasterFragment());
+            }
+            else {
+                pushFragment(getMasterFragment());
+            }
             childFragTrans.commit();
 
-            pushFragment(getDetailFragment());
+            if (mIsTablet) {
+                pushFragment(getDetailFragment());
+            }
+
         }
         // Fragments are in the stack, resume at the top.
         else {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+            if (mIsTablet) {
+                childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+            }
             childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
             childFragTrans.commit();
         }
@@ -81,7 +105,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+        if (mIsTablet) {
+            childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+        }
         childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
         childFragTrans.commit();
     }
@@ -93,7 +119,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public int getMinStackSize() {
-        return ACTIONABLE_STACK_SIZE;
+        return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
     }
 
     private INavigationFragment getMasterFragment() {
