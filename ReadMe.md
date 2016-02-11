@@ -10,6 +10,10 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
 ##Change Log
 
+COMING SOON
+- Master-Detail animations for showing and hiding the master when in portrait
+- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed.
+
 0.0.2
 - Single Stack Fragment Manager improvements.
 - All Managers now use layout files instead of programmatically creating view
@@ -17,10 +21,6 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 - Master-Detail now shows and hides the Master based on orientation
 - Master-Detail now manages fragments appropriately for a phone having only a single stack which starts at the given Master in NewInstance call.
 - Added in Example for Tabs (see git for examples).
-
-COMING SOON
-- Master-Detail animations for showing and hiding the master when in portrait
-- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed.
 
 0.0.1
 - Implementation of SingleStackNavigationManagerFragment
@@ -136,12 +136,14 @@ We can see here that if the onBackPressed() of the SingleStackNavigationManagerF
 3. Tabs
 4. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
-## Uploading updates to jCenter and Maven:
+##Uploading updates to jCenter and Maven
+
 In Android Studio Terminal use:
 ```
 ./gradlew install
 ./gradlew bintrayUpload
 ```
+
 #License
 
 Copyright (c) 2016 DMCApps [MIT License](https://opensource.org/licenses/MIT)
