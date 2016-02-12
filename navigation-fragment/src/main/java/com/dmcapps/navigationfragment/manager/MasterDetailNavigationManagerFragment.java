@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.manager;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -159,6 +160,15 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         if (shouldMasterToggle()) {
             mMasterFrame.setVisibility(View.GONE);
         }
+    }
+
+    // Feel like this stuff shouldn't be exposed :S how do I manage this better.
+    public boolean isPortrait() {
+        return mIsPortrait;
+    }
+
+    public boolean isTablet() {
+        return mIsTablet;
     }
 
     private INavigationFragment getMasterFragment() {

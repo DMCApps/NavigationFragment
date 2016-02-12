@@ -1,6 +1,7 @@
 package com.dmcapps.navigationfragmentexample.MasterDetailExample;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +14,7 @@ import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 
 import java.util.UUID;
 
-public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
+public class MasterDetailNavigationExampleActivity extends AppCompatActivity implements NavigationManagerFragment.NavigationManagerFragmentListener {
     private static final String STATE_NAV_TAG = "NAV_TAG";
 
     private String mNavigationManagerFragmentTag;
@@ -40,9 +41,8 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
             showFragment(mNavigationManagerFragmentTag);
         }
 
-        ActionBar ab = getSupportActionBar();
-        ab.setHomeButtonEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
+        MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        manageHomeUpEnabled(manager);
     }
 
     @Override
@@ -76,9 +76,11 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
     private void addFragment(MasterDetailNavigationManagerFragment fragment)  {
         mNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
         ft.commit();
+        fm.executePendingTransactions();
     }
 
     private void showFragment(String tag)  {
@@ -88,6 +90,7 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.attach(fragment);
             ft.commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
     }
 
@@ -97,5 +100,25 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void didPresentFragment() {
+        MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        manageHomeUpEnabled(manager);
+        manager.hideMaster();
+    }
+
+    @Override
+    public void didDismissFragment() {
+        MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        manageHomeUpEnabled(manager);
+    }
+
+    private void manageHomeUpEnabled(MasterDetailNavigationManagerFragment manager) {
+        // TODO: Something better for the home button but I need to research how I can handle this better.
+        boolean showHomeEnabled = manager.isOnRootFragment() && manager.isTablet() && manager.isPortrait();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeEnabled);
+        getSupportActionBar().setHomeButtonEnabled(showHomeEnabled);
     }
 }

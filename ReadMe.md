@@ -12,7 +12,8 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
 COMING SOON
 - Master-Detail animations for showing and hiding the master when in portrait
-- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed.
+- Master-Detail replace root fragment with an animation and custom animations
+- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed. (Don't like how it's done right now).
 
 0.0.2
 - Single Stack Fragment Manager improvements.
@@ -43,7 +44,7 @@ The purpose of this manager is to handle a single stack flow of fragments on the
 
 Every Fragment in the Navigation Stack must extend NavigationFragment in order to properly be displayed and navigated. Every NavigationFragment will have access to the NavigationManagerFragment in order to push and pop Fragments from the stack. Further details below will explain how to use the functionality provided by this Manager.
 
-#How to use it
+#Implementation
 
 ##The Single Stack Fragment Manager
 
@@ -129,11 +130,166 @@ public void onBackPressed() {
 
 We can see here that if the onBackPressed() of the SingleStackNavigationManagerFragment returns false then there are no more fragments in the stack to go back from and hence we perform the default behaviour of the Activity.
 
+##The Master Detail Fragment Manager
+
+This fragment manager is used to manage the MasterDetail flow of Android. The Master Detail Fragment Manager can handle a single stack of Fragments for a Phone or a split view screen on a Tablet. The current implementation handles only a static master panel with the detail panel being changable and navigatable in a linear fashion.
+
+###Creating and Displaying the Manager
+
+In order to create an instance of the MasterDetailNavigationManagerFragment, the master and detail fragment must be created along side this and given to the manager for use. We do this with the use of the following:
+
+```
+MasterFragment masterFrag = MasterFragment.newInstance();
+SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
+MasterDetailNavigationManagerFragment manager = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
+```
+
+In the example above, we are creating the masterFragment as the first fragment that we would like to see on the stack for the phone, and the left panel on the tablet. We then create the first fragment in the detail stack as the second parameter to newInstance. NOTE: On the phone, only the master fragment will be used. The detail fragment will be ignored hence starting the single stack at the detail fragment.
+
+We have now created our MasterDetailNavigationManagerFragment and it is ready for use in managing a stack of fragment. Next we will need to present it to the screen in our activity as we would any other fragment.
+
+```
+mNavigationManagerFragmentTag = UUID.randomUUID().toString();
+
+FragmentManager fm = getSupportFragmentManager();
+FragmentTransaction ft = fm.beginTransaction();
+ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
+ft.commit();
+fm.executePendingTransactions();
+```
+
+Now we have displayed our Master-Detail pattern on the screen. From here we are ready to use the manager to perform navigation on the Detail Fragment. This will then show the Master-Detail in one of three ways depending on the current device configurations. 
+
+If the Device is a Tablet and is in Landscape it will show as a side-by-side view.
+If the Device is a Tablet and is in Portrait it will show the Detail in the main window with the Master hiden until toggled.
+If the Device is a Phone in Portrait or Landscape then only the master will be shown at this time.
+  
+###Presenting a Fragment
+
+In order to present a fragment we follow the same pattern as the SingleStackFragmentManager. From our Master or our detail we can present fragments using the following.
+
+```
+// In the MasterFragment in the MasterDetailExample.
+((Button)view.findViewById(R.id.master_btn_add)).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // Just for the example so that we can keep the count correct.
+        int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
+        SampleFragment sample = SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1);
+        MasterFragment.this.presentFragment(sample);
+    }
+});
+```
+
+While on a Tablet this will transition the Current detail fragment into a new fragment on the stack. This will then cause there to be 2 fragments currently on the Detail view stack. If we are on the Phone it will transition the current view as if it was a single stack fragment. This uses the default animation of slide out to left and slide in from right.
+
+If you would like to present the fragment with a custom animation then you should use the following method signature.
+
+```
+presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
+```
+
+We execute the pending transations so that we can freely grab the fragment immediately after this code is complete and get its current state to manage the Home button in the action bar for use in displaying the Master when the Tablet is in Portrait. We can use the following to manage the actions of showing and hiding the Master when we are in Portrait. Please see below for a method for managing the Action Bar as a possible solution for showing and hiding the Master while in Portrait.
+
+###Dismissing a Fragment
+
+In order to remove fragments from the detail flow we must follow a similar style as presenting. To dismiss the fragments we call the dismissFragment() on the NavigationFragment that we are in. We can use the default animations (slide out right and slide in left).
+
+```
+// Inside the Sample Fragment we use the dismissFragment() method.
+((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        SampleFragment.this.dismissFragment();
+    }
+});
+```
+
+OR if you would like to provide your own animations your can use the same as the above but use the method with the following signiture.
+
+``
+dismissFragment(int animationIn, int animationOut);
+``
+
+###Keeping the Back Button Functional
+
+In order to use the back button for dismissing the fragments, we will need to add in some custom code to allow the MasterDetailNavigationManagerFragment to perform its own back action. To do so we will need to get a hold of the MasterDetailNavigationManagerFragment in the onBackPressed and then execute the back action of the Fragment. To do so we use the saved String tag for the MasterDetailNavigationManagerFragment and retrieve it from the FragmentManager. 
+
+```
+// Inside the Main Activity we use the onBackPressed() method.
+@Override
+public void onBackPressed() {
+    MasterDetailNavigationManagerFragment fragment = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+    if (!fragment.onBackPressed()) {
+        super.onBackPressed();
+    }
+}
+```
+
+We can see here that if the onBackPressed() of the MasterDetailNavigationManagerFragment returns false then there are no more fragments in the stack to go back from and hence we perform the default behaviour of the Activity.
+
+As you can see. The Master-Detail navigation fragment works much the same as the Single Stack Manager. This simplefies the use of both, but allows us to display the stacks in a single manner or a side by side manner. 
+
+###Replacing the Root Detail Fragment Directly
+
+In the Master-Detail pattern we can replace the entire Detail stack by calling a single method. This allows us to update the Detail stack to the root without having to dismiss all the other views. In order to do this we simply call.
+
+```
+// Inside the MasterDetailExample Sample Fragment.
+((Button)view.findViewById(R.id.master_btn_replace)).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        MasterFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
+    }
+});
+```
+
+// TODO: Add secondary method for animations from the user. Maybe default a fade out and in?
+There is no animation attached to this currently. 
+
+###Managing the Showing and Hiding of the Master while on a Tablet in Portrait
+
+The Master-Detail manager automatically hides the Master controller when the device is a Tablet in Portrait. This allows us to maximize the screen realestate for the Detail and keep navigation hidden. The Master-Detail currently has methods exposed to help determine if buttons should be shown. In future versions we will improve and simplify this process. Currently in the Example we manage it using the following method
+
+```
+private void manageHomeUpEnabled(MasterDetailNavigationManagerFragment manager) {
+    // TODO: Something better for the home button but I need to research how I can handle this better.
+    boolean showHomeEnabled = manager.isOnRootFragment() && manager.isTablet() && manager.isPortrait();
+    getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeEnabled);
+    getSupportActionBar().setHomeButtonEnabled(showHomeEnabled);
+}
+```
+
+This is a method that we can call to manage the showing of the up enabled of the home button. We can get the Fragment from the FragmentManager in order to know it's current state to update the button showing or hiding. We should also listen for changes in the stack in order to show and hide the button as well. To do so we can attach to the NavigationManagerFragmentListener in the Activity and listen on the method signatures of 
+
+```
+public interface NavigationManagerFragmentListener {
+    void didPresentFragment();
+    void didDismissFragment();
+}
+```
+
+It is not required to override this listener but it is ultimately helpful to showing and hiding the up enabled in the following manner in the Activity.
+
+```
+@Override
+public void didPresentFragment() {
+    MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+    manageHomeUpEnabled(manager);
+    manager.hideMaster();
+}
+
+@Override
+public void didDismissFragment() {
+    MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+    manageHomeUpEnabled(manager);
+}
+```
+
 ##Future Plans and Examples
 
-1. Master-Detail
-2. Tabs
-3. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+1. Tabs Example Completion
+2. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
 ##Uploading updates to jCenter and Maven
 

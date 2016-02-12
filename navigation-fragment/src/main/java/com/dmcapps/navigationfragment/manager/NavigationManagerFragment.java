@@ -1,11 +1,14 @@
 package com.dmcapps.navigationfragment.manager;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
+import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 
 import java.util.Stack;
@@ -16,18 +19,40 @@ import java.util.Stack;
 public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
+    private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
     protected static final int NO_ANIMATION = 0;
 
     private Stack<String> mFragmentTags;
 
+    private NavigationManagerFragmentListener mListener;
+
+    public interface NavigationManagerFragmentListener {
+        void didPresentFragment();
+        void didDismissFragment();
+    }
+
     public NavigationManagerFragment() {
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            // This is not mandatory. Only if the user wants to listen for push and pop events.
+            mListener = (NavigationManagerFragmentListener)activity;
+        }
+        catch (ClassCastException classCastException) {
+            classCastException.printStackTrace();
+            Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for displaying buttons for Master-Detail implementation.");
+            // throw new ClassCastException("Activity does not implement NavigationManagerFragmentListener");
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -37,6 +62,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
      *
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
@@ -95,10 +121,15 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         addFragmentToStack(navFragment);
 
         childFragTrans.commit();
+
+        if (mListener != null) {
+            mListener.didPresentFragment();
+        }
     }
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right.
      */
     public void popFragment() {
         popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
@@ -140,9 +171,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
             childFragTrans.commit();
         }
         else {
-            // TODO: Nothing to dismiss ... Exception? Call activity onBackPressed()? what to do?
+            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
             // TODO: Dismiss root and self?
             getActivity().onBackPressed();
+        }
+
+        if (mListener != null) {
+            mListener.didDismissFragment();
         }
     }
 
@@ -181,9 +216,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         pushFragment(navFragment, NO_ANIMATION, NO_ANIMATION);
     }
 
-    public abstract int getPushStackFrameId();
+    public boolean isOnRootFragment() {
+        return getFragmentTags().size() == getMinStackSize();
+    }
 
-    public abstract int getMinStackSize();
+    protected abstract int getPushStackFrameId();
+
+    protected abstract int getMinStackSize();
 
     protected void clearNavigationStackToPosition(int stackPosition) {
         while (getFragmentTags().size() > stackPosition) {

@@ -1,6 +1,7 @@
 package com.dmcapps.navigationfragmentexample.SingleStackExample;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,7 +58,8 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
     private void addFragment(SingleStackNavigationManagerFragment fragment)  {
         mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         ft.add(android.R.id.content, fragment, mSingleStackNavigationManagerFragmentTag);
         ft.commit();
     }
