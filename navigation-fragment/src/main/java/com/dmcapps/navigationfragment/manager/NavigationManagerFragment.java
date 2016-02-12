@@ -14,6 +14,9 @@ import java.util.Stack;
  * A simple {@link Fragment} subclass.
  */
 public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+    // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
+    // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
+
     protected static final int NO_ANIMATION = 0;
 
     private Stack<String> mFragmentTags;

@@ -29,7 +29,7 @@ COMING SOON
 
 ##Adding the library to your android studio project
 
-In your app build.gradle file add the following to your dependencies
+In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```
 compile 'com.dmcapps:navigation-fragment:0.0.2'
@@ -132,9 +132,8 @@ We can see here that if the onBackPressed() of the SingleStackNavigationManagerF
 ##Future Plans and Examples
 
 1. Master-Detail
-2. Make into Maven project
-3. Tabs
-4. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+2. Tabs
+3. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
 ##Uploading updates to jCenter and Maven
 
