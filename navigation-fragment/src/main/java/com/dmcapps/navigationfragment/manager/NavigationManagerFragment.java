@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.R;
@@ -218,6 +220,34 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     public boolean isOnRootFragment() {
         return getFragmentTags().size() == getMinStackSize();
+    }
+
+    public void setTitle(String title) {
+        if (getActivity() != null) {
+            if (getActivity() instanceof AppCompatActivity) {
+                getActivity().setTitle(title);
+            }
+            else {
+                Log.e(TAG, "Unable to set title, is not ActionBarActivity or AppCompatActivity.");
+            }
+        }
+        else {
+            Log.e(TAG, "Unable to set title, Activity is null");
+        }
+    }
+
+    public void setTitle(int resId) {
+        if (getActivity() != null) {
+            if (getActivity() instanceof AppCompatActivity) {
+                getActivity().setTitle(resId);
+            }
+            else {
+                Log.e(TAG, "Unable to set title, is not ActionBarActivity or AppCompatActivity.");
+            }
+        }
+        else {
+            Log.e(TAG, "Unable to set title, Activity is null");
+        }
     }
 
     protected abstract int getPushStackFrameId();

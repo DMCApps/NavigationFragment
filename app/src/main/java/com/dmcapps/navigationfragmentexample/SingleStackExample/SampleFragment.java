@@ -63,6 +63,13 @@ public class SampleFragment extends NavigationFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        setTitle("Sample Fragment " + mFragCount);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

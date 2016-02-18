@@ -52,4 +52,11 @@ public class MasterFragment extends NavigationFragment {
 
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setTitle("Master Fragment");
+    }
 }

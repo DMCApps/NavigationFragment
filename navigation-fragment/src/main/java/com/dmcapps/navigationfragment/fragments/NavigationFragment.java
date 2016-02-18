@@ -57,4 +57,12 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
     public void replaceRootFragment(INavigationFragment navFragment) {
         mNavigationManager.replaceRootFragment(navFragment);
     }
+
+    public void setTitle(String title) {
+        mNavigationManager.setTitle(title);
+    }
+
+    public void setTitle(int resId) {
+        mNavigationManager.setTitle(resId);
+    }
 }
