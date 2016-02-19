@@ -4,16 +4,30 @@
 
 Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
+##Adding the library to your android studio project
+
+In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
+
+```
+compile 'com.dmcapps:navigation-fragment:0.0.3'
+```
+
 ##Current Version
 
-0.0.2
+0.0.3
 
 ##Change Log
 
 COMING SOON
-- Master-Detail animations for showing and hiding the master when in portrait
+- Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
-- Master-Detail better handling of orientation changes and pushes for the activity to adjust it's home button as needed. (Don't like how it's done right now).
+
+0.0.3
+- Title can now be updated from any `NavigationFragment` using setTitle. Activity must be an AppCompatActivity
+- Master detail now manages the button that is shown from the Manager
+- Manager can accept a title or resource id
+- Master Detail now manages the button for showing and hiding itself
+- Master Detail now animates to show and hide on button click (only alpha animation. Plans for more in the future)
 
 0.0.2
 - Single Stack Fragment Manager improvements.
@@ -27,14 +41,6 @@ COMING SOON
 - Implementation of SingleStackNavigationManagerFragment
 - Handles single stack of fragments pushing and popping in a linear manner.
 - Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
-
-##Adding the library to your android studio project
-
-In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
-
-```
-compile 'com.dmcapps:navigation-fragment:0.0.2'
-```
 
 ##Introduction
 
@@ -121,7 +127,7 @@ In order to use the back button for dismissing the fragments, we will need to ad
 // Inside the Main Activity we use the onBackPressed() method.
 @Override
 public void onBackPressed() {
-    SingleStackNavigationManagerFragment fragment = (SingleStackNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
+    NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
     if (!fragment.onBackPressed()) {
         super.onBackPressed();
     }
@@ -219,7 +225,7 @@ In order to use the back button for dismissing the fragments, we will need to ad
 // Inside the Main Activity we use the onBackPressed() method.
 @Override
 public void onBackPressed() {
-    MasterDetailNavigationManagerFragment fragment = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+    NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
     if (!fragment.onBackPressed()) {
         super.onBackPressed();
     }
@@ -249,42 +255,15 @@ There is no animation attached to this currently.
 
 ###Managing the Showing and Hiding of the Master while on a Tablet in Portrait
 
-The Master-Detail manager automatically hides the Master controller when the device is a Tablet in Portrait. This allows us to maximize the screen realestate for the Detail and keep navigation hidden. The Master-Detail currently has methods exposed to help determine if buttons should be shown. In future versions we will improve and simplify this process. Currently in the Example we manage it using the following method
+The MasterDetailManagerFragment now handles the showing and hiding of the master whil on a tablet in portrait. All you need to do is set the title of the button shown in the menu
+
 
 ```
-private void manageHomeUpEnabled(MasterDetailNavigationManagerFragment manager) {
-    // TODO: Something better for the home button but I need to research how I can handle this better.
-    boolean showHomeEnabled = manager.isOnRootFragment() && manager.isTablet() && manager.isPortrait();
-    getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeEnabled);
-    getSupportActionBar().setHomeButtonEnabled(showHomeEnabled);
-}
+setMasterToggleTitle(String title);
+setMasterToggleTitle(int resId);
 ```
 
-This is a method that we can call to manage the showing of the up enabled of the home button. We can get the Fragment from the FragmentManager in order to know it's current state to update the button showing or hiding. We should also listen for changes in the stack in order to show and hide the button as well. To do so we can attach to the NavigationManagerFragmentListener in the Activity and listen on the method signatures of 
-
-```
-public interface NavigationManagerFragmentListener {
-    void didPresentFragment();
-    void didDismissFragment();
-}
-```
-
-It is not required to override this listener but it is ultimately helpful to showing and hiding the up enabled in the following manner in the Activity.
-
-```
-@Override
-public void didPresentFragment() {
-    MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
-    manageHomeUpEnabled(manager);
-    manager.hideMaster();
-}
-
-@Override
-public void didDismissFragment() {
-    MasterDetailNavigationManagerFragment manager = (MasterDetailNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
-    manageHomeUpEnabled(manager);
-}
-```
+The manager will show and hide the button based on the current fragment that the user is on. It will use the custom title that you have supplied in order to show the item in the menu.
 
 ##Future Plans and Examples
 
@@ -296,6 +275,7 @@ public void didDismissFragment() {
 In Android Studio Terminal use:
 ```
 ./gradlew install
+
 ./gradlew bintrayUpload
 ```
 
