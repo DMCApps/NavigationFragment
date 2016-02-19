@@ -119,6 +119,17 @@ OR if you would like to provide your own animations your can use the same as the
 dismissFragment(int animationIn, int animationOut);
 ``
 
+###Setting the page title
+
+To set the page title on any of the NavigationManagerFragment just call either of the methods for:
+
+```
+setTitle(int resId);
+setTitle(String title);
+```
+
+This will update the title for the given page.
+
 ###Keeping the Back Button Functional
 
 In order to use the back button for dismissing the fragments, we will need to add in some custom code to allow the SingleStackNavigationManagerFragment to perform its own back action. To do so we will need to get a hold of the SingleStackNavigationManagerFragment in the onBackPressed and then execute the back action of the Fragment. To do so we use the saved String tag for the SingleStackNavigationManagerFragment and retrieve it from the FragmentManager. 
@@ -216,6 +227,17 @@ OR if you would like to provide your own animations your can use the same as the
 ``
 dismissFragment(int animationIn, int animationOut);
 ``
+
+###Setting the page title
+
+To set the page title on any of the NavigationManagerFragment just call either of the methods for:
+
+```
+setTitle(int resId);
+setTitle(String title);
+```
+
+This will update the title for the given page.
 
 ###Keeping the Back Button Functional
 
