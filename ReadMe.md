@@ -18,18 +18,27 @@ compile 'com.dmcapps:navigation-fragment:0.0.3'
 
 ##Change Log
 
-COMING SOON
+###TO BE DECIDED/FIGURE OUT
+- Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
+- Should the manager manage the back button (ie home up enabled).
+- Is there a way to make the on back pressed in the fragment vs the activity?
+- Add method for showing the back button based on the stack position
+- Is this possible? Move all onPause/Resume/attach/detach code to NavigationManagerFragment, then make abstract methods for just the attach/detach portions?
+
+
+###COMING SOON
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
+- Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
 
-0.0.3
+###0.0.3
 - Title can now be updated from any `NavigationFragment` using setTitle. Activity must be an AppCompatActivity
 - Master detail now manages the button that is shown from the Manager
 - Manager can accept a title or resource id
 - Master Detail now manages the button for showing and hiding itself
 - Master Detail now animates to show and hide on button click (only alpha animation. Plans for more in the future)
 
-0.0.2
+###0.0.2
 - Single Stack Fragment Manager improvements.
 - All Managers now use layout files instead of programmatically creating view
 - Improvements to the Master-Detail manager
@@ -37,7 +46,7 @@ COMING SOON
 - Master-Detail now manages fragments appropriately for a phone having only a single stack which starts at the given Master in NewInstance call.
 - Added in Example for Tabs (see git for examples).
 
-0.0.1
+###0.0.1
 - Implementation of SingleStackNavigationManagerFragment
 - Handles single stack of fragments pushing and popping in a linear manner.
 - Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
