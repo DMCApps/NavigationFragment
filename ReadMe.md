@@ -30,6 +30,10 @@ compile 'com.dmcapps:navigation-fragment:0.0.3'
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
+- Have all Navigation managers use isPortrait and isTablet methods.
+
+###0.0.3.1
+- Master Detail now reports orientation and device type
 
 ###0.0.3
 - Title can now be updated from any `NavigationFragment` using setTitle. Activity must be an AppCompatActivity

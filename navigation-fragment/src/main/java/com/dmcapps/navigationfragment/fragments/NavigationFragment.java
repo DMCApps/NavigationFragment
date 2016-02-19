@@ -87,4 +87,26 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
     }
+
+    @Override
+    public boolean isPortrait() {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            return ((MasterDetailNavigationManagerFragment)mNavigationManager).isPortrait();
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isTablet() {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            return ((MasterDetailNavigationManagerFragment)mNavigationManager).isTablet();
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
+            return false;
+        }
+    }
 }

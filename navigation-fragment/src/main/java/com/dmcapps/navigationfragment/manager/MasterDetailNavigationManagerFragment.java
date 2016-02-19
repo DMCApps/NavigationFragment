@@ -225,6 +225,16 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         return isOnRootFragment() && mIsPortrait && mIsTablet;
     }
 
+    // TODO: Move to super and have protected variables that both report to.
+    public boolean isPortrait() {
+        return mIsPortrait;
+    }
+
+    // TODO: Move to super and have protected variables that both report to.
+    public boolean isTablet() {
+        return mIsTablet;
+    }
+
     public void setMasterToggleTitle(String title) {
         mMasterToggleTitle = title;
         getActivity().invalidateOptionsMenu();

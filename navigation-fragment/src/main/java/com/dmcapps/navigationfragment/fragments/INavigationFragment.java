@@ -28,4 +28,7 @@ public interface INavigationFragment extends Serializable {
 
     void setMasterToggleTitle(String title);
     void setMasterToggleTitle(int resId);
+
+    boolean isPortrait();
+    boolean isTablet();
 }
