@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Navigation Fragment</string>
+    <string name="menu_master_detail_toggle_default">Master</string>
 </resources>

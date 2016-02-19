@@ -1,7 +1,9 @@
 package com.dmcapps.navigationfragment.fragments;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 
 import java.util.UUID;
@@ -64,5 +66,25 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
 
     public void setTitle(int resId) {
         mNavigationManager.setTitle(resId);
+    }
+
+    @Override
+    public void setMasterToggleTitle(String title) {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+        }
+    }
+
+    @Override
+    public void setMasterToggleTitle(int resId) {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+        }
     }
 }

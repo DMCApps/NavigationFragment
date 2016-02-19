@@ -22,4 +22,10 @@ public interface INavigationFragment extends Serializable {
     void dismissFragment(int animationIn, int animationOut);
 
     void replaceRootFragment(INavigationFragment navFragment);
+
+    void setTitle(String title);
+    void setTitle(int resId);
+
+    void setMasterToggleTitle(String title);
+    void setMasterToggleTitle(int resId);
 }

@@ -2,7 +2,9 @@ package com.dmcapps.navigationfragment.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 
 import java.util.UUID;
@@ -57,5 +59,33 @@ public class NavigationListFragment extends ListFragment implements INavigationF
 
     public void replaceRootFragment(INavigationFragment navFragment) {
         mNavigationManager.replaceRootFragment(navFragment);
+    }
+
+    public void setTitle(String title) {
+        mNavigationManager.setTitle(title);
+    }
+
+    public void setTitle(int resId) {
+        mNavigationManager.setTitle(resId);
+    }
+
+    @Override
+    public void setMasterToggleTitle(String title) {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+        }
+    }
+
+    @Override
+    public void setMasterToggleTitle(int resId) {
+        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
+            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
+        }
+        else {
+            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+        }
     }
 }

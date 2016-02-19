@@ -1,21 +1,23 @@
 package com.dmcapps.navigationfragment.manager;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.helper.DeviceUtil;
-import com.dmcapps.navigationfragment.helper.ViewUtil;
+import com.dmcapps.navigationfragment.helper.AnimationEndListener;
+import com.dmcapps.navigationfragment.helper.AnimationStartListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +31,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     // size is small and hence it needs to show the home button for the master view
     // and also to tell the activity that a view has been pushed and hence to now show
     // the home button anymore.
-    // TODO: Also need to send information about orientation changes so that it can adjust
-    // it's button showing.
 
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
@@ -46,6 +46,11 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private boolean mIsTablet;
     private boolean mIsPortrait;
 
+    private String mMasterToggleTitle;
+    private int mMasterToggleResId = -1;
+
+    MenuItem mMasterToggle;
+
     public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
         MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
         Bundle bundle = new Bundle();
@@ -57,6 +62,38 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     public MasterDetailNavigationManagerFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu_master_detail, menu);
+        mMasterToggle = menu.findItem(R.id.menu_master_detail_toggle_master);
+
+        mMasterToggle.setVisible(isOnRootAndMasterIsToggleable());
+
+        if (mMasterToggleResId > 0) {
+            mMasterToggle.setTitle(mMasterToggleResId);
+        }
+        else if (mMasterToggleTitle != null && !mMasterToggleTitle.equals("")) {
+            mMasterToggle.setTitle(mMasterToggleTitle);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_master_detail_toggle_master) {
+            toggleMaster();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -108,6 +145,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
             childFragTrans.commit();
         }
+
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -125,6 +164,12 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
+    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animationIn, int animationOut) {
+        hideMaster();
+        super.pushFragment(detachStackSize, containerId, navFragment, animationIn, animationOut);
+    }
+
+    @Override
     public int getPushStackFrameId() {
         return R.id.master_detail_container_detail;
     }
@@ -132,6 +177,10 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     @Override
     public int getMinStackSize() {
         return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
+    }
+
+    public boolean shouldMasterToggle() {
+        return isOnRootFragment() && mIsTablet && mIsPortrait;
     }
 
     public void toggleMaster() {
@@ -144,31 +193,46 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         }
     }
 
-    public boolean shouldMasterToggle() {
-        return mIsTablet && mIsPortrait;
-    }
-
-    // TODO: Animations
+    // TODO: Better animation handling. This doesn't allow for custom animations.
     public void showMaster() {
         if (shouldMasterToggle()) {
-            mMasterFrame.setVisibility(View.VISIBLE);
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+            anim.setAnimationListener(new AnimationStartListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    mMasterFrame.setVisibility(View.VISIBLE);
+                }
+            });
+            mMasterFrame.startAnimation(anim);
         }
     }
 
-    // TODO: Animations
+    // TODO: Better animation handling. This doesn't allow for custom animations.
     public void hideMaster() {
-        if (shouldMasterToggle()) {
-            mMasterFrame.setVisibility(View.GONE);
+        if (shouldMasterToggle() && mMasterFrame.getVisibility() == View.VISIBLE) {
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+            anim.setAnimationListener(new AnimationEndListener() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mMasterFrame.setVisibility(View.GONE);
+                }
+            });
+            mMasterFrame.startAnimation(anim);
         }
     }
 
-    // Feel like this stuff shouldn't be exposed :S how do I manage this better.
-    public boolean isPortrait() {
-        return mIsPortrait;
+    public boolean isOnRootAndMasterIsToggleable() {
+        return isOnRootFragment() && mIsPortrait && mIsTablet;
     }
 
-    public boolean isTablet() {
-        return mIsTablet;
+    public void setMasterToggleTitle(String title) {
+        mMasterToggleTitle = title;
+        getActivity().invalidateOptionsMenu();
+    }
+
+    public void setMasterToggleTitle(int resId) {
+        mMasterToggleResId = resId;
+        getActivity().invalidateOptionsMenu();
     }
 
     private INavigationFragment getMasterFragment() {

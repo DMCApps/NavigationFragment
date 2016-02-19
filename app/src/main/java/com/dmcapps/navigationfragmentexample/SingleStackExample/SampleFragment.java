@@ -67,6 +67,7 @@ public class SampleFragment extends NavigationFragment {
         super.onResume();
 
         setTitle("Sample Fragment " + mFragCount);
+        setMasterToggleTitle("Master");
     }
 
     @Override
