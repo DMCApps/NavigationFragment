@@ -74,7 +74,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+            Log.e("NavigationFragment", "setMasterToggleTitle(String) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
     }
 
@@ -84,7 +84,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+            Log.e("NavigationFragment", "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
     }
 
@@ -94,7 +94,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             return ((MasterDetailNavigationManagerFragment)mNavigationManager).isPortrait();
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
+            Log.e("NavigationFragment", "isPortrait() - Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
             return false;
         }
     }
@@ -105,7 +105,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             return ((MasterDetailNavigationManagerFragment)mNavigationManager).isTablet();
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
+            Log.e("NavigationFragment", "isTablet() - Navigation Manager must be a MasterDetailNavigationManagerFragment TODO Have all report this.");
             return false;
         }
     }
