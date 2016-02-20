@@ -3,6 +3,7 @@ package com.dmcapps.navigationfragment.manager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ import com.dmcapps.navigationfragment.helper.ViewUtil;
  * and no overlap will occur in the class.
  */
 public class SingleStackNavigationManagerFragment extends NavigationManagerFragment {
-    // TODO: This should be abstract method. Would allow me to pull ALL methods into the parent.
+    private static final String TAG = SingleStackNavigationManagerFragment.class.getSimpleName();
+
     private static final int ACTIONABLE_STACK_SIZE = 1;
 
     private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
@@ -41,7 +43,18 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+        View view = inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+
+        mIsPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
+                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
+        mIsTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
+                || view.findViewById(R.id.single_stack_tablet_layout_main_land) != null;
+
+
+        Log.d(TAG, "Reported Tablet: " + mIsTablet);
+        Log.d(TAG, "Reported Portrait: " + mIsPortrait);
+
+        return view;
     }
 
     @Override

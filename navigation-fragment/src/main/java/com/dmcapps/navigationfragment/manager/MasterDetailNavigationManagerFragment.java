@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,9 +43,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private INavigationFragment mDetailFragment;
 
     private FrameLayout mMasterFrame;
-
-    private boolean mIsTablet;
-    private boolean mIsPortrait;
 
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
@@ -106,6 +104,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         if (mIsTablet) {
             mMasterFrame = (FrameLayout)view.findViewById(R.id.master_detail_container_master);
         }
+
+        Log.d(TAG, "Reported Tablet: " + mIsTablet);
+        Log.d(TAG, "Reported Portrait: " + mIsPortrait);
 
         return view;
     }
@@ -223,16 +224,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     public boolean isOnRootAndMasterIsToggleable() {
         return isOnRootFragment() && mIsPortrait && mIsTablet;
-    }
-
-    // TODO: Move to super and have protected variables that both report to.
-    public boolean isPortrait() {
-        return mIsPortrait;
-    }
-
-    // TODO: Move to super and have protected variables that both report to.
-    public boolean isTablet() {
-        return mIsTablet;
     }
 
     public void setMasterToggleTitle(String title) {

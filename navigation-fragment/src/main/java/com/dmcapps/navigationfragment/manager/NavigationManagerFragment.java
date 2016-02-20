@@ -29,6 +29,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     private NavigationManagerFragmentListener mListener;
 
+    protected boolean mIsTablet;
+    protected boolean mIsPortrait;
+
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
         void didDismissFragment();
@@ -251,6 +254,14 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         else {
             Log.e(TAG, "Unable to set title, Activity is null");
         }
+    }
+
+    public boolean isPortrait() {
+        return mIsPortrait;
+    }
+
+    public boolean isTablet() {
+        return mIsTablet;
     }
 
     protected abstract int getPushStackFrameId();

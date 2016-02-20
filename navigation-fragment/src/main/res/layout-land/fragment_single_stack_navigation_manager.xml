@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/master_detail_layout_main_portrait"
+    android:id="@+id/single_stack_phone_layout_main_land"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/master_detail_container_detail"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/single_stack_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
