@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```
-compile 'com.dmcapps:navigation-fragment:0.0.3.2'
+compile 'com.dmcapps:navigation-fragment:0.0.4'
 ```
 
 ##Current Version
 
-0.0.3.2
+0.0.4
 
 ##Change Log
 
@@ -30,7 +30,9 @@ compile 'com.dmcapps:navigation-fragment:0.0.3.2'
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
-- Have all Navigation managers use isPortrait and isTablet methods.
+
+###0.0.4
+- All Navigation types now report their orientation and device type (isPortrait() and isTablet()).
 
 ###0.0.3.2
 - Fixed popping to root attaching fragments as it removed them causing issues with contexts being null
