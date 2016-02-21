@@ -25,11 +25,11 @@ compile 'com.dmcapps:navigation-fragment:0.0.4'
 - Add method for showing the back button based on the stack position
 - Is this possible? Move all onPause/Resume/attach/detach code to NavigationManagerFragment, then make abstract methods for just the attach/detach portions?
 
-
 ###COMING SOON
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
+- Ability to toggle action bar (ie show and hide)
 
 ###0.0.4
 - All Navigation types now report their orientation and device type (isPortrait() and isTablet()).
