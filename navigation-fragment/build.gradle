@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/DMCApps/NavigationFragment'
     gitUrl = 'https://github.com/DMCApps/NavigationFragment.git'
 
-    libraryVersion = '0.0.4.1'
+    libraryVersion = '0.0.4.2'
 
     developerId = 'dmcapps'
     developerName = 'Daniel Carmo'
@@ -33,8 +33,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 6
-        versionName "0.0.4.1"
+        versionCode 7
+        versionName "0.0.4.2"
     }
     buildTypes {
         release {
