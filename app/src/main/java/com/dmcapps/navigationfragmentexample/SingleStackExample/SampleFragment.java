@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragmentexample.SingleStackExample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 import java.io.Serializable;
 
@@ -146,6 +148,13 @@ public class SampleFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
+            }
+        });
+
+        ((Button)view.findViewById(R.id.sample_btn_launch_activity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getContext(), TestIntentLaunchingActivity.class));
             }
         });
 

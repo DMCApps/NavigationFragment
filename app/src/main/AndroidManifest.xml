@@ -23,6 +23,11 @@
             android:label="@string/title_activity_tab_navigation_example"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".TestIntentLaunchingActivity"
+            android:label="@string/title_activity_test_intent_launching"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

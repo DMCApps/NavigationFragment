@@ -13,12 +13,13 @@ import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements Serializable {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
