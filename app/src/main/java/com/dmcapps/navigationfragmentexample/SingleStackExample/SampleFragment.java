@@ -160,7 +160,7 @@ public class SampleFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
+                SampleFragment.this.presentFragment(SampleFragment.newInstance(mFragText, (mFragCount + 1)));
             }
         });
 

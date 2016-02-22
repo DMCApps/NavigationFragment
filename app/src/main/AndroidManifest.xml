@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dmcapps.navigationfragmentexample" >
+    package="com.dmcapps.navigationfragmentexample">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,18 +16,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".SingleStackExample.SingleStackNavigationExampleActivity" />
-        <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity" >
-        </activity>
+        <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity"></activity>
         <activity
-            android:name=".TabExample.TabNavigationExample"
+            android:name=".ViewPagerExample.ViewPagerNavigationExample"
             android:label="@string/title_activity_tab_navigation_example"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TestIntentLaunchingActivity"
             android:label="@string/title_activity_test_intent_launching"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".DrawerExample.NavigationDrawerExampleActivity"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

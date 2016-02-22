@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Navigation Fragment</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="non_navigation_fragment">This is a sample of a Fragment that is NOT a NavigationFragment</string>
 
     <string name="title_activity_example_single_navigation_stack">
         ExampleSingleNavigationStackActivity
@@ -13,4 +13,8 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_test_intent_launching">TestIntentLaunchingActivity</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

@@ -8,10 +8,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.dmcapps.navigationfragmentexample.R;
+import com.dmcapps.navigationfragmentexample.DrawerExample.NavigationDrawerExampleActivity;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
-import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExample;
+import com.dmcapps.navigationfragmentexample.ViewPagerExample.ViewPagerNavigationExample;
 
 import java.util.ArrayList;
 
@@ -29,8 +29,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         ArrayList<String> items = new ArrayList<String>();
         items.add("Single Stack Example");
         items.add("Master Detail Example");
-        items.add("Tab Example");
-        mList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items));
+        items.add("View Pager Example");
+        items.add("Navigation Drawer Example");
+        mList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
     }
 
@@ -45,7 +46,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             startActivity(intent);
         }
         else if (position == 2) {
-            Intent intent = new Intent(this, TabNavigationExample.class);
+            Intent intent = new Intent(this, ViewPagerNavigationExample.class);
+            startActivity(intent);
+        }
+        else if (position == 3) {
+            Intent intent = new Intent(this, NavigationDrawerExampleActivity.class);
             startActivity(intent);
         }
     }
