@@ -42,12 +42,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private INavigationFragment mMasterFragment;
     private INavigationFragment mDetailFragment;
 
-    private FrameLayout mMasterFrame;
-
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
-
-    MenuItem mMasterToggle;
 
     public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
         MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
@@ -74,15 +70,15 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.menu_master_detail, menu);
-        mMasterToggle = menu.findItem(R.id.menu_master_detail_toggle_master);
+        MenuItem masterToggle = menu.findItem(R.id.menu_master_detail_toggle_master);
 
-        mMasterToggle.setVisible(isOnRootAndMasterIsToggleable());
+        masterToggle.setVisible(isOnRootAndMasterIsToggleable());
 
         if (mMasterToggleResId > 0) {
-            mMasterToggle.setTitle(mMasterToggleResId);
+            masterToggle.setTitle(mMasterToggleResId);
         }
         else if (mMasterToggleTitle != null && !mMasterToggleTitle.equals("")) {
-            mMasterToggle.setTitle(mMasterToggleTitle);
+            masterToggle.setTitle(mMasterToggleTitle);
         }
     }
 
@@ -100,10 +96,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
         mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
         mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
-
-        if (mIsTablet) {
-            mMasterFrame = (FrameLayout)view.findViewById(R.id.master_detail_container_master);
-        }
 
         Log.d(TAG, "Reported Tablet: " + mIsTablet);
         Log.d(TAG, "Reported Portrait: " + mIsPortrait);
@@ -186,7 +178,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     public void toggleMaster() {
         if (shouldMasterToggle()) {
-            if (mMasterFrame.getVisibility() == View.GONE) {
+            final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+            if (masterFrame.getVisibility() == View.GONE) {
                 showMaster();
             } else {
                 hideMaster();
@@ -197,28 +190,32 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void showMaster() {
         if (shouldMasterToggle()) {
+            final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
             anim.setAnimationListener(new AnimationStartListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    mMasterFrame.setVisibility(View.VISIBLE);
+                    masterFrame.setVisibility(View.VISIBLE);
                 }
             });
-            mMasterFrame.startAnimation(anim);
+            masterFrame.startAnimation(anim);
         }
     }
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void hideMaster() {
-        if (shouldMasterToggle() && mMasterFrame.getVisibility() == View.VISIBLE) {
+        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+
+        if (shouldMasterToggle() && masterFrame.getVisibility() == View.VISIBLE) {
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
             anim.setAnimationListener(new AnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    mMasterFrame.setVisibility(View.GONE);
+                    masterFrame.setVisibility(View.GONE);
                 }
             });
-            mMasterFrame.startAnimation(anim);
+            masterFrame.startAnimation(anim);
         }
     }
 

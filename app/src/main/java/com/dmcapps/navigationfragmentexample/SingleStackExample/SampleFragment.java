@@ -40,7 +40,6 @@ public class SampleFragment extends NavigationFragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment SampleFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SampleFragment newInstance(String param1, int fragCount) {
         SampleFragment fragment = new SampleFragment();
         Bundle args = new Bundle();
