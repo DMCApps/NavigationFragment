@@ -31,6 +31,8 @@ public class SampleFragment extends NavigationFragment {
     private String mFragText;
     private SampleModel model;
 
+    EditText edit1;
+
     private int mFragCount;
 
     /**
@@ -79,7 +81,7 @@ public class SampleFragment extends NavigationFragment {
 
         ((TextView)view.findViewById(R.id.sample_tv_text)).setText((mFragCount + 1) + " " + mFragText);
 
-        EditText edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
+        edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
         edit1.setText(model.text1);
         edit1.addTextChangedListener(new TextWatcher() {
             @Override
