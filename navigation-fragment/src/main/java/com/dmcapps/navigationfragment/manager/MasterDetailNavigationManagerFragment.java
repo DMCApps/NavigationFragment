@@ -179,7 +179,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     public void toggleMaster() {
         if (shouldMasterToggle()) {
             final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
-            if (masterFrame.getVisibility() == View.GONE) {
+            if (masterFrame.getVisibility() == View.INVISIBLE) {
                 showMaster();
             } else {
                 hideMaster();
@@ -189,10 +189,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void showMaster() {
-        if (shouldMasterToggle()) {
-            final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
-
-            masterFrame.setVisibility(View.INVISIBLE);
+        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+        if (shouldMasterToggle() && masterFrame.getVisibility() == View.INVISIBLE) {
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
             anim.setAnimationListener(new AnimationStartListener() {
                 @Override
@@ -213,7 +211,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             anim.setAnimationListener(new AnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    masterFrame.setVisibility(View.GONE);
+                    masterFrame.setVisibility(View.INVISIBLE);
                 }
             });
             masterFrame.startAnimation(anim);
