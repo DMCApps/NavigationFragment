@@ -31,6 +31,9 @@ compile 'com.dmcapps:navigation-fragment:0.0.4'
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
 - Ability to toggle action bar (ie show and hide)
 
+###0.0.4.1
+- Fixed Crash when launching Activity
+
 ###0.0.4
 - All Navigation types now report their orientation and device type (isPortrait() and isTablet()).
 
