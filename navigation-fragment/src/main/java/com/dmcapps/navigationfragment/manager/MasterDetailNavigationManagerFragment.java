@@ -191,13 +191,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     public void showMaster() {
         final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
         if (shouldMasterToggle() && masterFrame.getVisibility() == View.INVISIBLE) {
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            anim.setAnimationListener(new AnimationStartListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    masterFrame.setVisibility(View.VISIBLE);
-                }
-            });
+            masterFrame.setVisibility(View.VISIBLE);
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_from_left);
             masterFrame.startAnimation(anim);
         }
     }
@@ -207,7 +202,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
 
         if (shouldMasterToggle() && masterFrame.getVisibility() == View.VISIBLE) {
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_to_left);
             anim.setAnimationListener(new AnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
