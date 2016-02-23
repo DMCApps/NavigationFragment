@@ -30,6 +30,11 @@
         </activity>
         <activity android:name=".ListExample.ListExampleActivity" >
         </activity>
+        <activity
+            android:name=".DrawerExample.NavigationDrawerExampleActivity"
+            android:label="@string/title_activity_navigation_drawer_example"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
