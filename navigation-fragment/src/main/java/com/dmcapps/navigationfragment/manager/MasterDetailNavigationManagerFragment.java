@@ -1,9 +1,11 @@
 package com.dmcapps.navigationfragment.manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,7 @@ import com.dmcapps.navigationfragment.helper.AnimationStartListener;
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
@@ -35,33 +38,23 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 
-    private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
-    private static final String ARG_DETAIL_FRAGMENT = "DETAIL_FRAGMENT";
-
     private INavigationFragment mMasterFragment;
     private INavigationFragment mDetailFragment;
-
-    private FrameLayout mMasterFrame;
-
-    private boolean mIsTablet;
-    private boolean mIsPortrait;
 
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
 
-    MenuItem mMasterToggle;
-
     public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
-        MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_MASTER_FRAGMENT, masterFragment);
-        bundle.putSerializable(ARG_DETAIL_FRAGMENT, detailFragment);
-        managerFragment.setArguments(bundle);
-        return managerFragment;
+        return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
     }
 
-    public MasterDetailNavigationManagerFragment() {
-        // Required empty public constructor
+    // NOTE I need to pass in the fragments to be used by the constructor.
+    // If I serialize them into the bundle then whenever the application is backgrounded
+    // or an activity is launched, the application will crash with NotSerializableException
+    // if any of the Fragments in the stack have properties that are no Serializable.
+    public MasterDetailNavigationManagerFragment(INavigationFragment masterFragment, INavigationFragment detailFragment) {
+        mMasterFragment = masterFragment;
+        mDetailFragment = detailFragment;
     }
 
     @Override
@@ -76,15 +69,15 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.menu_master_detail, menu);
-        mMasterToggle = menu.findItem(R.id.menu_master_detail_toggle_master);
+        MenuItem masterToggle = menu.findItem(R.id.menu_master_detail_toggle_master);
 
-        mMasterToggle.setVisible(isOnRootAndMasterIsToggleable());
+        masterToggle.setVisible(isOnRootAndMasterIsToggleable());
 
         if (mMasterToggleResId > 0) {
-            mMasterToggle.setTitle(mMasterToggleResId);
+            masterToggle.setTitle(mMasterToggleResId);
         }
         else if (mMasterToggleTitle != null && !mMasterToggleTitle.equals("")) {
-            mMasterToggle.setTitle(mMasterToggleTitle);
+            masterToggle.setTitle(mMasterToggleTitle);
         }
     }
 
@@ -102,10 +95,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
         mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
         mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
-
-        if (mIsTablet) {
-            mMasterFrame = (FrameLayout)view.findViewById(R.id.master_detail_container_master);
-        }
 
         return view;
     }
@@ -185,7 +174,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     public void toggleMaster() {
         if (shouldMasterToggle()) {
-            if (mMasterFrame.getVisibility() == View.GONE) {
+            final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+            if (masterFrame.getVisibility() == View.INVISIBLE) {
                 showMaster();
             } else {
                 hideMaster();
@@ -195,29 +185,27 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void showMaster() {
-        if (shouldMasterToggle()) {
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            anim.setAnimationListener(new AnimationStartListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    mMasterFrame.setVisibility(View.VISIBLE);
-                }
-            });
-            mMasterFrame.startAnimation(anim);
+        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+        if (shouldMasterToggle() && masterFrame.getVisibility() == View.INVISIBLE) {
+            masterFrame.setVisibility(View.VISIBLE);
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_from_left);
+            masterFrame.startAnimation(anim);
         }
     }
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void hideMaster() {
-        if (shouldMasterToggle() && mMasterFrame.getVisibility() == View.VISIBLE) {
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+
+        if (shouldMasterToggle() && masterFrame.getVisibility() == View.VISIBLE) {
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_to_left);
             anim.setAnimationListener(new AnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    mMasterFrame.setVisibility(View.GONE);
+                    masterFrame.setVisibility(View.INVISIBLE);
                 }
             });
-            mMasterFrame.startAnimation(anim);
+            masterFrame.startAnimation(anim);
         }
     }
 
@@ -237,14 +225,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     private INavigationFragment getMasterFragment() {
         if (mMasterFragment == null) {
-            mMasterFragment = (INavigationFragment)getArguments().getSerializable(ARG_MASTER_FRAGMENT);
+            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
         }
         return mMasterFragment;
     }
 
     private INavigationFragment getDetailFragment() {
         if (mDetailFragment == null) {
-            mDetailFragment = (INavigationFragment)getArguments().getSerializable(ARG_DETAIL_FRAGMENT);
+            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
         }
         return mDetailFragment;
     }

@@ -13,12 +13,13 @@ import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements Serializable {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
@@ -28,6 +29,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     private Stack<String> mFragmentTags;
 
     private NavigationManagerFragmentListener mListener;
+
+    protected boolean mIsTablet;
+    protected boolean mIsPortrait;
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -147,7 +151,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
     public void popFragment(int animationIn, int animationOut) {
-        popFragment(getMinStackSize(), animationIn, animationOut);
+        popFragment(getMinStackSize(), true, animationIn, animationOut);
     }
 
     /**
@@ -157,17 +161,20 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      stackSize -> The stack size that the fragment should handle
      * @param
+     *      shouldAttach -> After completing the pop should the previous fragment be attached
+     * @param
      *      animationIn -> The animation of the fragment about to be shown.
      * @param
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragment(int stackSize, int animationIn, int animationOut) {
+    protected void popFragment(int stackSize, boolean shouldAttach, int animationIn, int animationOut) {
         if (getFragmentTags().size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animationIn, animationOut);
             childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
-            if (getFragmentTags().size() > 0) {
+            // TODO: Clean up this logic
+            if ((shouldAttach || stackSize == getFragmentTags().size()) && getFragmentTags().size() > 0) {
                 childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
             }
             childFragTrans.commit();
@@ -210,11 +217,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(getMinStackSize());
+        clearNavigationStackToPosition(getMinStackSize(), false);
     }
 
     public void replaceRootFragment(INavigationFragment navFragment) {
-        clearNavigationStackToPosition(getMinStackSize() - 1);
+        clearNavigationStackToPosition(getMinStackSize() - 1, false);
         pushFragment(navFragment, NO_ANIMATION, NO_ANIMATION);
     }
 
@@ -250,13 +257,21 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
+    public boolean isPortrait() {
+        return mIsPortrait;
+    }
+
+    public boolean isTablet() {
+        return mIsTablet;
+    }
+
     protected abstract int getPushStackFrameId();
 
     protected abstract int getMinStackSize();
 
-    protected void clearNavigationStackToPosition(int stackPosition) {
+    protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
         while (getFragmentTags().size() > stackPosition) {
-            popFragment(stackPosition, NO_ANIMATION, NO_ANIMATION);
+            popFragment(stackPosition, shouldAttach, NO_ANIMATION, NO_ANIMATION);
         }
     }
 

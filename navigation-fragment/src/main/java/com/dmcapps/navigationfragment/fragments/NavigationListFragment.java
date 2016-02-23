@@ -88,4 +88,14 @@ public class NavigationListFragment extends ListFragment implements INavigationF
             Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
     }
+
+    @Override
+    public boolean isPortrait() {
+        return mNavigationManager.isPortrait();
+    }
+
+    @Override
+    public boolean isTablet() {
+        return mNavigationManager.isTablet();
+    }
 }

@@ -8,10 +8,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
-import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExample;
+import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExampleActivity;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             startActivity(intent);
         }
         else if (position == 2) {
-            Intent intent = new Intent(this, TabNavigationExample.class);
+            Intent intent = new Intent(this, TabNavigationExampleActivity.class);
             startActivity(intent);
         }
     }

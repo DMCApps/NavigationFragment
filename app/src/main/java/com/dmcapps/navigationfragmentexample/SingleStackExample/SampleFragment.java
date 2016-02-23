@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragmentexample.SingleStackExample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 import java.io.Serializable;
 
@@ -29,6 +31,8 @@ public class SampleFragment extends NavigationFragment {
     private String mFragText;
     private SampleModel model;
 
+    EditText edit1;
+
     private int mFragCount;
 
     /**
@@ -38,7 +42,6 @@ public class SampleFragment extends NavigationFragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment SampleFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SampleFragment newInstance(String param1, int fragCount) {
         SampleFragment fragment = new SampleFragment();
         Bundle args = new Bundle();
@@ -78,7 +81,7 @@ public class SampleFragment extends NavigationFragment {
 
         ((TextView)view.findViewById(R.id.sample_tv_text)).setText((mFragCount + 1) + " " + mFragText);
 
-        EditText edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
+        edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
         edit1.setText(model.text1);
         edit1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -146,6 +149,13 @@ public class SampleFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
+            }
+        });
+
+        ((Button)view.findViewById(R.id.sample_btn_launch_activity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getContext(), TestIntentLaunchingActivity.class));
             }
         });
 

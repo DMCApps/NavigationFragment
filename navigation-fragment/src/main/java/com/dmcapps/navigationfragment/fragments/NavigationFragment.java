@@ -74,7 +74,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+            Log.e("NavigationFragment", "setMasterToggleTitle(String) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
     }
 
@@ -84,7 +84,17 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
         }
         else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
+            Log.e("NavigationFragment", "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
         }
+    }
+
+    @Override
+    public boolean isPortrait() {
+        return mNavigationManager.isPortrait();
+    }
+
+    @Override
+    public boolean isTablet() {
+        return mNavigationManager.isTablet();
     }
 }

@@ -9,38 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```
-compile 'com.dmcapps:navigation-fragment:0.0.3'
+compile 'com.dmcapps:navigation-fragment:0.0.5'
 ```
 
 ##Current Version
 
-0.0.3
-
-##Change Log
-
-COMING SOON
-- Master-Detail additional animations for showing and hiding the master when in portrait
-- Master-Detail replace root fragment with an animation and custom animations
-
-0.0.3
-- Title can now be updated from any `NavigationFragment` using setTitle. Activity must be an AppCompatActivity
-- Master detail now manages the button that is shown from the Manager
-- Manager can accept a title or resource id
-- Master Detail now manages the button for showing and hiding itself
-- Master Detail now animates to show and hide on button click (only alpha animation. Plans for more in the future)
-
-0.0.2
-- Single Stack Fragment Manager improvements.
-- All Managers now use layout files instead of programmatically creating view
-- Improvements to the Master-Detail manager
-- Master-Detail now shows and hides the Master based on orientation
-- Master-Detail now manages fragments appropriately for a phone having only a single stack which starts at the given Master in NewInstance call.
-- Added in Example for Tabs (see git for examples).
-
-0.0.1
-- Implementation of SingleStackNavigationManagerFragment
-- Handles single stack of fragments pushing and popping in a linear manner.
-- Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
+0.0.5
 
 ##Introduction
 
@@ -286,6 +260,65 @@ setMasterToggleTitle(int resId);
 ```
 
 The manager will show and hide the button based on the current fragment that the user is on. It will use the custom title that you have supplied in order to show the item in the menu.
+
+##Change Log
+
+###TO BE DECIDED/FIGURE OUT
+- Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
+- Should the manager manage the back button (ie home up enabled).
+- Is there a way to make the on back pressed in the fragment vs the activity?
+- Add method for showing the back button based on the stack position
+- Is this possible? Move all onPause/Resume/attach/detach code to NavigationManagerFragment, then make abstract methods for just the attach/detach portions?
+
+###COMING SOON
+- Master-Detail additional animations for showing and hiding the master when in portrait
+- Master-Detail replace root fragment with an animation and custom animations
+- Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
+- Ability to toggle action bar (ie show and hide)
+
+###0.0.5
+- Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
+
+###0.0.4.4
+- Master Detail Animation updated to slide in/out when collapsed
+
+###0.0.4.3
+- Master Detail Animation toggle now works always.
+
+###0.0.4.2
+- Master Detail and Single Stack managers are now fully Serializable.
+
+###0.0.4.1
+- Fixed Crash when launching Activity
+
+###0.0.4
+- All Navigation types now report their orientation and device type (isPortrait() and isTablet()).
+
+###0.0.3.2
+- Fixed popping to root attaching fragments as it removed them causing issues with contexts being null
+
+###0.0.3.1
+- Master Detail now reports orientation and device type
+
+###0.0.3
+- Title can now be updated from any `NavigationFragment` using setTitle. Activity must be an AppCompatActivity
+- Master detail now manages the button that is shown from the Manager
+- Manager can accept a title or resource id
+- Master Detail now manages the button for showing and hiding itself
+- Master Detail now animates to show and hide on button click (only alpha animation. Plans for more in the future)
+
+###0.0.2
+- Single Stack Fragment Manager improvements.
+- All Managers now use layout files instead of programmatically creating view
+- Improvements to the Master-Detail manager
+- Master-Detail now shows and hides the Master based on orientation
+- Master-Detail now manages fragments appropriately for a phone having only a single stack which starts at the given Master in NewInstance call.
+- Added in Example for Tabs (see git for examples).
+
+###0.0.1
+- Implementation of SingleStackNavigationManagerFragment
+- Handles single stack of fragments pushing and popping in a linear manner.
+- Partial implementation of Master-Detail Manager. DOES NOT SUPPORT ORIENTATION CHANGES OR PHONES
 
 ##Future Plans and Examples
 

@@ -25,7 +25,7 @@ import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 
-public class TabNavigationExample extends AppCompatActivity {
+public class TabNavigationExampleActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
