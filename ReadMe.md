@@ -14,7 +14,7 @@ compile 'com.dmcapps:navigation-fragment:0.0.5'
 
 ##Current Version
 
-0.0.5 [Change Log][]
+0.0.5
 
 ##Introduction
 
