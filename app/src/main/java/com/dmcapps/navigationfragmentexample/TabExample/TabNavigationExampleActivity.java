@@ -79,7 +79,7 @@ public class TabNavigationExampleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavigationManagerFragment page = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+        NavigationManagerFragment page = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
         if (!page.onBackPressed()) {
             super.onBackPressed();
         }
