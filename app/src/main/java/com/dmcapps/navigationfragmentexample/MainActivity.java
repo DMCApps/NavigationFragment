@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.dmcapps.navigationfragmentexample.ListExample.ListExampleActivity;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExampleActivity;
@@ -25,27 +26,32 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         mList = (ListView)findViewById(android.R.id.list);
 
-        ArrayList<String> items = new ArrayList<String>();
+        ArrayList<String> items = new ArrayList<>();
         items.add("Single Stack Example");
         items.add("Master Detail Example");
         items.add("Tab Example");
-        mList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items));
+        items.add("List Example");
+        mList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = null;
+
         if (position == 0) {
-            Intent intent = new Intent(this, SingleStackNavigationExampleActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, SingleStackNavigationExampleActivity.class);
         }
         else if (position == 1) {
-            Intent intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
         }
         else if (position == 2) {
-            Intent intent = new Intent(this, TabNavigationExampleActivity.class);
-            startActivity(intent);
+            intent = new Intent(this, TabNavigationExampleActivity.class);
         }
+        else if (position == 3) {
+            intent = new Intent(this, ListExampleActivity.class);
+        }
+
+        startActivity(intent);
     }
 }
