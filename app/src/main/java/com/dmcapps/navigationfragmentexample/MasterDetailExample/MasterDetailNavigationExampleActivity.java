@@ -32,9 +32,15 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         super.onResume();
 
         if (mNavigationManagerFragmentTag == null) {
+            MasterDetailNavigationManagerFragment navFrag = MasterDetailNavigationManagerFragment.newInstance();
+
             MasterFragment masterFrag = MasterFragment.newInstance();
+            navFrag.setMasterFragment(masterFrag);
+
             SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
-            addFragment(MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag));
+            navFrag.setDetailFragment(detailFrag);
+
+            addFragment(navFrag);
         }
         else {
             showFragment(mNavigationManagerFragmentTag);

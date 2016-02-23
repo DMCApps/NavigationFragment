@@ -36,22 +36,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 
-    private static final String ARG_MASTER_FRAGMENT = "MASTER_FRAGMENT";
-    private static final String ARG_DETAIL_FRAGMENT = "DETAIL_FRAGMENT";
-
     private INavigationFragment mMasterFragment;
     private INavigationFragment mDetailFragment;
 
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
 
-    public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
-        MasterDetailNavigationManagerFragment managerFragment = new MasterDetailNavigationManagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_MASTER_FRAGMENT, masterFragment);
-        bundle.putSerializable(ARG_DETAIL_FRAGMENT, detailFragment);
-        managerFragment.setArguments(bundle);
-        return managerFragment;
+    public static MasterDetailNavigationManagerFragment newInstance() {
+        return new MasterDetailNavigationManagerFragment();
     }
 
     public MasterDetailNavigationManagerFragment() {
@@ -96,9 +88,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
         mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
         mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
-
-        Log.d(TAG, "Reported Tablet: " + mIsTablet);
-        Log.d(TAG, "Reported Portrait: " + mIsPortrait);
 
         return view;
     }
@@ -172,6 +161,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
     }
 
+    public void setMasterFragment(INavigationFragment masterFragment) {
+        mMasterFragment = masterFragment;
+    }
+
+    public void setDetailFragment(INavigationFragment detailFragment) {
+        mDetailFragment = detailFragment;
+    }
+
     public boolean shouldMasterToggle() {
         return isOnRootFragment() && mIsTablet && mIsPortrait;
     }
@@ -229,14 +226,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     private INavigationFragment getMasterFragment() {
         if (mMasterFragment == null) {
-            mMasterFragment = (INavigationFragment)getArguments().getSerializable(ARG_MASTER_FRAGMENT);
+            throw new RuntimeException("You must call setMasterFragment before attaching the Manager to a Fragment Transaction");
         }
         return mMasterFragment;
     }
 
     private INavigationFragment getDetailFragment() {
         if (mDetailFragment == null) {
-            mDetailFragment = (INavigationFragment)getArguments().getSerializable(ARG_DETAIL_FRAGMENT);
+            throw new RuntimeException("You must call setDetailFragment before attaching the Manager to a Fragment Transaction");
         }
         return mDetailFragment;
     }

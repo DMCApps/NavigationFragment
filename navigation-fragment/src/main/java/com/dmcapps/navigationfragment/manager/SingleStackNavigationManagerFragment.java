@@ -26,16 +26,10 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private static final int ACTIONABLE_STACK_SIZE = 1;
 
-    private static final String ARG_ROOT_FRAGMENT = "ROOT_FRAGMENT";
-
     private INavigationFragment mRootFragment;
 
-    public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
-        SingleStackNavigationManagerFragment managerFragment = new SingleStackNavigationManagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARG_ROOT_FRAGMENT, rootFragment);
-        managerFragment.setArguments(bundle);
-        return managerFragment;
+    public static SingleStackNavigationManagerFragment newInstance() {
+        return new SingleStackNavigationManagerFragment();
     }
 
     public SingleStackNavigationManagerFragment() {
@@ -49,10 +43,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
                 || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
         mIsTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
                 || view.findViewById(R.id.single_stack_tablet_layout_main_land) != null;
-
-
-        Log.d(TAG, "Reported Tablet: " + mIsTablet);
-        Log.d(TAG, "Reported Portrait: " + mIsPortrait);
 
         return view;
     }
@@ -86,6 +76,10 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         childFragTrans.commit();
     }
 
+    public void setRootFragment(INavigationFragment rootFragment) {
+        mRootFragment = rootFragment;
+    }
+
     @Override
     public int getMinStackSize() {
         return ACTIONABLE_STACK_SIZE;
@@ -98,8 +92,9 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private INavigationFragment getRootFragment() {
         if (mRootFragment == null) {
-            mRootFragment = (INavigationFragment)getArguments().getSerializable(ARG_ROOT_FRAGMENT);
+            throw new RuntimeException("You must call setRootFragment before attaching the Manager to a Fragment Transaction");
         }
+
         return mRootFragment;
     }
 }

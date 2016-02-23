@@ -31,7 +31,9 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
         super.onResume();
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
-            addFragment(SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0)));
+            SingleStackNavigationManagerFragment navFrag = SingleStackNavigationManagerFragment.newInstance();
+            navFrag.setRootFragment(SampleFragment.newInstance("Root Fragment in the Stack", 0));
+            addFragment(navFrag);
         }
         else {
             showFragment(mSingleStackNavigationManagerFragmentTag);
