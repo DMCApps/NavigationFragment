@@ -1,6 +1,5 @@
-package com.dmcapps.navigationfragmentexample.ListExample;
+package com.dmcapps.navigationfragmentexample.NavigationFragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dmcapps.navigationfragment.fragments.NavigationListFragment;
-import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 /**

@@ -1,7 +1,5 @@
-package com.dmcapps.navigationfragmentexample.TabExample;
+package com.dmcapps.navigationfragmentexample.ViewPagerExample;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,22 +9,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
-import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 
-public class TabNavigationExampleActivity extends AppCompatActivity {
+public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

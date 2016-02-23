@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.MasterDetailExample;
+package com.dmcapps.navigationfragmentexample.NavigationFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 
 public class MasterFragment extends NavigationFragment {

@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.dmcapps.navigationfragmentexample.ListExample.ListExampleActivity;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
-import com.dmcapps.navigationfragmentexample.TabExample.TabNavigationExampleActivity;
+import com.dmcapps.navigationfragmentexample.ViewPagerExample.ViewPagerNavigationExampleActivity;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
         }
         else if (position == 2) {
-            intent = new Intent(this, TabNavigationExampleActivity.class);
+            intent = new Intent(this, ViewPagerNavigationExampleActivity.class);
         }
         else if (position == 3) {
             intent = new Intent(this, ListExampleActivity.class);

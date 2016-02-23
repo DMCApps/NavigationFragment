@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.SingleStackExample;
+package com.dmcapps.navigationfragmentexample.NavigationFragments;
 
 import android.content.Intent;
 import android.os.Bundle;

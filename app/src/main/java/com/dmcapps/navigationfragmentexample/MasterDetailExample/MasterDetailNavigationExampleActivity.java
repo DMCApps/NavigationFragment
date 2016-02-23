@@ -9,7 +9,8 @@ import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 
 import java.util.UUID;
 
