@@ -14,7 +14,7 @@ compile 'com.dmcapps:navigation-fragment:0.0.5'
 
 ##Current Version
 
-0.0.5 [Change Log](change_log)
+0.0.5 [Change Log][]
 
 ##Introduction
 
@@ -261,7 +261,7 @@ setMasterToggleTitle(int resId);
 
 The manager will show and hide the button based on the current fragment that the user is on. It will use the custom title that you have supplied in order to show the item in the menu.
 
-##<a name="change_log"></a>Change Log
+##Change Log
 
 ###TO BE DECIDED/FIGURE OUT
 - Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
