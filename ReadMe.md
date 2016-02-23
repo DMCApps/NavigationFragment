@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```
-compile 'com.dmcapps:navigation-fragment:0.0.4.4'
+compile 'com.dmcapps:navigation-fragment:0.0.5'
 ```
 
 ##Current Version
 
-0.0.4.4
+0.0.5
 
 ##Change Log
 
@@ -30,6 +30,9 @@ compile 'com.dmcapps:navigation-fragment:0.0.4.4'
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
 - Ability to toggle action bar (ie show and hide)
+
+###0.0.5
+- Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
 
 ###0.0.4.4
 - Master Detail Animation updated to slide in/out when collapsed

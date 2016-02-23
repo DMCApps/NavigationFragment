@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,6 +24,7 @@ import com.dmcapps.navigationfragment.helper.AnimationStartListener;
 /**
  * A simple {@link Fragment} subclass.
  */
+@SuppressLint("ValidFragment")
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
@@ -42,12 +44,17 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
 
-    public static MasterDetailNavigationManagerFragment newInstance() {
-        return new MasterDetailNavigationManagerFragment();
+    public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
+        return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
     }
 
-    public MasterDetailNavigationManagerFragment() {
-        // Required empty public constructor
+    // NOTE I need to pass in the fragments to be used by the constructor.
+    // If I serialize them into the bundle then whenever the application is backgrounded
+    // or an activity is launched, the application will crash with NotSerializableException
+    // if any of the Fragments in the stack have properties that are no Serializable.
+    public MasterDetailNavigationManagerFragment(INavigationFragment masterFragment, INavigationFragment detailFragment) {
+        mMasterFragment = masterFragment;
+        mDetailFragment = detailFragment;
     }
 
     @Override
@@ -161,14 +168,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
     }
 
-    public void setMasterFragment(INavigationFragment masterFragment) {
-        mMasterFragment = masterFragment;
-    }
-
-    public void setDetailFragment(INavigationFragment detailFragment) {
-        mDetailFragment = detailFragment;
-    }
-
     public boolean shouldMasterToggle() {
         return isOnRootFragment() && mIsTablet && mIsPortrait;
     }
@@ -226,14 +225,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     private INavigationFragment getMasterFragment() {
         if (mMasterFragment == null) {
-            throw new RuntimeException("You must call setMasterFragment before attaching the Manager to a Fragment Transaction");
+            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
         }
         return mMasterFragment;
     }
 
     private INavigationFragment getDetailFragment() {
         if (mDetailFragment == null) {
-            throw new RuntimeException("You must call setDetailFragment before attaching the Manager to a Fragment Transaction");
+            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
         }
         return mDetailFragment;
     }

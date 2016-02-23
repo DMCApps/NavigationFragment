@@ -25,7 +25,7 @@ import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SampleFragment;
 
-public class TabNavigationExample extends AppCompatActivity {
+public class TabNavigationExampleActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -91,26 +91,14 @@ public class TabNavigationExample extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
-                case 0: {
-                    SingleStackNavigationManagerFragment navFrag = SingleStackNavigationManagerFragment.newInstance();
-                    navFrag.setRootFragment(SampleFragment.newInstance("Start Frag 1", 0));
-                    return navFrag;
-                }
-                case 1: {
-                    MasterDetailNavigationManagerFragment navFrag = MasterDetailNavigationManagerFragment.newInstance();
-
+                case 0:
+                    return SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 1", 0));
+                case 1:
                     MasterFragment masterFrag = MasterFragment.newInstance();
-                    navFrag.setMasterFragment(masterFrag);
-
                     SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
-                    navFrag.setDetailFragment(detailFrag);
-                    return navFrag;
-                }
-                case 2: {
-                    SingleStackNavigationManagerFragment navFrag = SingleStackNavigationManagerFragment.newInstance();
-                    navFrag.setRootFragment(SampleFragment.newInstance("Start Frag 2", 0));
-                    return navFrag;
-                }
+                    return MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
+                case 2:
+                    return SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 2", 0));
             }
             return null;
         }

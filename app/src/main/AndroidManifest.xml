@@ -19,7 +19,7 @@
         <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity" >
         </activity>
         <activity
-            android:name=".TabExample.TabNavigationExample"
+            android:name=".TabExample.TabNavigationExampleActivity"
             android:label="@string/title_activity_tab_navigation_example"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

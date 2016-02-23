@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.manager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +22,7 @@ import com.dmcapps.navigationfragment.helper.ViewUtil;
  * in order to function. Each time a new manager is made a separate stack will be created
  * and no overlap will occur in the class.
  */
+@SuppressLint("ValidFragment")
 public class SingleStackNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = SingleStackNavigationManagerFragment.class.getSimpleName();
 
@@ -28,11 +30,16 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private INavigationFragment mRootFragment;
 
-    public static SingleStackNavigationManagerFragment newInstance() {
-        return new SingleStackNavigationManagerFragment();
+    public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
+        return new SingleStackNavigationManagerFragment(rootFragment);
     }
 
     public SingleStackNavigationManagerFragment() {
+
+    }
+
+    public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
+        mRootFragment = rootFragment;
     }
 
     @Override
@@ -76,10 +83,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         childFragTrans.commit();
     }
 
-    public void setRootFragment(INavigationFragment rootFragment) {
-        mRootFragment = rootFragment;
-    }
-
     @Override
     public int getMinStackSize() {
         return ACTIONABLE_STACK_SIZE;
@@ -92,7 +95,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private INavigationFragment getRootFragment() {
         if (mRootFragment == null) {
-            throw new RuntimeException("You must call setRootFragment before attaching the Manager to a Fragment Transaction");
+            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment) before attaching the Manager to a Fragment Transaction");
         }
 
         return mRootFragment;
