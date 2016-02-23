@@ -14,11 +14,10 @@ import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
-
-import java.util.UUID;
 
 public class NavigationDrawerExampleActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,7 +48,14 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            super.onBackPressed();
+            if(mVisibleFragment instanceof NavigationManagerFragment) {
+                if (!((NavigationManagerFragment)mVisibleFragment).onBackPressed()) {
+                    super.onBackPressed();
+                }
+            }
+            else {
+                super.onBackPressed();
+            }
         }
     }
 

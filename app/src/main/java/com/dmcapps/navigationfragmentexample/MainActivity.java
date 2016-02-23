@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.dmcapps.navigationfragmentexample.DrawerExample.NavigationDrawerExampleActivity;
 import com.dmcapps.navigationfragmentexample.ListExample.ListExampleActivity;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.SingleStackExample.SingleStackNavigationExampleActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         items.add("Master Detail Example");
         items.add("Tab Example");
         items.add("List Example");
+        items.add("Navigation Drawer Example (uses replace and remove as well as non-Navigation Fragments)");
         mList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
     }
@@ -50,6 +52,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
         else if (position == 3) {
             intent = new Intent(this, ListExampleActivity.class);
+        }
+        else if (position == 4) {
+            intent = new Intent(this, NavigationDrawerExampleActivity.class);
         }
 
         startActivity(intent);
