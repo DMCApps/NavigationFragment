@@ -19,13 +19,20 @@
         <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity" >
         </activity>
         <activity
-            android:name=".TabExample.TabNavigationExampleActivity"
+            android:name=".ViewPagerExample.ViewPagerNavigationExampleActivity"
             android:label="@string/title_activity_tab_navigation_example"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".TestIntentLaunchingActivity"
             android:label="@string/title_activity_test_intent_launching"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".ListExample.ListExampleActivity" >
+        </activity>
+        <activity
+            android:name=".DrawerExample.NavigationDrawerExampleActivity"
+            android:label="@string/title_activity_navigation_drawer_example"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>

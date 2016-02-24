@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.SingleStackExample;
+package com.dmcapps.navigationfragmentexample.ListExample;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,11 +8,13 @@ import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
-import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.ListExampleFragment;
 
 import java.util.UUID;
 
-public class SingleStackNavigationExampleActivity extends AppCompatActivity {
+public class ListExampleActivity extends AppCompatActivity {
+
+
 
     private static final String STATE_NAV_TAG = "NAV_TAG";
 
@@ -32,7 +34,7 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
         super.onResume();
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
+            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(ListExampleFragment.newInstance());
             addFragment(navManager);
         }
         else {
