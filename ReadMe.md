@@ -8,7 +8,7 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
-```
+```groovy
 compile 'com.dmcapps:navigation-fragment:0.0.5'
 ```
 
@@ -34,14 +34,14 @@ This manager is used to manage a single flow of Fragments in a stack. The stack 
 
 In order to create an instance of the SingleStackNavigationManagerFragment, the root fragment must be created along side this and given to the manager for use. We do this with the use of the following:
 
-```
+```java
 NavigationFragment rootFragment = SampleFragment.newInstance("This is the root fragment");
 SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(rootFragment);
 ```
 
 In the example above, we are creating the rootFragment as the first fragment that we would like to see on the stack. We have now created our SingleStackNavigationManagerFragment and it is ready for use in managing a stack of fragment. Next we will need to present it to the screen as we would any other fragment.
 
-```
+```java
 mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -57,7 +57,7 @@ Now that the SingleStackNavigationManagerFragment has been added to the screen, 
 
 Now that the SingleStackNavigationManagerFragment is being put to work, we need to make sure that we are presenting and dismissing fragments from the appropriate methods. Since all fragment in the stack must extend NavigationFragment, we will have access to the appropriate methods for doing so. In order to present a new fragment we have two options. We can use the default animations (slide in right and slide out left).
 
-```
+```java
 // Inside the Sample Fragment we use the presentFragmnet(NavigationFragment fragment) method.
 ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -69,7 +69,7 @@ Now that the SingleStackNavigationManagerFragment is being put to work, we need 
 
 OR if you would like to provide your own animations you can use the same as the above but use the method with the following signiture
 
-```
+```java
 presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
 ```
 
@@ -77,7 +77,7 @@ presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
 
 In order to remove fragments from the screen we must follow a similar style as presenting. To dismiss the fragments we call the dismissFragment() on the NavigationFragment that we are in. We can use the default animations (slide out right and slide in left).
 
-```
+```java
 // Inside the Sample Fragment we use the dismissFragment() method.
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -89,15 +89,15 @@ In order to remove fragments from the screen we must follow a similar style as p
 
 OR if you would like to provide your own animations your can use the same as the above but use the method with the following signiture.
 
-``
+```java
 dismissFragment(int animationIn, int animationOut);
-``
+```
 
 ###Setting the page title
 
 To set the page title on any of the NavigationManagerFragment just call either of the methods for:
 
-```
+```java
 setTitle(int resId);
 setTitle(String title);
 ```
@@ -108,7 +108,7 @@ This will update the title for the given page.
 
 In order to use the back button for dismissing the fragments, we will need to add in some custom code to allow the SingleStackNavigationManagerFragment to perform its own back action. To do so we will need to get a hold of the SingleStackNavigationManagerFragment in the onBackPressed and then execute the back action of the Fragment. To do so we use the saved String tag for the SingleStackNavigationManagerFragment and retrieve it from the FragmentManager. 
 
-```
+```java
 // Inside the Main Activity we use the onBackPressed() method.
 @Override
 public void onBackPressed() {
@@ -129,7 +129,7 @@ This fragment manager is used to manage the MasterDetail flow of Android. The Ma
 
 In order to create an instance of the MasterDetailNavigationManagerFragment, the master and detail fragment must be created along side this and given to the manager for use. We do this with the use of the following:
 
-```
+```java
 MasterFragment masterFrag = MasterFragment.newInstance();
 SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
 MasterDetailNavigationManagerFragment manager = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
@@ -139,7 +139,7 @@ In the example above, we are creating the masterFragment as the first fragment t
 
 We have now created our MasterDetailNavigationManagerFragment and it is ready for use in managing a stack of fragment. Next we will need to present it to the screen in our activity as we would any other fragment.
 
-```
+```java
 mNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
 FragmentManager fm = getSupportFragmentManager();
@@ -159,7 +159,7 @@ If the Device is a Phone in Portrait or Landscape then only the master will be s
 
 In order to present a fragment we follow the same pattern as the SingleStackFragmentManager. From our Master or our detail we can present fragments using the following.
 
-```
+```java
 // In the MasterFragment in the MasterDetailExample.
 ((Button)view.findViewById(R.id.master_btn_add)).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -176,7 +176,7 @@ While on a Tablet this will transition the Current detail fragment into a new fr
 
 If you would like to present the fragment with a custom animation then you should use the following method signature.
 
-```
+```java
 presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
 ```
 
@@ -186,7 +186,7 @@ We execute the pending transations so that we can freely grab the fragment immed
 
 In order to remove fragments from the detail flow we must follow a similar style as presenting. To dismiss the fragments we call the dismissFragment() on the NavigationFragment that we are in. We can use the default animations (slide out right and slide in left).
 
-```
+```java
 // Inside the Sample Fragment we use the dismissFragment() method.
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -198,15 +198,15 @@ In order to remove fragments from the detail flow we must follow a similar style
 
 OR if you would like to provide your own animations your can use the same as the above but use the method with the following signiture.
 
-``
+```java
 dismissFragment(int animationIn, int animationOut);
-``
+```
 
 ###Setting the page title
 
 To set the page title on any of the NavigationManagerFragment just call either of the methods for:
 
-```
+```java
 setTitle(int resId);
 setTitle(String title);
 ```
@@ -217,7 +217,7 @@ This will update the title for the given page.
 
 In order to use the back button for dismissing the fragments, we will need to add in some custom code to allow the MasterDetailNavigationManagerFragment to perform its own back action. To do so we will need to get a hold of the MasterDetailNavigationManagerFragment in the onBackPressed and then execute the back action of the Fragment. To do so we use the saved String tag for the MasterDetailNavigationManagerFragment and retrieve it from the FragmentManager. 
 
-```
+```java
 // Inside the Main Activity we use the onBackPressed() method.
 @Override
 public void onBackPressed() {
@@ -236,7 +236,7 @@ As you can see. The Master-Detail navigation fragment works much the same as the
 
 In the Master-Detail pattern we can replace the entire Detail stack by calling a single method. This allows us to update the Detail stack to the root without having to dismiss all the other views. In order to do this we simply call.
 
-```
+```java
 // Inside the MasterDetailExample Sample Fragment.
 ((Button)view.findViewById(R.id.master_btn_replace)).setOnClickListener(new View.OnClickListener() {
     @Override
@@ -254,7 +254,7 @@ There is no animation attached to this currently.
 The MasterDetailManagerFragment now handles the showing and hiding of the master whil on a tablet in portrait. All you need to do is set the title of the button shown in the menu
 
 
-```
+```java
 setMasterToggleTitle(String title);
 setMasterToggleTitle(int resId);
 ```
