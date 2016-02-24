@@ -276,14 +276,15 @@ The manager will show and hide the button based on the current fragment that the
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
 - Ability to toggle action bar (ie show and hide)
 - Builder Pattern for NavigationManager
-    - Builder(NavType)
-    - SetDefaultAnimation
-    - setRootFragment
-    - setMasterFragment
-    - setDetailFragment
+    - NavigationManager.Builder(NavType)
+    - setDefaultAnimations()
+    - setRootFragment()
+    - setMasterFragment()
+    - setDetailFragment()
 - Code clean up into smaller managers to use Builder pattern more effectively
 - Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
 - Nullify the initially set root/master/detail fragment after attach as they are not needed in memory anymore.
+- Ability to hide master toggle
 
 ###0.0.5
 - Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
