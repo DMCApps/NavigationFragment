@@ -270,7 +270,7 @@ The manager will show and hide the button based on the current fragment that the
 - Add method for showing the back button based on the stack position
 - Is this possible? Move all onPause/Resume/attach/detach code to NavigationManagerFragment, then make abstract methods for just the attach/detach portions?
 
-###COMING SOON
+###Future Implementation Notes
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
@@ -281,10 +281,12 @@ The manager will show and hide the button based on the current fragment that the
     - setRootFragment()
     - setMasterFragment()
     - setDetailFragment()
+    - setManageMasterToggle()
 - Code clean up into smaller managers to use Builder pattern more effectively
 - Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
 - Nullify the initially set root/master/detail fragment after attach as they are not needed in memory anymore.
-- Ability to hide master toggle
+- Ability to hide master toggle 
+- Remove ClassCastException for attach so that it doesn't clog up the logs.
 
 ###0.0.5
 - Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
