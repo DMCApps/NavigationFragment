@@ -282,6 +282,8 @@ The manager will show and hide the button based on the current fragment that the
     - setMasterFragment
     - setDetailFragment
 - Code clean up into smaller managers to use Builder pattern more effectively
+- Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
+- Nullify the initially set root/master/detail fragment after attach as they are not needed in memory anymore.
 
 ###0.0.5
 - Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
