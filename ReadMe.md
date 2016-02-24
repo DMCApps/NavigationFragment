@@ -275,6 +275,13 @@ The manager will show and hide the button based on the current fragment that the
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
 - Ability to toggle action bar (ie show and hide)
+- Builder Pattern for NavigationManager
+    - Builder(NavType)
+    - SetDefaultAnimation
+    - setRootFragment
+    - setMasterFragment
+    - setDetailFragment
+- Code clean up into smaller managers to use Builder pattern more effectively
 
 ###0.0.5
 - Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
@@ -322,8 +329,7 @@ The manager will show and hide the button based on the current fragment that the
 
 ##Future Plans and Examples
 
-1. Tabs Example Completion
-2. Complete Set Up with Maven and jCenter once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+1. Complete Set Up with Maven once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
 ##Uploading updates to jCenter and Maven
 
