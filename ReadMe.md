@@ -340,6 +340,7 @@ These methods will tell the manager to use your defined animations when presenti
 [] Ability to invalidate menu from NavigationFragment.
 
 ###Future Implementation Notes
+- Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager.
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
