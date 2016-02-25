@@ -21,6 +21,7 @@ import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
 import com.dmcapps.navigationfragment.helper.AnimationStartListener;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,8 +55,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     // or an activity is launched, the application will crash with NotSerializableException
     // if any of the Fragments in the stack have properties that are no Serializable.
     public MasterDetailNavigationManagerFragment(INavigationFragment masterFragment, INavigationFragment detailFragment) {
-        mMasterFragment = masterFragment;
-        mDetailFragment = detailFragment;
+        mConfig.masterFragment = masterFragment;
+        mConfig.detailFragment = detailFragment;
+        mLifecycleManager = new MasterDetailLifecycleManager();
     }
 
     @Override
@@ -109,54 +111,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     @Override
     public void onResume() {
         super.onResume();
-
-        // No Fragments have been added. Attach the master and detail.
-        if (mState.fragmentTagStack.size() == 0) {
-            getMasterFragment().setNavigationManager(this);
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            if (isTablet()) {
-                // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.master_detail_container_master, (Fragment) getMasterFragment(), getMasterFragment().getNavTag());
-                addFragmentToStack(getMasterFragment());
-            }
-            else {
-                pushFragment(getMasterFragment());
-            }
-            childFragTrans.commit();
-
-            if (isTablet()) {
-                pushFragment(getDetailFragment());
-            }
-
-        }
-        // Fragments are in the stack, resume at the top.
-        else {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-            if (isTablet()) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
-            }
-            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-            childFragTrans.commit();
-        }
-
         getActivity().invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        if (isTablet()) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
-        }
-        childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-        childFragTrans.commit();
     }
 
     @Override
@@ -220,6 +175,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         getActivity().invalidateOptionsMenu();
     }
 
+    // TODO: Do I need these anymore?
+    /*
     private INavigationFragment getMasterFragment() {
         if (mMasterFragment == null) {
             throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
@@ -233,4 +190,5 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         }
         return mDetailFragment;
     }
+    */
 }

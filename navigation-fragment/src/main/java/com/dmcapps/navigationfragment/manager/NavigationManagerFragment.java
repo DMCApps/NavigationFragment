@@ -1,6 +1,7 @@
 package com.dmcapps.navigationfragment.manager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
 
 import java.io.Serializable;
 import java.util.Stack;
@@ -28,6 +30,8 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     private NavigationManagerFragmentListener mListener;
 
+    protected ILifecycleManager mLifecycleManager;
+
     protected ManagerConfig mConfig = new ManagerConfig();
     protected ManagerState mState = new ManagerState();
 
@@ -40,16 +44,30 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         try {
             // This is not mandatory. Only if the user wants to listen for push and pop events.
-            mListener = (NavigationManagerFragmentListener)activity;
+            mListener = (NavigationManagerFragmentListener)context;
         }
         catch (ClassCastException classCastException) {
             Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for displaying buttons for Master-Detail implementation.");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mLifecycleManager.onResume(this, mState, mConfig);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mLifecycleManager.onPause(this, mState);
     }
 
     /**
@@ -60,7 +78,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
     public void pushFragment(INavigationFragment navFragment) {
-        pushFragment(navFragment, R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+        pushFragment(navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
     }
 
     /**
@@ -124,7 +142,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Uses default animation of slide in from left and slide out to right.
      */
     public void popFragment() {
-        popFragment(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+        popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
     }
 
     /**
@@ -241,13 +259,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         return mState.isTablet;
     }
 
+    public void addFragmentToStack(INavigationFragment navFragment) {
+        mState.fragmentTagStack.add(navFragment.getNavTag());
+    }
+
     protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
         while (mState.fragmentTagStack.size() > stackPosition) {
             popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
         }
-    }
-
-    protected void addFragmentToStack(INavigationFragment navFragment) {
-        mState.fragmentTagStack.add(navFragment.getNavTag());
     }
 }

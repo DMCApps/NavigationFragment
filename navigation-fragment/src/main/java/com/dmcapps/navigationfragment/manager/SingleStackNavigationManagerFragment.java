@@ -14,6 +14,7 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.ViewUtil;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.SingleStackLifecycleManager;
 
 
 /**
@@ -29,8 +30,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private static final int ACTIONABLE_STACK_SIZE = 1;
 
-    private INavigationFragment mRootFragment;
-
     public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
@@ -40,7 +39,8 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
     }
 
     public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
-        mRootFragment = rootFragment;
+        mConfig.rootFragment = rootFragment;
+        mLifecycleManager = new SingleStackLifecycleManager();
     }
 
     @Override
@@ -65,6 +65,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
     public void onResume() {
         super.onResume();
 
+        /*
         // No Fragments have been added. Attach the root.
         if (mState.fragmentTagStack.size() == 0) {
             pushFragment(getRootFragment());
@@ -77,19 +78,23 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
             childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
+        */
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
+        /*
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
         childFragTrans.commit();
+        */
     }
 
+    /*
     private INavigationFragment getRootFragment() {
         if (mRootFragment == null) {
             throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment) before attaching the Manager to a Fragment Transaction");
@@ -97,4 +102,5 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
         return mRootFragment;
     }
+    */
 }
