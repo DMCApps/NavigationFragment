@@ -273,31 +273,6 @@ These methods will tell the manager to use your defined animations when presenti
 
 ##Change Log
 
-###TO BE DECIDED/FIGURE OUT
-- Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
-- Should the manager manage the back button (ie home up enabled).
-- Is there a way to make the on back pressed in the fragment vs the activity?
-- Add method for showing the back button based on the stack position
-- Is this possible? Move all onPause/Resume/attach/detach code to NavigationManagerFragment, then make abstract methods for just the attach/detach portions?
-
-###Future Implementation Notes
-- Master-Detail additional animations for showing and hiding the master when in portrait
-- Master-Detail replace root fragment with an animation and custom animations
-- Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
-- Ability to toggle action bar (ie show and hide)
-- Builder Pattern for NavigationManager
-    - NavigationManager.Builder(NavType)
-    - setDefaultAnimations()
-    - setRootFragment()
-    - setMasterFragment()
-    - setDetailFragment()
-    - setManageMasterToggle()
-- Code clean up into smaller managers to use Builder pattern more effectively
-- Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
-- Nullify the initially set root/master/detail fragment after attach as they are not needed in memory anymore.
-- Ability to hide master toggle 
-- Remove ClassCastException for attach so that it doesn't clog up the logs.
-
 ###0.1.0
 - Refactored library to be more modular
 - Updated manager to use internal classes to maintain state
@@ -350,9 +325,32 @@ These methods will tell the manager to use your defined animations when presenti
 
 ##Future Plans and Examples
 
-1. Complete Set Up with Maven once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
+###Next Release
+[] Code clean up into smaller managers to use Builder pattern more effectively
+[] Hide master toggle as default. Show if user sets it to be automatic.
+[] Add method for showing the back button based on the stack position
+
+###Future Implementation Notes
+- Master-Detail additional animations for showing and hiding the master when in portrait
+- Master-Detail replace root fragment with an animation and custom animations
+- Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
+- Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
+- Builder Pattern for NavigationManager
+    - NavigationManager.Builder(NavType)
+    - setDefaultAnimations()
+    - setRootFragment()
+    - setMasterFragment()
+    - setDetailFragment()
+    - setManageMasterToggle()
+
+###TO BE DECIDED/FIGURE OUT
+- Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
+- Should the manager manage the back button (ie home up enabled).
+- Is there a way to make the on back pressed in the fragment vs the activity?
 
 ##Uploading updates to jCenter and Maven
+
+Complete Set Up with Maven once all approved http://inthecheesefactory.com/blog/how-to-upload-library-to-jcenter-maven-central-as-dependency/en
 
 In Android Studio Terminal use:
 ```
