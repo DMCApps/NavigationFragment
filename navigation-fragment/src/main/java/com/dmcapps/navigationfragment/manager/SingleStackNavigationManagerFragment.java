@@ -54,14 +54,4 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         mConfig.minStackSize = ACTIONABLE_STACK_SIZE;
         mConfig.pushContainerId = R.id.single_stack_content;
     }
-
-    /*
-    private INavigationFragment getRootFragment() {
-        if (mRootFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-
-        return mRootFragment;
-    }
-    */
 }

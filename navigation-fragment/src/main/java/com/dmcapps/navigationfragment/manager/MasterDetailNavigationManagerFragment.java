@@ -174,21 +174,4 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         mMasterToggleResId = resId;
         getActivity().invalidateOptionsMenu();
     }
-
-    // TODO: Do I need these anymore?
-    /*
-    private INavigationFragment getMasterFragment() {
-        if (mMasterFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-        return mMasterFragment;
-    }
-
-    private INavigationFragment getDetailFragment() {
-        if (mDetailFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-        return mDetailFragment;
-    }
-    */
 }
