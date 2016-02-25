@@ -2,12 +2,17 @@ package com.dmcapps.navigationfragment.manager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
@@ -25,7 +30,6 @@ import java.util.Stack;
  */
 public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements Serializable {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
-    // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
     private NavigationManagerFragmentListener mListener;
@@ -69,14 +73,17 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     @Override
     public void onResume() {
         super.onResume();
-
         mLifecycleManager.onResume(this, mState, mConfig);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return mLifecycleManager.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
         mLifecycleManager.onPause(this, mState);
     }
 
@@ -204,6 +211,10 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
+    public void addFragmentToStack(INavigationFragment navFragment) {
+        mState.fragmentTagStack.add(navFragment.getNavTag());
+    }
+
     /**
      * Access the fragment that is on the top of the navigation stack.
      *
@@ -230,19 +241,61 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         return false;
     }
 
+    /**
+     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
+     */
     public void clearNavigationStackToRoot() {
         clearNavigationStackToPosition(mConfig.minStackSize, false);
     }
 
+    /**
+     * Remove all fragments from the stack including the Root. The add the given {@link INavigationFragment}
+     * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
+     *
+     * @param
+     *      navFragment
+     */
     public void replaceRootFragment(INavigationFragment navFragment) {
         clearNavigationStackToPosition(mConfig.minStackSize - 1, false);
         pushFragment(navFragment, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
     }
 
+    /**
+     * Remove all fragments up until the given position. Also takes a flag to tell if the fragments
+     * that are on the stack should be attached as they are pushed (this causes lifecycle methods to run).
+     *
+     * @param
+     *      stackPosition -> The position (0 indexed) that you would like to pop to.
+     * @param
+     *      shouldAttach -> Wether fragments should be re-attached after the current fragment is popped.
+     */
+    protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
+        while (mState.fragmentTagStack.size() > stackPosition) {
+            popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        }
+    }
+
+    /**
+     * Check if the current top fragment is the root fragment
+     *
+     * @return
+     *      true -> Stack is currently at the root fragment
+     *      false -> Stack is not at the root fragment
+     */
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
     }
 
+    // ===============================
+    // START ACTION BAR HELPER METHODS
+    // ===============================
+
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      resId -> Resource Id of the title you would like to set.
+     */
     public void setTitle(int resId) {
         if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
             getActivity().setTitle(resId);
@@ -252,6 +305,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      title -> String of the title you would like to set.
+     */
     public void setTitle(String title) {
         if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
             getActivity().setTitle(title);
@@ -261,21 +320,37 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
+    // ===============================
+    // END ACTION BAR HELPER METHODS
+    // ===============================
+
+    // ===============================
+    // START DEVICE STATE METHODS
+    // ===============================
+
+    /**
+     * Helper method for the current device state for orientation. Uses the layout used as the determining factor.
+     *
+     * @return
+     *      true -> Current device is in portrait mode based on the layout used.
+     *      false -> Current device is in landscape mode based on the layout used.
+     */
     public boolean isPortrait() {
         return mState.isPortrait;
     }
 
+    /**
+     * Helper method for the current device state for type. Uses the layout used as the determining factor.
+     *
+     * @return
+     *      true -> Current device is a tablet based on the layout used.
+     *      false -> Current device is a phone based on the layout used.
+     */
     public boolean isTablet() {
         return mState.isTablet;
     }
 
-    public void addFragmentToStack(INavigationFragment navFragment) {
-        mState.fragmentTagStack.add(navFragment.getNavTag());
-    }
-
-    protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
-        while (mState.fragmentTagStack.size() > stackPosition) {
-            popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        }
-    }
+    // ===============================
+    // END DEVICE STATE METHODS
+    // ===============================
 }

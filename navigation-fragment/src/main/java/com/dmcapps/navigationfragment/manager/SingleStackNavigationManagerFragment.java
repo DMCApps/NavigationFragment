@@ -55,39 +55,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         mConfig.pushContainerId = R.id.single_stack_content;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        /*
-        // No Fragments have been added. Attach the root.
-        if (mState.fragmentTagStack.size() == 0) {
-            pushFragment(getRootFragment());
-        }
-        // Fragments are in the stack, resume at the top.
-        else {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-            childFragTrans.commit();
-        }
-        */
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        /*
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-        childFragTrans.commit();
-        */
-    }
-
     /*
     private INavigationFragment getRootFragment() {
         if (mRootFragment == null) {
