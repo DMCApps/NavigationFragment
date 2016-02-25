@@ -52,6 +52,10 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
             childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
+
+        if (navMgrFragment.getActivity() != null) {
+            navMgrFragment.getActivity().invalidateOptionsMenu();
+        }
     }
 
     @Override
