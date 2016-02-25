@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.0'
+compile 'com.dmcapps:navigation-fragment:0.1.1'
 ```
 
 ##Current Version
 
-0.1.0
+0.1.1
 
 ##Introduction
 
@@ -274,6 +274,7 @@ These methods will tell the manager to use your defined animations when presenti
 ##Change Log
 
 ###0.1.1
+- Additional refactoring
 
 ###0.1.0
 - Refactored library to be more modular
