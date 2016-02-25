@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.ViewUtil;
+import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 
 
 /**
@@ -72,7 +73,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         else {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
             childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
@@ -84,7 +85,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
         childFragTrans.commit();
     }

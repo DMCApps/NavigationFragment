@@ -20,6 +20,7 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
 import com.dmcapps.navigationfragment.helper.AnimationStartListener;
+import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -133,7 +134,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         else {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
             if (isTablet()) {
                 childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
             }
@@ -150,7 +151,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
+        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
         if (isTablet()) {
             childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
         }

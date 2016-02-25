@@ -26,10 +26,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     // TODO: Move all onPause/Resume/attach/detach code here then make abstract methods for just the attach/detach portions
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
-    protected static final int NO_ANIMATION = 0;
-
-    private Stack<String> mFragmentTags;
-
     private NavigationManagerFragmentListener mListener;
 
     protected ManagerConfig mConfig = new ManagerConfig();
@@ -212,38 +208,28 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     public void replaceRootFragment(INavigationFragment navFragment) {
         clearNavigationStackToPosition(mConfig.minStackSize - 1, false);
-        pushFragment(navFragment, NO_ANIMATION, NO_ANIMATION);
+        pushFragment(navFragment, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
     }
 
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
     }
 
-    public void setTitle(String title) {
-        if (getActivity() != null) {
-            if (getActivity() instanceof AppCompatActivity) {
-                getActivity().setTitle(title);
-            }
-            else {
-                Log.e(TAG, "Unable to set title, is not ActionBarActivity or AppCompatActivity.");
-            }
+    public void setTitle(int resId) {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            getActivity().setTitle(resId);
         }
         else {
-            Log.e(TAG, "Unable to set title, Activity is null");
+            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
         }
     }
 
-    public void setTitle(int resId) {
-        if (getActivity() != null) {
-            if (getActivity() instanceof AppCompatActivity) {
-                getActivity().setTitle(resId);
-            }
-            else {
-                Log.e(TAG, "Unable to set title, is not ActionBarActivity or AppCompatActivity.");
-            }
+    public void setTitle(String title) {
+        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
+            getActivity().setTitle(title);
         }
         else {
-            Log.e(TAG, "Unable to set title, Activity is null");
+            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
         }
     }
 
@@ -257,7 +243,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
         while (mState.fragmentTagStack.size() > stackPosition) {
-            popFragment(stackPosition, shouldAttach, NO_ANIMATION, NO_ANIMATION);
+            popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
         }
     }
 

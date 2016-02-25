@@ -7,6 +7,8 @@ import com.dmcapps.navigationfragment.R;
  */
 public class ManagerConfig {
 
+    public static final int NO_ANIMATION = 0;
+
     public int minStackSize;
 
     public int pushContainerId;
