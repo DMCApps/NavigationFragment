@@ -266,9 +266,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     protected Stack<String> getFragmentTags() {
-        if (mFragmentTags == null) {
-            mFragmentTags = new Stack<>();
+        if (mState.fragmentStack == null) {
+            mState.fragmentStack = new Stack<>();
         }
-        return mFragmentTags;
+        return mState.fragmentStack;
     }
 }
