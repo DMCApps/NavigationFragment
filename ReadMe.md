@@ -273,6 +273,8 @@ These methods will tell the manager to use your defined animations when presenti
 
 ##Change Log
 
+###0.1.1
+
 ###0.1.0
 - Refactored library to be more modular
 - Updated manager to use internal classes to maintain state
