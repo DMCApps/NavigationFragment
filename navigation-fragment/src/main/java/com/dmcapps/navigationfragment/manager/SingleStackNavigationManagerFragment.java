@@ -44,14 +44,20 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+        return inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+    }
 
-        mIsPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
-                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
-        mIsTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mState.isTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
                 || view.findViewById(R.id.single_stack_tablet_layout_main_land) != null;
+        mState.isPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
+                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
 
-        return view;
+        mConfig.minStackSize = ACTIONABLE_STACK_SIZE;
+        mConfig.pushContainerId = R.id.single_stack_content;
     }
 
     @Override
@@ -81,16 +87,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
         childFragTrans.commit();
-    }
-
-    @Override
-    public int getMinStackSize() {
-        return ACTIONABLE_STACK_SIZE;
-    }
-
-    @Override
-    public int getPushStackFrameId() {
-        return R.id.single_stack_content;
     }
 
     private INavigationFragment getRootFragment() {

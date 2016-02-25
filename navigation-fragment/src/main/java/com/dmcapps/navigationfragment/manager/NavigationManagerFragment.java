@@ -12,6 +12,8 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
+import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 
 import java.io.Serializable;
 import java.util.Stack;
@@ -30,8 +32,8 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     private NavigationManagerFragmentListener mListener;
 
-    protected boolean mIsTablet;
-    protected boolean mIsPortrait;
+    protected ManagerConfig mConfig = new ManagerConfig();
+    protected ManagerState mState = new ManagerState();
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -50,20 +52,8 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
             mListener = (NavigationManagerFragmentListener)activity;
         }
         catch (ClassCastException classCastException) {
-            classCastException.printStackTrace();
             Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for displaying buttons for Master-Detail implementation.");
-            // throw new ClassCastException("Activity does not implement NavigationManagerFragmentListener");
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     /**
@@ -89,7 +79,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animationOut -> The animation of the fragment that is being sent to the back.
      */
     public void pushFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragment(getMinStackSize(), getPushStackFrameId(), navFragment, animationIn, animationOut);
+        pushFragment(mConfig.minStackSize, mConfig.pushContainerId, navFragment, animationIn, animationOut);
     }
 
     /**
@@ -151,7 +141,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
     public void popFragment(int animationIn, int animationOut) {
-        popFragment(getMinStackSize(), true, animationIn, animationOut);
+        popFragment(mConfig.minStackSize, true, animationIn, animationOut);
     }
 
     /**
@@ -208,7 +198,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     public boolean onBackPressed() {
-        if (getFragmentTags().size() > getMinStackSize()) {
+        if (getFragmentTags().size() > mConfig.minStackSize) {
             popFragment();
             return true;
         }
@@ -217,16 +207,16 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(getMinStackSize(), false);
+        clearNavigationStackToPosition(mConfig.minStackSize, false);
     }
 
     public void replaceRootFragment(INavigationFragment navFragment) {
-        clearNavigationStackToPosition(getMinStackSize() - 1, false);
+        clearNavigationStackToPosition(mConfig.minStackSize - 1, false);
         pushFragment(navFragment, NO_ANIMATION, NO_ANIMATION);
     }
 
     public boolean isOnRootFragment() {
-        return getFragmentTags().size() == getMinStackSize();
+        return getFragmentTags().size() == mConfig.minStackSize;
     }
 
     public void setTitle(String title) {
@@ -258,16 +248,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     public boolean isPortrait() {
-        return mIsPortrait;
+        return mState.isPortrait;
     }
 
     public boolean isTablet() {
-        return mIsTablet;
+        return mState.isTablet;
     }
-
-    protected abstract int getPushStackFrameId();
-
-    protected abstract int getMinStackSize();
 
     protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
         while (getFragmentTags().size() > stackPosition) {

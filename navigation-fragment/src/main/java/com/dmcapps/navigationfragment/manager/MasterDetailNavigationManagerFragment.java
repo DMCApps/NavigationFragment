@@ -91,12 +91,18 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+        return inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+    }
 
-        mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
-        mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        return view;
+        mState.isTablet = getView().findViewById(R.id.master_detail_container_master) != null;
+        mState.isPortrait = getView().findViewById(R.id.master_detail_layout_main_portrait) != null;
+
+        mConfig.minStackSize = isTablet() ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
+        mConfig.pushContainerId = R.id.master_detail_container_detail;
     }
 
     @Override
@@ -108,7 +114,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             getMasterFragment().setNavigationManager(this);
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            if (mIsTablet) {
+            if (isTablet()) {
                 // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
                 childFragTrans.add(R.id.master_detail_container_master, (Fragment) getMasterFragment(), getMasterFragment().getNavTag());
                 addFragmentToStack(getMasterFragment());
@@ -118,7 +124,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             }
             childFragTrans.commit();
 
-            if (mIsTablet) {
+            if (isTablet()) {
                 pushFragment(getDetailFragment());
             }
 
@@ -128,7 +134,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            if (mIsTablet) {
+            if (isTablet()) {
                 childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
             }
             childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
@@ -145,7 +151,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        if (mIsTablet) {
+        if (isTablet()) {
             childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
         }
         childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
@@ -158,18 +164,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         super.pushFragment(detachStackSize, containerId, navFragment, animationIn, animationOut);
     }
 
-    @Override
-    public int getPushStackFrameId() {
-        return R.id.master_detail_container_detail;
-    }
-
-    @Override
-    public int getMinStackSize() {
-        return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
-    }
-
     public boolean shouldMasterToggle() {
-        return isOnRootFragment() && mIsTablet && mIsPortrait;
+        return isOnRootFragment() && isTablet() && isPortrait();
     }
 
     public void toggleMaster() {
@@ -210,7 +206,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     public boolean isOnRootAndMasterIsToggleable() {
-        return isOnRootFragment() && mIsPortrait && mIsTablet;
+        return isOnRootFragment() && isTablet() && isPortrait();
     }
 
     public void setMasterToggleTitle(String title) {
