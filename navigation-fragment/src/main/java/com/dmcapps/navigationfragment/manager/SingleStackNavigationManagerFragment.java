@@ -2,17 +2,13 @@ package com.dmcapps.navigationfragment.manager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.helper.ViewUtil;
+import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.SingleStackLifecycleManager;
 
 
 /**
@@ -28,76 +24,25 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
 
     private static final int ACTIONABLE_STACK_SIZE = 1;
 
-    private INavigationFragment mRootFragment;
-
     public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
 
-    public SingleStackNavigationManagerFragment() {
-
-    }
-
     public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
-        mRootFragment = rootFragment;
+        mConfig.rootFragment = rootFragment;
+        mLifecycleManager = new SingleStackLifecycleManager();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        mIsPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
-                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
-        mIsTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
+        mState.isTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
                 || view.findViewById(R.id.single_stack_tablet_layout_main_land) != null;
+        mState.isPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
+                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // No Fragments have been added. Attach the root.
-        if (getFragmentTags().size() == 0) {
-            pushFragment(getRootFragment());
-        }
-        // Fragments are in the stack, resume at the top.
-        else {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-            childFragTrans.commit();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-        childFragTrans.commit();
-    }
-
-    @Override
-    public int getMinStackSize() {
-        return ACTIONABLE_STACK_SIZE;
-    }
-
-    @Override
-    public int getPushStackFrameId() {
-        return R.id.single_stack_content;
-    }
-
-    private INavigationFragment getRootFragment() {
-        if (mRootFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-
-        return mRootFragment;
+        mConfig.minStackSize = ACTIONABLE_STACK_SIZE;
+        mConfig.pushContainerId = R.id.single_stack_content;
     }
 }

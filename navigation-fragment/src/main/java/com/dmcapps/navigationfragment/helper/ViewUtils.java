@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by DCarmo on 16-02-07.
  */
-public class ViewUtil {
+public class ViewUtils {
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     /**

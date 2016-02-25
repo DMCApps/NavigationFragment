@@ -20,6 +20,8 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
 import com.dmcapps.navigationfragment.helper.AnimationStartListener;
+import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,8 +55,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     // or an activity is launched, the application will crash with NotSerializableException
     // if any of the Fragments in the stack have properties that are no Serializable.
     public MasterDetailNavigationManagerFragment(INavigationFragment masterFragment, INavigationFragment detailFragment) {
-        mMasterFragment = masterFragment;
-        mDetailFragment = detailFragment;
+        mConfig.masterFragment = masterFragment;
+        mConfig.detailFragment = detailFragment;
+        mLifecycleManager = new MasterDetailLifecycleManager();
     }
 
     @Override
@@ -90,66 +93,14 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        mIsTablet = view.findViewById(R.id.master_detail_container_master) != null;
-        mIsPortrait = view.findViewById(R.id.master_detail_layout_main_portrait) != null;
+        mState.isTablet = getView().findViewById(R.id.master_detail_container_master) != null;
+        mState.isPortrait = getView().findViewById(R.id.master_detail_layout_main_portrait) != null;
 
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // No Fragments have been added. Attach the master and detail.
-        if (getFragmentTags().size() == 0) {
-            getMasterFragment().setNavigationManager(this);
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            if (mIsTablet) {
-                // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.master_detail_container_master, (Fragment) getMasterFragment(), getMasterFragment().getNavTag());
-                addFragmentToStack(getMasterFragment());
-            }
-            else {
-                pushFragment(getMasterFragment());
-            }
-            childFragTrans.commit();
-
-            if (mIsTablet) {
-                pushFragment(getDetailFragment());
-            }
-
-        }
-        // Fragments are in the stack, resume at the top.
-        else {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            if (mIsTablet) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
-            }
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-            childFragTrans.commit();
-        }
-
-        getActivity().invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        if (mIsTablet) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
-        }
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
-        childFragTrans.commit();
+        mConfig.minStackSize = isTablet() ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
+        mConfig.pushContainerId = R.id.master_detail_container_detail;
     }
 
     @Override
@@ -158,18 +109,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         super.pushFragment(detachStackSize, containerId, navFragment, animationIn, animationOut);
     }
 
-    @Override
-    public int getPushStackFrameId() {
-        return R.id.master_detail_container_detail;
-    }
-
-    @Override
-    public int getMinStackSize() {
-        return mIsTablet ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
-    }
-
     public boolean shouldMasterToggle() {
-        return isOnRootFragment() && mIsTablet && mIsPortrait;
+        return isOnRootFragment() && isTablet() && isPortrait();
     }
 
     public void toggleMaster() {
@@ -210,7 +151,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     public boolean isOnRootAndMasterIsToggleable() {
-        return isOnRootFragment() && mIsPortrait && mIsTablet;
+        return isOnRootFragment() && isTablet() && isPortrait();
     }
 
     public void setMasterToggleTitle(String title) {
@@ -221,19 +162,5 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     public void setMasterToggleTitle(int resId) {
         mMasterToggleResId = resId;
         getActivity().invalidateOptionsMenu();
-    }
-
-    private INavigationFragment getMasterFragment() {
-        if (mMasterFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-        return mMasterFragment;
-    }
-
-    private INavigationFragment getDetailFragment() {
-        if (mDetailFragment == null) {
-            throw new RuntimeException("You must create the Manager through newInstance(INavigationFragment, INavigationFragment) before attaching the Manager to a Fragment Transaction");
-        }
-        return mDetailFragment;
     }
 }

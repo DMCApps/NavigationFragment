@@ -1,6 +1,7 @@
 package com.dmcapps.navigationfragment.helper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,8 +30,8 @@ public class RetainedChildFragmentManagerFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         if(mRetainedChildFragmentManager != null) {
             // Restore the last retained child fragment manager to the new
@@ -56,7 +57,7 @@ public class RetainedChildFragmentManagerFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    protected FragmentManager getRetainedChildFragmentManager() {
+    public FragmentManager getRetainedChildFragmentManager() {
         if(mRetainedChildFragmentManager == null) {
             // Hold the reference of child fragment manager created by
             // Fragment internally and hold it for the future recreated

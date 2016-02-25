@@ -35,6 +35,8 @@
             android:label="@string/title_activity_navigation_drawer_example"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity" >
+        </activity>
     </application>
 
 </manifest>
