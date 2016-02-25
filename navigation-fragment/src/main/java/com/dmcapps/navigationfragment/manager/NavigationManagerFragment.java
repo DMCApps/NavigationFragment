@@ -43,6 +43,16 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     public NavigationManagerFragment() {
     }
 
+    public void setDefaultPresentAnimations(int animIn, int animOut) {
+        mConfig.presentAnimationIn = animIn;
+        mConfig.presentAnimationOut = animOut;
+    }
+
+    public void setDefaultDismissAnimations(int animIn, int animOut) {
+        mConfig.dismissAnimationIn = animIn;
+        mConfig.dismissAnimationOut = animOut;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -88,12 +98,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      * @param
-     *      animationIn -> The animation of the fragment about to be shown.
+     *      animIn -> The animation of the fragment about to be shown.
      * @param
-     *      animationOut -> The animation of the fragment that is being sent to the back.
+     *      animOut -> The animation of the fragment that is being sent to the back.
      */
-    public void pushFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        pushFragment(mConfig.minStackSize, mConfig.pushContainerId, navFragment, animationIn, animationOut);
+    public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
+        pushFragment(mConfig.minStackSize, mConfig.pushContainerId, navFragment, animIn, animOut);
     }
 
     /**
@@ -109,18 +119,18 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      * @param
-     *      animationIn -> The animation of the fragment about to be shown.
+     *      animIn -> The animation of the fragment about to be shown.
      * @param
-     *      animationOut -> The animation of the fragment that is being sent to the back.
+     *      animOut -> The animation of the fragment that is being sent to the back.
      */
-    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animationIn, int animationOut) {
+    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animIn, int animOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
         if (mState.fragmentTagStack.size() >= detachStackSize) {
-            childFragTrans.setCustomAnimations(animationIn, animationOut);
+            childFragTrans.setCustomAnimations(animIn, animOut);
             Fragment topFrag = childFragManager.findFragmentByTag(mState.fragmentTagStack.peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
             childFragTrans.detach(topFrag);
@@ -150,12 +160,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * the animations defined.
      *
      * @param
-     *      animationIn -> The animation of the fragment about to be shown.
+     *      animIn -> The animation of the fragment about to be shown.
      * @param
-     *      animationOut -> The animation of the fragment that is being dismissed.
+     *      animOut -> The animation of the fragment that is being dismissed.
      */
-    public void popFragment(int animationIn, int animationOut) {
-        popFragment(mConfig.minStackSize, true, animationIn, animationOut);
+    public void popFragment(int animIn, int animOut) {
+        popFragment(mConfig.minStackSize, true, animIn, animOut);
     }
 
     /**
@@ -167,15 +177,15 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      shouldAttach -> After completing the pop should the previous fragment be attached
      * @param
-     *      animationIn -> The animation of the fragment about to be shown.
+     *      animIn -> The animation of the fragment about to be shown.
      * @param
-     *      animationOut -> The animation of the fragment that is being dismissed.
+     *      animOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragment(int stackSize, boolean shouldAttach, int animationIn, int animationOut) {
+    protected void popFragment(int stackSize, boolean shouldAttach, int animIn, int animOut) {
         if (mState.fragmentTagStack.size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(animationIn, animationOut);
+            childFragTrans.setCustomAnimations(animIn, animOut);
             childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
             // TODO: Clean up this logic
             if ((shouldAttach || stackSize == mState.fragmentTagStack.size()) && mState.fragmentTagStack.size() > 0) {

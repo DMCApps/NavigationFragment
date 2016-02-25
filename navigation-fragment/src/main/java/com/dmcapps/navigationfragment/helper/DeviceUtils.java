@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 /**
  * Created by DCarmo on 16-02-07.
  */
-public class DeviceUtil {
+public class DeviceUtils {
 
     /**
      * Returns the density of the screen
