@@ -328,9 +328,11 @@ These methods will tell the manager to use your defined animations when presenti
 ###Next Release
 [] Code clean up into smaller managers to use Builder pattern more effectively
 [] Hide master toggle as default. Show if user sets it to be automatic.
-[] Add method for showing the back button based on the stack position
+[] Add method for showing the back button based on the stack position.
+[] Update clearStack to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many.
 
 ###Future Implementation Notes
+- Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
