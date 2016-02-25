@@ -246,9 +246,6 @@ In the Master-Detail pattern we can replace the entire Detail stack by calling a
 });
 ```
 
-// TODO: Add secondary method for animations from the user. Maybe default a fade out and in?
-There is no animation attached to this currently. 
-
 ###Managing the Showing and Hiding of the Master while on a Tablet in Portrait
 
 The MasterDetailManagerFragment now handles the showing and hiding of the master whil on a tablet in portrait. All you need to do is set the title of the button shown in the menu
@@ -260,6 +257,19 @@ setMasterToggleTitle(int resId);
 ```
 
 The manager will show and hide the button based on the current fragment that the user is on. It will use the custom title that you have supplied in order to show the item in the menu.
+
+### Additional functionality not noted
+
+You can also override the default animations of the `NavigationManagerFragment` so that it will always run your animations. To do so immediately after creating the `NavigationManagerFragment` you can call the following methods
+
+```java
+// Call either (or both) of these methods after creating the SingleStack or MasterDetail NavigationManagerFragment. The method should be called on the Manager itself to change the default animations to your defined animations.
+
+public void setDefaultPresentAnimations(int animIn, int animOut);
+public void setDefaultDismissAnimations(int animIn, int animOut);
+```
+
+These methods will tell the manager to use your defined animations when presenting and dismissing fragments. When you need to use a one time animation change. Use the methods defined in the above sections when presenting/dismissing that allow overriding of the animations on a single transaction.
 
 ##Change Log
 
@@ -287,6 +297,12 @@ The manager will show and hide the button based on the current fragment that the
 - Nullify the initially set root/master/detail fragment after attach as they are not needed in memory anymore.
 - Ability to hide master toggle 
 - Remove ClassCastException for attach so that it doesn't clog up the logs.
+
+###0.1.0
+- Refactored library to be more modular
+- Updated manager to use internal classes to maintain state
+- Updated manager to use lifecycle handlers for the individuals types lifecycle methods.
+- Added in functionality to override the default animations (Please see the Override Default Animations Example)
 
 ###0.0.5
 - Fixed a major bug whenever you had a fragment that contained a property that was not Serializable the manager would crash on startActivity or Home Button Press.
