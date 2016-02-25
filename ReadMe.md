@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.1'
+compile 'com.dmcapps:navigation-fragment:0.1.1.1'
 ```
 
 ##Current Version
 
-0.1.1
+0.1.1.1
 
 ##Introduction
 
@@ -272,6 +272,9 @@ public void setDefaultDismissAnimations(int animIn, int animOut);
 These methods will tell the manager to use your defined animations when presenting and dismissing fragments. When you need to use a one time animation change. Use the methods defined in the above sections when presenting/dismissing that allow overriding of the animations on a single transaction.
 
 ##Change Log
+
+###0.1.1.1
+- Upgraded to use gradle 1.5.0
 
 ###0.1.1
 - Additional refactoring
