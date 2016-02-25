@@ -10,10 +10,10 @@ public class ManagerState {
     public boolean isTablet;
     public boolean isPortrait;
 
-    public Stack<String> fragmentStack;
+    public Stack<String> fragmentTagStack;
 
     public ManagerState() {
-        fragmentStack = new Stack<>();
+        fragmentTagStack = new Stack<>();
     }
 
 }

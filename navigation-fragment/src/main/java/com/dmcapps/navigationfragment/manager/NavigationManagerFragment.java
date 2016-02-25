@@ -105,9 +105,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         // TODO: Better way to do this?
-        if (getFragmentTags().size() >= detachStackSize) {
+        if (mState.fragmentTagStack.size() >= detachStackSize) {
             childFragTrans.setCustomAnimations(animationIn, animationOut);
-            Fragment topFrag = childFragManager.findFragmentByTag(getFragmentTags().peek());
+            Fragment topFrag = childFragManager.findFragmentByTag(mState.fragmentTagStack.peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
             childFragTrans.detach(topFrag);
         }
@@ -158,14 +158,14 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animationOut -> The animation of the fragment that is being dismissed.
      */
     protected void popFragment(int stackSize, boolean shouldAttach, int animationIn, int animationOut) {
-        if (getFragmentTags().size() > stackSize) {
+        if (mState.fragmentTagStack.size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animationIn, animationOut);
-            childFragTrans.remove(childFragManager.findFragmentByTag(getFragmentTags().pop()));
+            childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
             // TODO: Clean up this logic
-            if ((shouldAttach || stackSize == getFragmentTags().size()) && getFragmentTags().size() > 0) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+            if ((shouldAttach || stackSize == mState.fragmentTagStack.size()) && mState.fragmentTagStack.size() > 0) {
+                childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             }
             childFragTrans.commit();
         }
@@ -187,7 +187,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      {@link INavigationFragment} that is on the top of the stack.
      */
     public INavigationFragment topFragment() {
-        return (INavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(getFragmentTags().peek());
+        return (INavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(mState.fragmentTagStack.peek());
     }
 
     /**
@@ -198,7 +198,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     public boolean onBackPressed() {
-        if (getFragmentTags().size() > mConfig.minStackSize) {
+        if (mState.fragmentTagStack.size() > mConfig.minStackSize) {
             popFragment();
             return true;
         }
@@ -216,7 +216,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     public boolean isOnRootFragment() {
-        return getFragmentTags().size() == mConfig.minStackSize;
+        return mState.fragmentTagStack.size() == mConfig.minStackSize;
     }
 
     public void setTitle(String title) {
@@ -256,19 +256,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
-        while (getFragmentTags().size() > stackPosition) {
+        while (mState.fragmentTagStack.size() > stackPosition) {
             popFragment(stackPosition, shouldAttach, NO_ANIMATION, NO_ANIMATION);
         }
     }
 
     protected void addFragmentToStack(INavigationFragment navFragment) {
-        getFragmentTags().add(navFragment.getNavTag());
-    }
-
-    protected Stack<String> getFragmentTags() {
-        if (mState.fragmentStack == null) {
-            mState.fragmentStack = new Stack<>();
-        }
-        return mState.fragmentStack;
+        mState.fragmentTagStack.add(navFragment.getNavTag());
     }
 }

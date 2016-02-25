@@ -110,7 +110,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         super.onResume();
 
         // No Fragments have been added. Attach the master and detail.
-        if (getFragmentTags().size() == 0) {
+        if (mState.fragmentTagStack.size() == 0) {
             getMasterFragment().setNavigationManager(this);
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -135,9 +135,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
             if (isTablet()) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+                childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
             }
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
 
@@ -152,9 +152,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
         if (isTablet()) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().firstElement()));
+            childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.firstElement()));
         }
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+        childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
         childFragTrans.commit();
     }
 

@@ -65,7 +65,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         super.onResume();
 
         // No Fragments have been added. Attach the root.
-        if (getFragmentTags().size() == 0) {
+        if (mState.fragmentTagStack.size() == 0) {
             pushFragment(getRootFragment());
         }
         // Fragments are in the stack, resume at the top.
@@ -73,7 +73,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
     }
@@ -85,7 +85,7 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(NO_ANIMATION, NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(getFragmentTags().peek()));
+        childFragTrans.detach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
         childFragTrans.commit();
     }
 
