@@ -93,11 +93,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
-    }
-
-    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -106,12 +101,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
         mConfig.minStackSize = isTablet() ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
         mConfig.pushContainerId = R.id.master_detail_container_detail;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().invalidateOptionsMenu();
     }
 
     @Override

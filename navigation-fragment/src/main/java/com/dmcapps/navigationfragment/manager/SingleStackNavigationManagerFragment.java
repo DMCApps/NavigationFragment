@@ -28,10 +28,6 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
 
-    public SingleStackNavigationManagerFragment() {
-
-    }
-
     public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
         mConfig.rootFragment = rootFragment;
         mLifecycleManager = new SingleStackLifecycleManager();
