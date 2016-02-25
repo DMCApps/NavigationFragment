@@ -335,7 +335,9 @@ These methods will tell the manager to use your defined animations when presenti
 [] Code clean up into smaller managers to use Builder pattern more effectively
 [] Hide master toggle as default. Show if user sets it to be automatic.
 [] Add method for showing the back button based on the stack position.
-[] Update clearStack to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many.
+[] Add in ability to update the icon on the back button.
+[] Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
+[] Ability to invalidate menu from NavigationFragment.
 
 ###Future Implementation Notes
 - Add in Acceptance Testing using Robotium.
