@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.0.5'
+compile 'com.dmcapps:navigation-fragment:0.1.0'
 ```
 
 ##Current Version
 
-0.0.5
+0.1.0
 
 ##Introduction
 
