@@ -358,6 +358,7 @@ These methods will tell the manager to use your defined animations when presenti
 - Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
 - Should the manager manage the back button (ie home up enabled).
 - Is there a way to make the on back pressed in the fragment vs the activity?
+- Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 
 ##Uploading updates to jCenter and Maven
 
