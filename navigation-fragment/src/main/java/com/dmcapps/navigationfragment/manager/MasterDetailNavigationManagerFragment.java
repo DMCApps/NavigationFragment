@@ -104,9 +104,9 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animationIn, int animationOut) {
+    public void pushFragment(int containerId, INavigationFragment navFragment, int animationIn, int animationOut) {
         hideMaster();
-        super.pushFragment(detachStackSize, containerId, navFragment, animationIn, animationOut);
+        super.pushFragment(containerId, navFragment, animationIn, animationOut);
     }
 
     public boolean shouldMasterToggle() {
