@@ -114,7 +114,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
     public void pushFragment(INavigationFragment navFragment) {
-        pushFragment(navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
+        pushFragment(mConfig.minStackSize, mConfig.pushContainerId, navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
     }
 
     /**
@@ -178,7 +178,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Uses default animation of slide in from left and slide out to right.
      */
     public void popFragment() {
-        popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
+        popFragment(mConfig.minStackSize, mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
     }
 
     /**
@@ -191,7 +191,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animOut -> The animation of the fragment that is being dismissed.
      */
     public void popFragment(int animIn, int animOut) {
-        popFragment(mConfig.minStackSize, true, animIn, animOut);
+        popFragment(mConfig.minStackSize, animIn, animOut);
     }
 
     /**
@@ -201,13 +201,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @param
      *      stackSize -> The stack size that the fragment should handle
      * @param
-     *      shouldAttach -> After completing the pop should the previous fragment be attached
-     * @param
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragment(int stackSize, boolean shouldAttach, int animIn, int animOut) {
+    protected void popFragment(int stackSize, int animIn, int animOut) {
         if (mState.fragmentTagStack.size() > stackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
