@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +21,7 @@ import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
 
 import java.io.Serializable;
@@ -73,6 +75,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     @Override
     public void onResume() {
         super.onResume();
+
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mLifecycleManager.onResume(this, mState, mConfig);
     }
 
@@ -86,6 +91,20 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         super.onPause();
         mLifecycleManager.onPause(this, mState);
     }
+
+    /*
+     * This needs to be moved to the NavigationFragment to automatically handle the back button.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+     */
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
@@ -194,10 +213,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animIn, animOut);
             childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
-            // TODO: Clean up this logic
-            if ((shouldAttach || stackSize == mState.fragmentTagStack.size()) && mState.fragmentTagStack.size() > 0) {
+
+            if (mState.fragmentTagStack.size() > 0) {
                 childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
             }
+
             childFragTrans.commit();
         }
         else {
@@ -242,37 +262,44 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     /**
-     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
-     */
-    public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(mConfig.minStackSize, false);
-    }
-
-    /**
      * Remove all fragments from the stack including the Root. The add the given {@link INavigationFragment}
      * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
      *
      * @param
-     *      navFragment
+     *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
     public void replaceRootFragment(INavigationFragment navFragment) {
-        clearNavigationStackToPosition(mConfig.minStackSize - 1, false);
+        clearNavigationStackToPosition(mConfig.minStackSize - 1);
         pushFragment(navFragment, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
     }
 
     /**
-     * Remove all fragments up until the given position. Also takes a flag to tell if the fragments
-     * that are on the stack should be attached as they are pushed (this causes lifecycle methods to run).
+     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
+     */
+    public void clearNavigationStackToRoot() {
+        clearNavigationStackToPosition(mConfig.minStackSize);
+    }
+
+    /**
+     * Remove all fragments up until the given position.
      *
      * @param
      *      stackPosition -> The position (0 indexed) that you would like to pop to.
-     * @param
-     *      shouldAttach -> Wether fragments should be re-attached after the current fragment is popped.
      */
-    protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
+    protected void clearNavigationStackToPosition(int stackPosition) {
+        FragmentManager childFragManager = getRetainedChildFragmentManager();
+        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+
         while (mState.fragmentTagStack.size() > stackPosition) {
-            popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+            childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
         }
+
+        if (mState.fragmentTagStack.size() > 0) {
+            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
+        }
+
+        childFragTrans.commit();
     }
 
     /**
@@ -285,44 +312,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
     }
-
-    // ===============================
-    // START ACTION BAR HELPER METHODS
-    // ===============================
-
-    /**
-     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
-     *
-     * @param
-     *      resId -> Resource Id of the title you would like to set.
-     */
-    public void setTitle(int resId) {
-        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
-            getActivity().setTitle(resId);
-        }
-        else {
-            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
-        }
-    }
-
-    /**
-     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
-     *
-     * @param
-     *      title -> String of the title you would like to set.
-     */
-    public void setTitle(String title) {
-        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
-            getActivity().setTitle(title);
-        }
-        else {
-            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
-        }
-    }
-
-    // ===============================
-    // END ACTION BAR HELPER METHODS
-    // ===============================
 
     // ===============================
     // START DEVICE STATE METHODS

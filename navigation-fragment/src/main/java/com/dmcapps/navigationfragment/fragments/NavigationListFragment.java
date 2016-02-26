@@ -1,11 +1,13 @@
 package com.dmcapps.navigationfragment.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
 
@@ -61,32 +63,53 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         mNavigationManager.replaceRootFragment(navFragment);
     }
 
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      title -> String of the title you would like to set.
+     */
+    @Override
     public void setTitle(String title) {
-        mNavigationManager.setTitle(title);
+        ActionBarManager.setTitle(getActivity(), title);
     }
 
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      resId -> Resource Id of the title you would like to set.
+     */
+    @Override
     public void setTitle(int resId) {
-        mNavigationManager.setTitle(resId);
+        ActionBarManager.setTitle(getActivity(), resId);
+    }
+
+    /*
+    @Override
+    public void setDisplayHomeAsUpEnabled(boolean enabled) {
+        ActionBarManager.setDisplayHomeAsUpEnabled(getActivity(), enabled);
     }
 
     @Override
+    public void setHomeAsUpIndicator(Drawable indicator) {
+        ActionBarManager.setHomeAsUpIndicator(getActivity(), indicator);
+    }
+
+    @Override
+    public void setHomeAsUpIndicator(int resId) {
+        ActionBarManager.setHomeAsUpIndicator(getActivity(), resId);
+    }
+    */
+
+    @Override
     public void setMasterToggleTitle(String title) {
-        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
-            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
-        }
-        else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
-        }
+        ActionBarManager.setMasterToggleTitle(mNavigationManager, title);
     }
 
     @Override
     public void setMasterToggleTitle(int resId) {
-        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
-            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
-        }
-        else {
-            Log.e("NavigationFragment", "Navigation Manager must be a MasterDetailNavigationManagerFragment");
-        }
+        ActionBarManager.setMasterToggleTitle(mNavigationManager, resId);
     }
 
     @Override
