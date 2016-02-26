@@ -331,13 +331,15 @@ These methods will tell the manager to use your defined animations when presenti
 
 ##Future Plans and Examples
 
+###In Progress
+- Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
+- Code clean up into smaller managers to use Builder pattern more effectively
+
 ###Next Release
-[] Code clean up into smaller managers to use Builder pattern more effectively
-[] Hide master toggle as default. Show if user sets it to be automatic.
-[] Add method for showing the back button based on the stack position.
-[] Add in ability to update the icon on the back button.
-[] Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
-[] Ability to invalidate menu from NavigationFragment.
+- Hide master toggle as default. Show if user sets it to be automatic.
+- Add method for showing the back button based on the stack position.
+- Add in ability to update the icon on the back button.
+- Ability to invalidate menu from NavigationFragment.
 
 ###Future Implementation Notes
 - Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager.

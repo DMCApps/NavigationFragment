@@ -114,22 +114,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
     public void pushFragment(INavigationFragment navFragment) {
-        pushFragment(mConfig.pushContainerId, navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
-    }
-
-    /**
-     * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
-     * the animations defined.
-     *
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being sent to the back.
-     */
-    public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
-        pushFragment(mConfig.pushContainerId, navFragment, animIn, animOut);
+        pushFragment(navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
     }
 
     /**
@@ -139,15 +124,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Adding the new fragment to the containerId
      *
      * @param
-     *      containerId -> The id of the container the fragment should be attached to.
-     * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      * @param
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being sent to the back.
      */
-    public void pushFragment(int containerId, INavigationFragment navFragment, int animIn, int animOut) {
+    public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
         navFragment.setNavigationManager(this);
         FragmentManager childFragManager = getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -160,7 +143,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(containerId, (Fragment)navFragment, navFragment.getNavTag());
+        childFragTrans.add(mConfig.pushContainerId, (Fragment)navFragment, navFragment.getNavTag());
         addFragmentToStack(navFragment);
 
         childFragTrans.commit();
@@ -175,20 +158,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Uses default animation of slide in from left and slide out to right.
      */
     public void popFragment() {
-        popFragment(mConfig.minStackSize, mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
-    }
-
-    /**
-     * Pop the current fragment off the top of the stack and dismiss it using
-     * the animations defined.
-     *
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being dismissed.
-     */
-    public void popFragment(int animIn, int animOut) {
-        popFragment(mConfig.minStackSize, animIn, animOut);
+        popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
     }
 
     /**
@@ -196,14 +166,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * the passed in stackSize. Dismiss it using the animations defined.
      *
      * @param
-     *      stackSize -> The stack size that the fragment should handle
-     * @param
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragment(int stackSize, int animIn, int animOut) {
-        if (mState.fragmentTagStack.size() > stackSize) {
+    public void popFragment(int animIn, int animOut) {
+        if (mState.fragmentTagStack.size() > mConfig.minStackSize) {
             FragmentManager childFragManager = getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(animIn, animOut);
