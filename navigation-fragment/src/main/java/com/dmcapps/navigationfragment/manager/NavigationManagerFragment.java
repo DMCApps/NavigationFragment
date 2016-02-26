@@ -23,6 +23,7 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
+import com.dmcapps.navigationfragment.manager.micromanagers.stack.StackManager;
 
 import java.io.Serializable;
 import java.util.Stack;
@@ -40,6 +41,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     protected ManagerConfig mConfig = new ManagerConfig();
     protected ManagerState mState = new ManagerState();
+    protected StackManager mStackManager = new StackManager();
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -131,22 +133,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animOut -> The animation of the fragment that is being sent to the back.
      */
     public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
-        navFragment.setNavigationManager(this);
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-
-        if (mState.fragmentTagStack.size() >= mConfig.minStackSize) {
-            childFragTrans.setCustomAnimations(animIn, animOut);
-            Fragment topFrag = childFragManager.findFragmentByTag(mState.fragmentTagStack.peek());
-            // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
-            childFragTrans.detach(topFrag);
-        }
-
-        // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(mConfig.pushContainerId, (Fragment)navFragment, navFragment.getNavTag());
-        addFragmentToStack(navFragment);
-
-        childFragTrans.commit();
+        mStackManager.pushFragment(this, mState, mConfig, navFragment, animIn, animOut);
 
         if (mListener != null) {
             mListener.didPresentFragment();
@@ -171,23 +158,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animOut -> The animation of the fragment that is being dismissed.
      */
     public void popFragment(int animIn, int animOut) {
-        if (mState.fragmentTagStack.size() > mConfig.minStackSize) {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(animIn, animOut);
-            childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
-
-            if (mState.fragmentTagStack.size() > 0) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-            }
-
-            childFragTrans.commit();
-        }
-        else {
-            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
-            // TODO: Dismiss root and self?
-            getActivity().onBackPressed();
-        }
+        mStackManager.popFragment(this, mState, mConfig, animIn, animOut);
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -250,19 +221,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      stackPosition -> The position (0 indexed) that you would like to pop to.
      */
     protected void clearNavigationStackToPosition(int stackPosition) {
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-
-        while (mState.fragmentTagStack.size() > stackPosition) {
-            childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
-        }
-
-        if (mState.fragmentTagStack.size() > 0) {
-            childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-        }
-
-        childFragTrans.commit();
+        mStackManager.clearNavigationStackToPosition(this, mState, stackPosition);
     }
 
     /**
