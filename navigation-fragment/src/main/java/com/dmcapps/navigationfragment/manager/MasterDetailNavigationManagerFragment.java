@@ -40,11 +40,10 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
     private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
 
-    private INavigationFragment mMasterFragment;
-    private INavigationFragment mDetailFragment;
-
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
+
+    private boolean mManageMasterActionBarToggle = false;
 
     public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
         return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
@@ -60,11 +59,15 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         mLifecycleManager = new MasterDetailLifecycleManager();
     }
 
+    public void setManageMasterActionBarToggle(boolean manageToggle) {
+        mManageMasterActionBarToggle = manageToggle;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(mManageMasterActionBarToggle);
     }
 
     @Override

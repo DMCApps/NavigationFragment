@@ -97,7 +97,9 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
                 case 1:
                     MasterFragment masterFrag = MasterFragment.newInstance();
                     SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
-                    return MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
+                    MasterDetailNavigationManagerFragment managerFragment = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
+                    managerFragment.setManageMasterActionBarToggle(true);
+                    return managerFragment;
                 case 2:
                     return SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 2", 0));
             }

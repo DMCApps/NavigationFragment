@@ -260,6 +260,8 @@ The manager will show and hide the button based on the current fragment that the
 
 ### Additional functionality not noted
 
+####Chaning Default Animations
+
 You can also override the default animations of the `NavigationManagerFragment` so that it will always run your animations. To do so immediately after creating the `NavigationManagerFragment` you can call the following methods
 
 ```java
@@ -270,6 +272,14 @@ public void setDefaultDismissAnimations(int animIn, int animOut);
 ```
 
 These methods will tell the manager to use your defined animations when presenting and dismissing fragments. When you need to use a one time animation change. Use the methods defined in the above sections when presenting/dismissing that allow overriding of the animations on a single transaction.
+
+####MasterDetailNavigationManagerFragment toggle for master page Portrait vs Landscape
+
+When the Master Detail is in Portrait mode the Master will automatically hide. You can have the manager automatically add a button to the action bar to show and hide the Master page when in Portrait. The button is defaulted off but can be added to the action bar with a method on the `MasterDetailNavigationManagerFragment`. After creating the Manager and BEFORE adding it to the screen, call the following method on the manager:
+
+```java
+setManageMasterActionBarToggle(boolean manageToggle);
+``` 
 
 ##Change Log
 
@@ -334,9 +344,9 @@ These methods will tell the manager to use your defined animations when presenti
 ###In Progress
 - Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
 - Code clean up into smaller managers to use Builder pattern more effectively
+- Hide master toggle as default. Show if user sets it to be automatic.
 
 ###Next Release
-- Hide master toggle as default. Show if user sets it to be automatic.
 - Add method for showing the back button based on the stack position.
 - Add in ability to update the icon on the back button.
 - Ability to invalidate menu from NavigationFragment.

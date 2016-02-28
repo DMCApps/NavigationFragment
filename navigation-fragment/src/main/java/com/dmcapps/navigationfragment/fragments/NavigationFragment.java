@@ -37,6 +37,9 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         else if (getParentFragment() instanceof MasterDetailNavigationManagerFragment) {
             return (MasterDetailNavigationManagerFragment)getParentFragment();
         }
+        else if (getParentFragment() instanceof NavigationManagerFragment) {
+            return (NavigationManagerFragment)getParentFragment();
+        }
         else {
             throw new RuntimeException("Parent is not a known NavigationManagerFragment.");
         }

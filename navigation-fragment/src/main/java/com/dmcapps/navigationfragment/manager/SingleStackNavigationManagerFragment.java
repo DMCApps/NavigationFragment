@@ -28,6 +28,10 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
 
+    // NOTE I need to pass in the fragments to be used by the constructor.
+    // If I serialize them into the bundle then whenever the application is backgrounded
+    // or an activity is launched, the application will crash with NotSerializableException
+    // if any of the Fragments in the stack have properties that are no Serializable.
     public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
         mConfig.rootFragment = rootFragment;
         mLifecycleManager = new SingleStackLifecycleManager();
