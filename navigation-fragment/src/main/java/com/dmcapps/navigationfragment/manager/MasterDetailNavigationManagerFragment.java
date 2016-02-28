@@ -96,17 +96,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mState.isTablet = getView().findViewById(R.id.master_detail_container_master) != null;
-        mState.isPortrait = getView().findViewById(R.id.master_detail_layout_main_portrait) != null;
-
-        mConfig.minStackSize = isTablet() ? TABLET_ACTIONABLE_STACK_SIZE : PHONE_ACTIONABLE_STACK_SIZE;
-        mConfig.pushContainerId = R.id.master_detail_container_detail;
-    }
-
-    @Override
     public void pushFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
         hideMaster();
         super.pushFragment(navFragment, animationIn, animationOut);
@@ -118,7 +107,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     public void toggleMaster() {
         if (shouldMasterToggle()) {
-            final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+            final View masterFrame = getView().findViewById(R.id.navigation_manager_container_master);
             if (masterFrame.getVisibility() == View.INVISIBLE) {
                 showMaster();
             } else {
@@ -129,7 +118,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void showMaster() {
-        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+        final View masterFrame = getView().findViewById(R.id.navigation_manager_container_master);
         if (shouldMasterToggle() && masterFrame.getVisibility() == View.INVISIBLE) {
             masterFrame.setVisibility(View.VISIBLE);
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_from_left);
@@ -139,7 +128,7 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
 
     // TODO: Better animation handling. This doesn't allow for custom animations.
     public void hideMaster() {
-        final View masterFrame = getView().findViewById(R.id.master_detail_container_master);
+        final View masterFrame = getView().findViewById(R.id.navigation_manager_container_master);
 
         if (shouldMasterToggle() && masterFrame.getVisibility() == View.VISIBLE) {
             Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_to_left);

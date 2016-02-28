@@ -17,6 +17,8 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
  */
 public class SingleStackLifecycleManager implements ILifecycleManager {
 
+    private static final int SINGLE_STACK_MIN_ACTION_SIZE = 1;
+
     @Override
     public void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
         // No Fragments have been added. Attach the root.
@@ -37,7 +39,22 @@ public class SingleStackLifecycleManager implements ILifecycleManager {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_single_stack_navigation_manager, container, false);
+        return inflater.inflate(R.layout.fragment_navigation_manager, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, ManagerState state, ManagerConfig config) {
+        state.isTablet = view.findViewById(R.id.navigation_manager_tablet_land) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
+        state.isPortrait = view.findViewById(R.id.navigation_manager_phone_portrait) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
+
+        config.minStackSize = SINGLE_STACK_MIN_ACTION_SIZE;
+        config.pushContainerId = R.id.navigation_manager_fragment_container;
+
+        if (view.findViewById(R.id.navigation_manager_container_master) != null) {
+            view.findViewById(R.id.navigation_manager_container_master).setVisibility(View.GONE);
+        }
     }
 
     @Override

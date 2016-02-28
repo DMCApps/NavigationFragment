@@ -89,6 +89,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLifecycleManager.onViewCreated(view, mState, mConfig);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mLifecycleManager.onPause(this, mState);

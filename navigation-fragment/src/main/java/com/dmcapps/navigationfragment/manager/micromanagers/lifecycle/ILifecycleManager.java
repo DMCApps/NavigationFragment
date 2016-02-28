@@ -20,6 +20,8 @@ public interface ILifecycleManager {
 
     View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
+    void onViewCreated(View view, ManagerState state, ManagerConfig config);
+
     void onPause(NavigationManagerFragment navMgrFragment, ManagerState state);
 
 }
