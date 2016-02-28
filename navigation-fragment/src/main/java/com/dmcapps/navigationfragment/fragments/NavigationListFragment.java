@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
@@ -20,7 +21,6 @@ import java.util.UUID;
  */
 public class NavigationListFragment extends ListFragment implements INavigationFragment {
 
-    private NavigationManagerFragment mNavigationManager;
     private final String TAG;
 
     public NavigationListFragment() {
@@ -31,36 +31,40 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         return TAG;
     }
 
-    public void setNavigationManager(NavigationManagerFragment navigationManager) {
-        mNavigationManager = navigationManager;
-    }
-
     public NavigationManagerFragment getNavigationManager() {
-        return mNavigationManager;
+        if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
+            return (SingleStackNavigationManagerFragment)getParentFragment();
+        }
+        else if (getParentFragment() instanceof MasterDetailNavigationManagerFragment) {
+            return (MasterDetailNavigationManagerFragment)getParentFragment();
+        }
+        else {
+            throw new RuntimeException("Parent is not a NavigationManagerFragment.");
+        }
     }
 
     public void presentFragment(INavigationFragment navFragment) {
-        mNavigationManager.pushFragment(navFragment);
+        getNavigationManager().pushFragment(navFragment);
     }
 
     public void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        mNavigationManager.pushFragment(navFragment, animationIn, animationOut);
+        getNavigationManager().pushFragment(navFragment, animationIn, animationOut);
     }
 
     public void dismissToRoot() {
-        mNavigationManager.clearNavigationStackToRoot();
+        getNavigationManager().clearNavigationStackToRoot();
     }
 
     public void dismissFragment() {
-        mNavigationManager.popFragment();
+        getNavigationManager().popFragment();
     }
 
     public void dismissFragment(int animationIn, int animationOut) {
-        mNavigationManager.popFragment(animationIn, animationOut);
+        getNavigationManager().popFragment(animationIn, animationOut);
     }
 
     public void replaceRootFragment(INavigationFragment navFragment) {
-        mNavigationManager.replaceRootFragment(navFragment);
+        getNavigationManager().replaceRootFragment(navFragment);
     }
 
     /**
@@ -104,21 +108,21 @@ public class NavigationListFragment extends ListFragment implements INavigationF
 
     @Override
     public void setMasterToggleTitle(String title) {
-        ActionBarManager.setMasterToggleTitle(mNavigationManager, title);
+        ActionBarManager.setMasterToggleTitle(getNavigationManager(), title);
     }
 
     @Override
     public void setMasterToggleTitle(int resId) {
-        ActionBarManager.setMasterToggleTitle(mNavigationManager, resId);
+        ActionBarManager.setMasterToggleTitle(getNavigationManager(), resId);
     }
 
     @Override
     public boolean isPortrait() {
-        return mNavigationManager.isPortrait();
+        return getNavigationManager().isPortrait();
     }
 
     @Override
     public boolean isTablet() {
-        return mNavigationManager.isTablet();
+        return getNavigationManager().isTablet();
     }
 }
