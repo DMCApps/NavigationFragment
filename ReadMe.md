@@ -341,10 +341,12 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Future Plans and Examples
 
-###In Progress
+###Complete and Ready for next release
 - Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
-- Code clean up into smaller managers to use Builder pattern more effectively
 - Hide master toggle as default. Show if user sets it to be automatic.
+
+###In Progress
+- Code clean up into smaller managers to use Builder pattern more effectively
 
 ###Next Release
 - Add method for showing the back button based on the stack position.
