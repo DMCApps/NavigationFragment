@@ -22,7 +22,7 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
 
         // No Fragments have been added. Attach the master and detail.
         if (state.fragmentTagStack.size() == 0) {
-            // config.masterFragment.setNavigationManager(navMgrFragment);
+            config.masterFragment.setNavigationManager(navMgrFragment);
             FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             if (state.isTablet) {

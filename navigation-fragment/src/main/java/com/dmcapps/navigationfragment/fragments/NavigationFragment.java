@@ -22,6 +22,8 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
 
     private final String TAG;
 
+    private NavigationManagerFragment mNavMgrFragment;
+
     public NavigationFragment() {
         TAG = UUID.randomUUID().toString();
     }
@@ -30,7 +32,14 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         return TAG;
     }
 
+    public void setNavigationManager(NavigationManagerFragment navMgrFragment) {
+        mNavMgrFragment = navMgrFragment;
+    }
+
     public NavigationManagerFragment getNavigationManager() {
+        return mNavMgrFragment;
+
+        /*
         if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
             return (SingleStackNavigationManagerFragment)getParentFragment();
         }
@@ -43,6 +52,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         else {
             throw new RuntimeException("Parent is not a known NavigationManagerFragment.");
         }
+        */
     }
 
     public void presentFragment(INavigationFragment navFragment) {

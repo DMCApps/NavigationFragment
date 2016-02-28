@@ -23,6 +23,8 @@ public class NavigationListFragment extends ListFragment implements INavigationF
 
     private final String TAG;
 
+    private NavigationManagerFragment mNavMgrFragment;
+
     public NavigationListFragment() {
         TAG = UUID.randomUUID().toString();
     }
@@ -31,7 +33,13 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         return TAG;
     }
 
+    public void setNavigationManager(NavigationManagerFragment navMgrFragment) {
+        mNavMgrFragment = navMgrFragment;
+    }
+
     public NavigationManagerFragment getNavigationManager() {
+        return mNavMgrFragment;
+        /*
         if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
             return (SingleStackNavigationManagerFragment)getParentFragment();
         }
@@ -41,6 +49,7 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         else {
             throw new RuntimeException("Parent is not a NavigationManagerFragment.");
         }
+        */
     }
 
     public void presentFragment(INavigationFragment navFragment) {
