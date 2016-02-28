@@ -37,9 +37,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     // and also to tell the activity that a view has been pushed and hence to now show
     // the home button anymore.
 
-    private static final int TABLET_ACTIONABLE_STACK_SIZE = 2;
-    private static final int PHONE_ACTIONABLE_STACK_SIZE = 1;
-
     private String mMasterToggleTitle;
     private int mMasterToggleResId = -1;
 
