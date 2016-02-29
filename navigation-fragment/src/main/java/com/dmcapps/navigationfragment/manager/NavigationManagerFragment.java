@@ -148,7 +148,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
-     * Uses default animation of slide in from left and slide out to right.
+     * Uses default animation of slide in from left and slide out to right animation.
      */
     public void popFragment() {
         popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
@@ -181,8 +181,22 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @return
      *      {@link INavigationFragment} that is on the top of the stack.
      */
-    public INavigationFragment topFragment() {
-        return (INavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(mState.fragmentTagStack.peek());
+    public INavigationFragment getTopFragment() {
+        return getFragmentAtIndex(mState.fragmentTagStack.size() - 1);
+    }
+
+    public INavigationFragment getRootFragment() {
+        return getFragmentAtIndex(0);
+    }
+
+    /**
+     * Access the fragment at the given index of the navigation stack.
+     *
+     * @return
+     *      {@link INavigationFragment} that is on the top of the stack.
+     */
+    public INavigationFragment getFragmentAtIndex(int index) {
+        return mStackManager.getFragmentAtIndex(this, mState, index);
     }
 
     /**

@@ -30,9 +30,9 @@ public class MasterFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 // Example when we have a master detail showing
-                if (getNavigationManager().topFragment() instanceof SampleFragment) {
+                if (getNavigationManager().getTopFragment() instanceof SampleFragment) {
                     // Just for the example so that we can keep the count correct.
-                    int fragCount = ((SampleFragment)getNavigationManager().topFragment()).getFragCount();
+                    int fragCount = ((SampleFragment)getNavigationManager().getTopFragment()).getFragCount();
                     presentFragment(SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1));
                 }
                 // This example is when we are collapsed on a phone.

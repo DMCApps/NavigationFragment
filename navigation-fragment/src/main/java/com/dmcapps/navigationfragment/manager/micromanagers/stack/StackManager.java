@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 
@@ -68,5 +70,23 @@ public class StackManager implements IStackManager {
         }
 
         childFragTrans.commit();
+    }
+
+    /**
+     * Access the fragment at the given index of the navigation stack.
+     *
+     * @param
+     *      manager -> The current {@link NavigationManagerFragment} managing the state of the Navigation.
+     * @param
+     *      state -> The current {@link ManagerState} that has the current navigation stack state.
+     * @param
+     *      index -> The index of the {@link INavigationFragment} you would like to get.
+     * @return
+     *      {@link INavigationFragment} that is at the given index.
+     */
+    public INavigationFragment getFragmentAtIndex(NavigationManagerFragment manager, ManagerState state, int index) {
+        String navFragTag = state.fragmentTagStack.get(index);
+        FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+        return (INavigationFragment)childFragManager.findFragmentByTag(navFragTag);
     }
 }
