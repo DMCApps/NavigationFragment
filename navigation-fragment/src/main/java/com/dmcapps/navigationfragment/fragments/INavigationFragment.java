@@ -1,5 +1,7 @@
 package com.dmcapps.navigationfragment.fragments;
 
+import android.graphics.drawable.Drawable;
+
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 
 import java.io.Serializable;
@@ -28,6 +30,13 @@ public interface INavigationFragment extends Serializable {
 
     void setMasterToggleTitle(String title);
     void setMasterToggleTitle(int resId);
+
+    /*
+    void setDisplayHomeAsUpEnabled(boolean enabled);
+
+    void setHomeAsUpIndicator(Drawable indicator);
+    void setHomeAsUpIndicator(int resId);
+    */
 
     boolean isPortrait();
     boolean isTablet();

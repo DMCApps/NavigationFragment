@@ -18,6 +18,9 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
  */
 public class MasterDetailLifecycleManager implements ILifecycleManager {
 
+    private static final int MASTER_DETAIL_PHONE_MIN_ACTION_SIZE = 1;
+    private static final int MASTER_DETAIL_TABLET_MIN_ACTION_SIZE = 2;
+
     public void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
 
         // No Fragments have been added. Attach the master and detail.
@@ -27,7 +30,7 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             if (state.isTablet) {
                 // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.master_detail_container_master, (Fragment) config.masterFragment, config.masterFragment.getNavTag());
+                childFragTrans.add(R.id.navigation_manager_container_master, (Fragment) config.masterFragment, config.masterFragment.getNavTag());
                 navMgrFragment.addFragmentToStack(config.masterFragment);
             }
             else {
@@ -60,9 +63,21 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_master_detail_navigation_manager, container, false);
+        return inflater.inflate(R.layout.fragment_navigation_manager, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, ManagerState state, ManagerConfig config) {
+        state.isTablet = view.findViewById(R.id.navigation_manager_tablet_land) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
+        state.isPortrait = view.findViewById(R.id.navigation_manager_phone_portrait) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
+
+        config.minStackSize = state.isTablet ? MASTER_DETAIL_TABLET_MIN_ACTION_SIZE : MASTER_DETAIL_PHONE_MIN_ACTION_SIZE;
+        config.pushContainerId = R.id.navigation_manager_fragment_container;
+    }
+
+    @Override
     public void onPause(NavigationManagerFragment navMgrFragment, ManagerState state) {
 
         FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();

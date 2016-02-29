@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.1'
+compile 'com.dmcapps:navigation-fragment:0.1.1.1'
 ```
 
 ##Current Version
 
-0.1.1
+0.1.1.1
 
 ##Introduction
 
@@ -260,6 +260,8 @@ The manager will show and hide the button based on the current fragment that the
 
 ### Additional functionality not noted
 
+####Chaning Default Animations
+
 You can also override the default animations of the `NavigationManagerFragment` so that it will always run your animations. To do so immediately after creating the `NavigationManagerFragment` you can call the following methods
 
 ```java
@@ -271,7 +273,24 @@ public void setDefaultDismissAnimations(int animIn, int animOut);
 
 These methods will tell the manager to use your defined animations when presenting and dismissing fragments. When you need to use a one time animation change. Use the methods defined in the above sections when presenting/dismissing that allow overriding of the animations on a single transaction.
 
+####MasterDetailNavigationManagerFragment toggle for master page Portrait vs Landscape
+
+When the Master Detail is in Portrait mode the Master will automatically hide. You can have the manager automatically add a button to the action bar to show and hide the Master page when in Portrait. The button is defaulted off but can be added to the action bar with a method on the `MasterDetailNavigationManagerFragment`. After creating the Manager and BEFORE adding it to the screen, call the following method on the manager:
+
+```java
+setManageMasterActionBarToggle(boolean manageToggle);
+``` 
+
 ##Change Log
+
+###0.1.2.0
+- Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
+- Hide master toggle as default. Show if user sets it to be automatic.
+- Added in an example for [Git issue 5](https://github.com/DMCApps/NavigationFragment/issues/5) it won't work).
+- Added in methods in the NavigationManagerFragment for getting the NavigationFragment at the root, top and at an index.
+
+###0.1.1.1
+- Upgraded to use gradle 1.5.0
 
 ###0.1.1
 - Additional refactoring
@@ -328,18 +347,22 @@ These methods will tell the manager to use your defined animations when presenti
 
 ##Future Plans and Examples
 
+###Complete Features in 'develop' Branch
+
+###In Progress
+- Code clean up into smaller managers to use Builder pattern more effectively
+
 ###Next Release
-[] Code clean up into smaller managers to use Builder pattern more effectively
-[] Hide master toggle as default. Show if user sets it to be automatic.
-[] Add method for showing the back button based on the stack position.
-[] Update clearStack to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many.
+- Add method for showing the back button based on the stack position.
+- Add in ability to update the icon on the back button.
+- Ability to invalidate menu from NavigationFragment.
 
 ###Future Implementation Notes
+- Ability to pass bundle when using present/dismiss.
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
 - Animation making child not disappear before the animation happens http://stackoverflow.com/a/23276145/845038
-- Expose code for getRootFragment(), getMasterFragment() and getDetailFragment() using the fragment stack.
 - Builder Pattern for NavigationManager
     - NavigationManager.Builder(NavType)
     - setDefaultAnimations()
@@ -349,9 +372,11 @@ These methods will tell the manager to use your defined animations when presenti
     - setManageMasterToggle()
 
 ###TO BE DECIDED/FIGURE OUT
+- Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager. (When I went to implement this, I came to the conclusion that it might not work. If you try to do what is explained in [issue 5](https://github.com/DMCApps/NavigationFragment/issues/5) it won't work). Maybe a method that keeps checking the parents until it finds a NavigationManagerFragment and then present on that one?
 - Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
 - Should the manager manage the back button (ie home up enabled).
 - Is there a way to make the on back pressed in the fragment vs the activity?
+- Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 
 ##Uploading updates to jCenter and Maven
 

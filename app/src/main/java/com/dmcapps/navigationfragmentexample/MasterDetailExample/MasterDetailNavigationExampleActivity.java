@@ -35,7 +35,9 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         if (mNavigationManagerFragmentTag == null) {
             MasterFragment masterFrag = MasterFragment.newInstance();
             SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
-            addFragment(MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag));
+            MasterDetailNavigationManagerFragment managerFragment = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
+            managerFragment.setManageMasterActionBarToggle(true);
+            addFragment(managerFragment);
         }
         else {
             showFragment(mNavigationManagerFragmentTag);
