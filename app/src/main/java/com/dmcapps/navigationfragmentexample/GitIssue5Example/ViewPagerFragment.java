@@ -17,6 +17,7 @@ import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragme
 import com.dmcapps.navigationfragmentexample.DrawerExample.NonNavigationFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
+import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
 
 /**
@@ -49,10 +50,10 @@ public class ViewPagerFragment extends NavigationFragment {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager)view.findViewById(R.id.view_pager_container);
+        mViewPager = (ViewPager) view.findViewById(R.id.view_pager_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout)view.findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -79,6 +80,10 @@ public class ViewPagerFragment extends NavigationFragment {
                     return navFragment;
                 case 2:
                     return NonNavigationFragment.newInstance("Non Nav Fragment 2");
+                case 3:
+                    UltimateSwipeRefreshFragment navFlag = UltimateSwipeRefreshFragment.newInstance("NavUlt", 0);
+                    navFlag.setNavigationManager(getNavigationManager());
+                    return navFlag;
             }
             return null;
         }
@@ -86,7 +91,7 @@ public class ViewPagerFragment extends NavigationFragment {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -98,6 +103,8 @@ public class ViewPagerFragment extends NavigationFragment {
                     return "View Pager Navigation";
                 case 2:
                     return "Single Stack 2";
+                case 3:
+                    return "urv recyclerview";
             }
             return null;
         }

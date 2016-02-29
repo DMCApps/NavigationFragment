@@ -78,10 +78,9 @@ public class SampleFragment extends NavigationFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sample, container, false);
+        ((TextView) view.findViewById(R.id.sample_tv_text)).setText((mFragCount + 1) + " " + mFragText);
 
-        ((TextView)view.findViewById(R.id.sample_tv_text)).setText((mFragCount + 1) + " " + mFragText);
-
-        edit1 = (EditText)view.findViewById(R.id.sample_et_text_1);
+        edit1 = (EditText) view.findViewById(R.id.sample_et_text_1);
         edit1.setText(model.text1);
         edit1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -100,7 +99,7 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
-        EditText edit2 = (EditText)view.findViewById(R.id.sample_et_text_2);
+        EditText edit2 = (EditText) view.findViewById(R.id.sample_et_text_2);
         edit2.setText(model.text2);
         edit2.addTextChangedListener(new TextWatcher() {
             @Override
@@ -119,7 +118,7 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
-        EditText edit3 = (EditText)view.findViewById(R.id.sample_et_text_3);
+        EditText edit3 = (EditText) view.findViewById(R.id.sample_et_text_3);
         edit3.setText(model.text3);
         edit3.addTextChangedListener(new TextWatcher() {
             @Override
@@ -138,28 +137,28 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
-        ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismissFragment();
             }
         });
 
-        ((Button)view.findViewById(R.id.sample_btn_replace_root)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.sample_btn_replace_root)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
             }
         });
 
-        ((Button)view.findViewById(R.id.sample_btn_launch_activity)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.sample_btn_launch_activity)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().startActivity(new Intent(getContext(), TestIntentLaunchingActivity.class));
             }
         });
 
-        ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
