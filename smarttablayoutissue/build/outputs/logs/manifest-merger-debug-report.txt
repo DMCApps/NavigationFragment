@@ -1,0 +1,127 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:2:1-24:12
+	package
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:3:5-42
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+application
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:5:5-22:19
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v13:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v13/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [in.srain.cube:ultra-ptr:1.0.11] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/in.srain.cube/ultra-ptr/1.0.11/AndroidManifest.xml:11:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.dmcapps:navigation-fragment:0.1.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.dmcapps/navigation-fragment/0.1.1.1/AndroidManifest.xml:11:5-15:19
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:37:5-50:19
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:9:9-41
+	android:supportsRtl
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:10:9-35
+	android:allowBackup
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:7:9-35
+	android:icon
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:8:9-43
+	android:theme
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:11:9-40
+	android:name
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:6:9-43
+activity#com.hkm.smarttablayoutissue.TabPagerS
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:12:9-21:20
+	android:label
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:14:13-45
+	android:theme
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:15:13-56
+	android:name
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:13:13-38
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:16:13-20:29
+action#android.intent.action.MAIN
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:17:17-69
+	android:name
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:17:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:19:17-77
+	android:name
+		ADDED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:19:27-74
+uses-sdk
+INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.hkm.slidingmenulib:libmenu:0.4.58] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.hkm.slidingmenulib/libmenu/0.4.58/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v13:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v13/23.1.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [in.srain.cube:ultra-ptr:1.0.11] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/in.srain.cube/ultra-ptr/1.0.11/AndroidManifest.xml:7:5-9:41
+MERGED from [jp.wasabeef:recyclerview-animators:2.2.0] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/jp.wasabeef/recyclerview-animators/2.2.0/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.ogaclejapan.smarttablayout:library:1.6.0] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.ogaclejapan.smarttablayout/library/1.6.0/AndroidManifest.xml:8:5-10:41
+MERGED from [com.ogaclejapan.smarttablayout:utils-v4:1.6.0] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.ogaclejapan.smarttablayout/utils-v4/1.6.0/AndroidManifest.xml:8:5-10:41
+MERGED from [com.dmcapps:navigation-fragment:0.1.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.dmcapps/navigation-fragment/0.1.1.1/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:31:5-33:41
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+		INJECTED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:35:5-81
+	android:name
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:35:22-78
+activity#me.drakeet.library.ui.CatchActivity
+ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:38:9-49:20
+	android:label
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:41:13-51
+	android:icon
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:40:13-49
+	android:theme
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:43:13-48
+	android:taskAffinity
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:42:13-54
+	android:name
+		ADDED from [me.drakeet.library:crashwoodpecker:0.9.7] /Users/hesk/github/NavigationFragment/smarttablayoutissue/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/AndroidManifest.xml:39:13-63
+android:uses-permission#android.permission.READ_EXTERNAL_STORAGE
+IMPLIED from /Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/AndroidManifest.xml:2:1-24:12 reason: me.drakeet.library requested WRITE_EXTERNAL_STORAGE

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/master_detail_layout_main_land"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/master_detail_container_master"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"/>
+
+    <FrameLayout
+        android:id="@+id/master_detail_container_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/master_detail_container_master"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout><!-- From: file:/Users/hesk/github/NavigationFragment/navigation-fragment/src/main/res/layout-large-land/fragment_master_detail_navigation_manager.xml -->

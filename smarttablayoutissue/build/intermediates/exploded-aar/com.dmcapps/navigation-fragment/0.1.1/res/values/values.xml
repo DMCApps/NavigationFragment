@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/hesk/github/NavigationFragment/navigation-fragment/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">Navigation Fragment</string>
+    <string name="menu_master_detail_toggle_default">Master</string>
+</resources>

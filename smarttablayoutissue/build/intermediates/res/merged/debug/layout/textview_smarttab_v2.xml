@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.neopixl.pixlui.components.textview.TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pixlui="http://schemas.android.com/apk/com.neopixl.pixlui"
+    android:id="@id/feature_custom_tab_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
+    android:gravity="center"
+    android:singleLine="true"
+    android:textAllCaps="false"
+    android:textColor="@color/indicator_off"
+    android:textSize="15sp" /><!-- From: file:/Users/hesk/github/NavigationFragment/smarttablayoutissue/src/main/res/layout/textview_smarttab_v2.xml -->

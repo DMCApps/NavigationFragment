@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AddFloatingActionButton"><attr format="color" name="plusIconColor"/></declare-styleable>
+    <declare-styleable name="FloatActionButton"><attr format="color" name="urv_fab_colorPressed"/><attr format="color" name="urv_fab_colorNormal"/><attr format="float" name="urv_fab_alphaPressed"/><attr format="float" name="urv_fab_alphaNormal"/><attr name="icon"/><attr format="enum" name="urv_fab_size"><enum name="normal" value="0"/><enum name="mini" value="1"/><enum name="noshadow" value="2"/></attr></declare-styleable>
+    <declare-styleable name="FloatingActionsMenu"><attr format="color" name="addButtonColorPressed"/><attr format="color" name="addButtonColorNormal"/><attr format="color" name="addButtonPlusIconColor"/><attr format="boolean" name="addButtonIsHorizontal"/></declare-styleable>
+    <declare-styleable name="SwipeLayout"><attr name="drag_edge"><flag name="left" value="1"/><flag name="right" value="2"/><flag name="top" value="4"/><flag name="bottom" value="8"/></attr><attr format="dimension" name="leftEdgeSwipeOffset"/><attr format="dimension" name="rightEdgeSwipeOffset"/><attr format="dimension" name="topEdgeSwipeOffset"/><attr format="dimension" name="bottomEdgeSwipeOffset"/><attr format="enum" name="show_mode"><enum name="lay_down" value="0"/><enum name="pull_out" value="1"/></attr><attr format="boolean" name="clickToClose"/></declare-styleable>
+    <declare-styleable name="SwipeListView"><attr format="boolean" name="swipeOpenOnLongPress"/><attr format="boolean" name="onlyOneOpenedWhenSwipe"/><attr format="integer" name="swipeAnimationTime"/><attr format="dimension" name="swipeOffsetLeft"/><attr format="dimension" name="swipeOffsetRight"/><attr format="boolean" name="swipeCloseAllItemsWhenMoveList"/><attr format="reference" name="swipeFrontView"/><attr format="reference" name="swipeBackView"/><attr format="enum" name="swipeMode"><enum name="none" value="0"/><enum name="both" value="1"/><enum name="right" value="2"/><enum name="left" value="3"/></attr><attr format="enum" name="swipeActionLeft"><enum name="reveal" value="0"/><enum name="dismiss" value="1"/><enum name="choice" value="2"/></attr><attr format="enum" name="swipeActionRight"><enum name="reveal" value="0"/><enum name="dismiss" value="1"/><enum name="choice" value="2"/></attr><attr format="reference" name="swipeDrawableChecked"/><attr format="reference" name="swipeDrawableUnchecked"/></declare-styleable>
+    <declare-styleable name="UltimateRecyclerview"><attr format="boolean" name="recyclerviewClipToPadding"/><attr format="dimension" name="recyclerviewPadding"/><attr format="dimension" name="recyclerviewPaddingTop"/><attr format="dimension" name="recyclerviewPaddingBottom"/><attr format="dimension" name="recyclerviewPaddingLeft"/><attr format="dimension" name="recyclerviewPaddingRight"/><attr format="reference" name="recyclerviewEmptyView"/><attr format="reference" name="recyclerviewFloatingActionView"/><attr format="enum" name="recyclerviewScrollbars"><enum name="none" value="0"/><enum name="vertical" value="1"/><enum name="horizontal" value="2"/></attr><attr format="reference" name="recyclerviewDefaultSwipeColor"/></declare-styleable>
+    <dimen name="expand_size">8dp</dimen>
+    <dimen name="fab_actions_spacing">16dp</dimen>
+    <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="fab_min_significant_scroll">4dp</dimen>
+    <dimen name="fab_mini_shadow_size">6dp</dimen>
+    <dimen name="fab_plus_icon_size">14dp</dimen>
+    <dimen name="fab_plus_icon_stroke">2dp</dimen>
+    <dimen name="fab_shadow_offset">3dp</dimen>
+    <dimen name="fab_shadow_radius">9dp</dimen>
+    <dimen name="fab_shadow_size">8dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_stroke_width">0.5dp</dimen>
+    <dimen name="item_margin">16dp</dimen>
+    <item name="exp_indication_arrow" type="id"/>
+    <item name="exp_section_adjustment_layout" type="id"/>
+    <item name="exp_section_notification_number" type="id"/>
+    <item name="exp_section_ripple_wrapper_click" type="id"/>
+    <item name="exp_section_title" type="id"/>
+    <item name="fab_expand_menu_button" type="id"/>
+    <item name="recyclerview_swipe" type="id"/>
+    <item name="urv_main_list" type="id"/>
+    <item name="urv_main_progress_bar" type="id"/>
+    <string name="app_name">UltimateRecyclerView</string>
+</resources>
