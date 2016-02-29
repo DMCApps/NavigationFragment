@@ -141,14 +141,14 @@ public class SampleFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.dismissFragment();
+                dismissFragment();
             }
         });
 
         ((Button)view.findViewById(R.id.sample_btn_replace_root)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
+                replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
             }
         });
 
@@ -162,7 +162,7 @@ public class SampleFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
+                presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
             }
         });
 

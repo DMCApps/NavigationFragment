@@ -30,14 +30,14 @@ public class MasterFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 // Example when we have a master detail showing
-                if (MasterFragment.this.getNavigationManager().topFragment() instanceof SampleFragment) {
+                if (getNavigationManager().getTopFragment() instanceof SampleFragment) {
                     // Just for the example so that we can keep the count correct.
-                    int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
-                    MasterFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1));
+                    int fragCount = ((SampleFragment)getNavigationManager().getTopFragment()).getFragCount();
+                    presentFragment(SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1));
                 }
                 // This example is when we are collapsed on a phone.
                 else {
-                    MasterFragment.this.presentFragment(SampleFragment.newInstance("Fragment added to the Stack", 0));
+                    presentFragment(SampleFragment.newInstance("Fragment added to the Stack", 0));
                 }
             }
         });
@@ -45,14 +45,14 @@ public class MasterFragment extends NavigationFragment {
         ((Button)view.findViewById(R.id.master_btn_replace)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MasterFragment.this.replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
+                replaceRootFragment(SampleFragment.newInstance("This is a replaced root Fragment", 0));
             }
         });
 
         ((Button)view.findViewById(R.id.master_btn_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MasterFragment.this.dismissFragment();
+                dismissFragment();
             }
         });
 

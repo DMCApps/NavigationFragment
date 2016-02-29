@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +21,9 @@ import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
+import com.dmcapps.navigationfragment.manager.micromanagers.stack.StackManager;
 
 import java.io.Serializable;
 import java.util.Stack;
@@ -38,6 +41,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     protected ManagerConfig mConfig = new ManagerConfig();
     protected ManagerState mState = new ManagerState();
+    protected StackManager mStackManager = new StackManager();
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -73,6 +77,9 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     @Override
     public void onResume() {
         super.onResume();
+
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mLifecycleManager.onResume(this, mState, mConfig);
     }
 
@@ -82,10 +89,30 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLifecycleManager.onViewCreated(view, mState, mConfig);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mLifecycleManager.onPause(this, mState);
     }
+
+    /*
+     * This needs to be moved to the NavigationFragment to automatically handle the back button.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+     */
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
@@ -101,6 +128,8 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     /**
      * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
      * the animations defined.
+     * Detaching the top fragment if the stack is at or above minStackSize
+     * Adding the new fragment to the containerId
      *
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
@@ -110,44 +139,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animOut -> The animation of the fragment that is being sent to the back.
      */
     public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
-        pushFragment(mConfig.minStackSize, mConfig.pushContainerId, navFragment, animIn, animOut);
-    }
-
-    /**
-     * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
-     * the animations defined.
-     * Detaching the top fragment if the stack is at or above stackSize
-     * Adding the new fragment to the containerId
-     *
-     * @param
-     *      detachStackSize -> The size of the stack required before detaching begins
-     * @param
-     *      containerId -> The id of the container the fragment should be attached to.
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being sent to the back.
-     */
-    public void pushFragment(int detachStackSize, int containerId, INavigationFragment navFragment, int animIn, int animOut) {
-        navFragment.setNavigationManager(this);
-        FragmentManager childFragManager = getRetainedChildFragmentManager();
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-
-        // TODO: Better way to do this?
-        if (mState.fragmentTagStack.size() >= detachStackSize) {
-            childFragTrans.setCustomAnimations(animIn, animOut);
-            Fragment topFrag = childFragManager.findFragmentByTag(mState.fragmentTagStack.peek());
-            // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
-            childFragTrans.detach(topFrag);
-        }
-
-        // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(containerId, (Fragment)navFragment, navFragment.getNavTag());
-        addFragmentToStack(navFragment);
-
-        childFragTrans.commit();
+        mStackManager.pushFragment(this, mState, mConfig, navFragment, animIn, animOut);
 
         if (mListener != null) {
             mListener.didPresentFragment();
@@ -156,23 +148,10 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
-     * Uses default animation of slide in from left and slide out to right.
+     * Uses default animation of slide in from left and slide out to right animation.
      */
     public void popFragment() {
         popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
-    }
-
-    /**
-     * Pop the current fragment off the top of the stack and dismiss it using
-     * the animations defined.
-     *
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being dismissed.
-     */
-    public void popFragment(int animIn, int animOut) {
-        popFragment(mConfig.minStackSize, true, animIn, animOut);
     }
 
     /**
@@ -180,31 +159,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * the passed in stackSize. Dismiss it using the animations defined.
      *
      * @param
-     *      stackSize -> The stack size that the fragment should handle
-     * @param
-     *      shouldAttach -> After completing the pop should the previous fragment be attached
-     * @param
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being dismissed.
      */
-    protected void popFragment(int stackSize, boolean shouldAttach, int animIn, int animOut) {
-        if (mState.fragmentTagStack.size() > stackSize) {
-            FragmentManager childFragManager = getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(animIn, animOut);
-            childFragTrans.remove(childFragManager.findFragmentByTag(mState.fragmentTagStack.pop()));
-            // TODO: Clean up this logic
-            if ((shouldAttach || stackSize == mState.fragmentTagStack.size()) && mState.fragmentTagStack.size() > 0) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(mState.fragmentTagStack.peek()));
-            }
-            childFragTrans.commit();
-        }
-        else {
-            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
-            // TODO: Dismiss root and self?
-            getActivity().onBackPressed();
-        }
+    public void popFragment(int animIn, int animOut) {
+        mStackManager.popFragment(this, mState, mConfig, animIn, animOut);
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -221,8 +181,22 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * @return
      *      {@link INavigationFragment} that is on the top of the stack.
      */
-    public INavigationFragment topFragment() {
-        return (INavigationFragment)getRetainedChildFragmentManager().findFragmentByTag(mState.fragmentTagStack.peek());
+    public INavigationFragment getTopFragment() {
+        return getFragmentAtIndex(mState.fragmentTagStack.size() - 1);
+    }
+
+    public INavigationFragment getRootFragment() {
+        return getFragmentAtIndex(0);
+    }
+
+    /**
+     * Access the fragment at the given index of the navigation stack.
+     *
+     * @return
+     *      {@link INavigationFragment} that is on the top of the stack.
+     */
+    public INavigationFragment getFragmentAtIndex(int index) {
+        return mStackManager.getFragmentAtIndex(this, mState, index);
     }
 
     /**
@@ -242,37 +216,32 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     /**
-     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
-     */
-    public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(mConfig.minStackSize, false);
-    }
-
-    /**
      * Remove all fragments from the stack including the Root. The add the given {@link INavigationFragment}
      * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
      *
      * @param
-     *      navFragment
+     *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
     public void replaceRootFragment(INavigationFragment navFragment) {
-        clearNavigationStackToPosition(mConfig.minStackSize - 1, false);
+        clearNavigationStackToPosition(mConfig.minStackSize - 1);
         pushFragment(navFragment, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
     }
 
     /**
-     * Remove all fragments up until the given position. Also takes a flag to tell if the fragments
-     * that are on the stack should be attached as they are pushed (this causes lifecycle methods to run).
+     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
+     */
+    public void clearNavigationStackToRoot() {
+        clearNavigationStackToPosition(mConfig.minStackSize);
+    }
+
+    /**
+     * Remove all fragments up until the given position.
      *
      * @param
      *      stackPosition -> The position (0 indexed) that you would like to pop to.
-     * @param
-     *      shouldAttach -> Wether fragments should be re-attached after the current fragment is popped.
      */
-    protected void clearNavigationStackToPosition(int stackPosition, boolean shouldAttach) {
-        while (mState.fragmentTagStack.size() > stackPosition) {
-            popFragment(stackPosition, shouldAttach, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        }
+    protected void clearNavigationStackToPosition(int stackPosition) {
+        mStackManager.clearNavigationStackToPosition(this, mState, stackPosition);
     }
 
     /**
@@ -285,44 +254,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
     }
-
-    // ===============================
-    // START ACTION BAR HELPER METHODS
-    // ===============================
-
-    /**
-     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
-     *
-     * @param
-     *      resId -> Resource Id of the title you would like to set.
-     */
-    public void setTitle(int resId) {
-        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
-            getActivity().setTitle(resId);
-        }
-        else {
-            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
-        }
-    }
-
-    /**
-     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
-     *
-     * @param
-     *      title -> String of the title you would like to set.
-     */
-    public void setTitle(String title) {
-        if (getActivity() != null && getActivity() instanceof AppCompatActivity) {
-            getActivity().setTitle(title);
-        }
-        else {
-            Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
-        }
-    }
-
-    // ===============================
-    // END ACTION BAR HELPER METHODS
-    // ===============================
 
     // ===============================
     // START DEVICE STATE METHODS

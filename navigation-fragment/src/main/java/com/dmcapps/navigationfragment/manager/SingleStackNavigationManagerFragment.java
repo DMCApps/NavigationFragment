@@ -22,27 +22,16 @@ import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.SingleStac
 public class SingleStackNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = SingleStackNavigationManagerFragment.class.getSimpleName();
 
-    private static final int ACTIONABLE_STACK_SIZE = 1;
-
     public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
 
+    // NOTE I need to pass in the fragments to be used by the constructor.
+    // If I serialize them into the bundle then whenever the application is backgrounded
+    // or an activity is launched, the application will crash with NotSerializableException
+    // if any of the Fragments in the stack have properties that are no Serializable.
     public SingleStackNavigationManagerFragment(INavigationFragment rootFragment) {
         mConfig.rootFragment = rootFragment;
         mLifecycleManager = new SingleStackLifecycleManager();
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mState.isTablet = view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null
-                || view.findViewById(R.id.single_stack_tablet_layout_main_land) != null;
-        mState.isPortrait = view.findViewById(R.id.single_stack_phone_layout_main_portrait) != null
-                || view.findViewById(R.id.single_stack_tablet_layout_main_portrait) != null;
-
-        mConfig.minStackSize = ACTIONABLE_STACK_SIZE;
-        mConfig.pushContainerId = R.id.single_stack_content;
     }
 }

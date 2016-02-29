@@ -1,10 +1,13 @@
 package com.dmcapps.navigationfragment.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
 
@@ -17,8 +20,9 @@ import java.util.UUID;
  */
 public class NavigationFragment extends Fragment implements INavigationFragment {
 
-    private NavigationManagerFragment mNavigationManager;
     private final String TAG;
+
+    private NavigationManagerFragment mNavMgrFragment;
 
     public NavigationFragment() {
         TAG = UUID.randomUUID().toString();
@@ -28,73 +32,109 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         return TAG;
     }
 
-    public void setNavigationManager(NavigationManagerFragment navigationManager) {
-        mNavigationManager = navigationManager;
+    public void setNavigationManager(NavigationManagerFragment navMgrFragment) {
+        mNavMgrFragment = navMgrFragment;
     }
 
     public NavigationManagerFragment getNavigationManager() {
-        return mNavigationManager;
+        return mNavMgrFragment;
+
+        /*
+        if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
+            return (SingleStackNavigationManagerFragment)getParentFragment();
+        }
+        else if (getParentFragment() instanceof MasterDetailNavigationManagerFragment) {
+            return (MasterDetailNavigationManagerFragment)getParentFragment();
+        }
+        else if (getParentFragment() instanceof NavigationManagerFragment) {
+            return (NavigationManagerFragment)getParentFragment();
+        }
+        else {
+            throw new RuntimeException("Parent is not a known NavigationManagerFragment.");
+        }
+        */
     }
 
     public void presentFragment(INavigationFragment navFragment) {
-        mNavigationManager.pushFragment(navFragment);
+        getNavigationManager().pushFragment(navFragment);
     }
 
     public void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        mNavigationManager.pushFragment(navFragment, animationIn, animationOut);
+        getNavigationManager().pushFragment(navFragment, animationIn, animationOut);
     }
 
     public void dismissToRoot() {
-        mNavigationManager.clearNavigationStackToRoot();
+        getNavigationManager().clearNavigationStackToRoot();
     }
 
     public void dismissFragment() {
-        mNavigationManager.popFragment();
+        getNavigationManager().popFragment();
     }
 
     public void dismissFragment(int animationIn, int animationOut) {
-        mNavigationManager.popFragment(animationIn, animationOut);
+        getNavigationManager().popFragment(animationIn, animationOut);
     }
 
     public void replaceRootFragment(INavigationFragment navFragment) {
-        mNavigationManager.replaceRootFragment(navFragment);
+        getNavigationManager().replaceRootFragment(navFragment);
     }
 
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      title -> String of the title you would like to set.
+     */
+    @Override
     public void setTitle(String title) {
-        mNavigationManager.setTitle(title);
+        ActionBarManager.setTitle(getActivity(), title);
     }
 
+    /**
+     * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
+     *
+     * @param
+     *      resId -> Resource Id of the title you would like to set.
+     */
+    @Override
     public void setTitle(int resId) {
-        mNavigationManager.setTitle(resId);
+        ActionBarManager.setTitle(getActivity(), resId);
+    }
+
+    /*
+    @Override
+    public void setDisplayHomeAsUpEnabled(boolean enabled) {
+        ActionBarManager.setDisplayHomeAsUpEnabled(getActivity(), enabled);
     }
 
     @Override
+    public void setHomeAsUpIndicator(Drawable indicator) {
+        ActionBarManager.setHomeAsUpIndicator(getActivity(), indicator);
+    }
+
+    @Override
+    public void setHomeAsUpIndicator(int resId) {
+        ActionBarManager.setHomeAsUpIndicator(getActivity(), resId);
+    }
+    */
+
+    @Override
     public void setMasterToggleTitle(String title) {
-        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
-            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(title);
-        }
-        else {
-            Log.e("NavigationFragment", "setMasterToggleTitle(String) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
-        }
+        ActionBarManager.setMasterToggleTitle(getNavigationManager(), title);
     }
 
     @Override
     public void setMasterToggleTitle(int resId) {
-        if (mNavigationManager instanceof MasterDetailNavigationManagerFragment) {
-            ((MasterDetailNavigationManagerFragment)mNavigationManager).setMasterToggleTitle(resId);
-        }
-        else {
-            Log.e("NavigationFragment", "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
-        }
+        ActionBarManager.setMasterToggleTitle(getNavigationManager(), resId);
     }
 
     @Override
     public boolean isPortrait() {
-        return mNavigationManager.isPortrait();
+        return getNavigationManager().isPortrait();
     }
 
     @Override
     public boolean isTablet() {
-        return mNavigationManager.isTablet();
+        return getNavigationManager().isTablet();
     }
 }

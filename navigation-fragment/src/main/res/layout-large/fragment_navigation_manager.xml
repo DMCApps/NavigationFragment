@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/master_detail_layout_main_portrait"
+    android:id="@+id/navigation_manager_tablet_portrait"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <FrameLayout
-        android:id="@+id/master_detail_container_detail"
+        android:id="@+id/navigation_manager_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <FrameLayout
-        android:id="@+id/master_detail_container_master"
+        android:id="@+id/navigation_manager_container_master"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:visibility="invisible" />
 
 </RelativeLayout>
