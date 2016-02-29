@@ -347,6 +347,8 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Future Plans and Examples
 
+###Complete Features in 'develop' Branch
+
 ###In Progress
 - Code clean up into smaller managers to use Builder pattern more effectively
 
