@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@android:color/white"
+        app:stl_distributeEvenly="true"
+        app:stl_dividerThickness="0dp"
+        app:stl_indicatorAlwaysInCenter="false"
+        app:stl_indicatorGravity="bottom"
+        app:stl_indicatorInFront="true"
+        app:stl_indicatorInterpolation="linear"
+        app:stl_indicatorThickness="3dp"
+        app:stl_indicatorWithoutPadding="true"
+        app:stl_underlineColor="@color/colorPrimaryDark"
+        app:stl_underlineThickness="0dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="@android:color/white"
+        android:padding="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</LinearLayout>
