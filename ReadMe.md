@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.1.1'
+compile 'com.dmcapps:navigation-fragment:0.1.2.1'
 ```
 
 ##Current Version
 
-0.1.1.1
+0.1.2.1
 
 ##Introduction
 
@@ -282,6 +282,9 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ``` 
 
 ##Change Log
+
+###0.1.2.1
+- Made the ManagerConfig and ManagerState Serializable classes.
 
 ###0.1.2.0
 - Update in Manager the `clearStackToPosition` method to not use pop method as it is not appropriate. Allow me to remove multiple fragments in one transaction instead of many transactions.
