@@ -31,8 +31,8 @@
             android:label="@string/title_activity_navigation_drawer_example"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity"></activity>
-        <activity android:name=".GitIssue5Example.GitIssue5ExampleActivity"></activity>
-        <activity android:name=".GitIssue5Example.GitIssue10ExampleActivity"></activity>
+        <activity android:name=".GitIssues.GitIssue5ExampleActivity"></activity>
+        <activity android:name=".GitIssues.GitIssue10ExampleActivity"></activity>
     </application>
 
 </manifest>

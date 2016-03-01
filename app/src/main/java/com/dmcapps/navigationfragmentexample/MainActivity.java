@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dmcapps.navigationfragmentexample.DrawerExample.NavigationDrawerExampleActivity;
-import com.dmcapps.navigationfragmentexample.GitIssue5Example.GitIssue10ExampleActivity;
-import com.dmcapps.navigationfragmentexample.GitIssue5Example.GitIssue5ExampleActivity;
+import com.dmcapps.navigationfragmentexample.GitIssues.GitIssue10ExampleActivity;
+import com.dmcapps.navigationfragmentexample.GitIssues.GitIssue5ExampleActivity;
 import com.dmcapps.navigationfragmentexample.ListExample.ListExampleActivity;
 import com.dmcapps.navigationfragmentexample.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity;
