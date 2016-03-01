@@ -362,7 +362,7 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - getActivity from a NavigationFragment seems to always return the old instance. Need to override this and call getActivity() on the NavigationManager to always get the NavigationManagers Activity.
 
 ###Future Implementation Notes
-- Ability to pass bundle when using present/dismiss.
+- Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
 - Master-Detail replace root fragment with an animation and custom animations
@@ -376,11 +376,11 @@ setManageMasterActionBarToggle(boolean manageToggle);
     - setManageMasterToggle()
 
 ###TO BE DECIDED/FIGURE OUT
+- Find a way to manage the fragments without using setRetainInstance(true) as it makes the child fragment manager not update it's activity.
 - Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager. (When I went to implement this, I came to the conclusion that it might not work. If you try to do what is explained in [issue 5](https://github.com/DMCApps/NavigationFragment/issues/5) it won't work). Maybe a method that keeps checking the parents until it finds a NavigationManagerFragment and then present on that one?
 - Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
 - Should the manager manage the back button (ie home up enabled).
 - Is there a way to make the on back pressed in the fragment vs the activity?
-- Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 
 ##Uploading updates to jCenter and Maven
 
