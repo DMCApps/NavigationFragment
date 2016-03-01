@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.GitIssue5Example;
+package com.dmcapps.navigationfragmentexample.GitIssues;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -15,11 +15,9 @@ import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by hesk on 29/2/16.

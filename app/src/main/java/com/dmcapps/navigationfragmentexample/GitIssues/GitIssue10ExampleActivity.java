@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.GitIssue5Example;
+package com.dmcapps.navigationfragmentexample.GitIssues;
 
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 

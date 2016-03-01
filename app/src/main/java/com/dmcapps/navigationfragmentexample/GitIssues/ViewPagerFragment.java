@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.GitIssue5Example;
+package com.dmcapps.navigationfragmentexample.GitIssues;
 
 
 import android.os.Bundle;
@@ -12,10 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.DrawerExample.NonNavigationFragment;
-import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;

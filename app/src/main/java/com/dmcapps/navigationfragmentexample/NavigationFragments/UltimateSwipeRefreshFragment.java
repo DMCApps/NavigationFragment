@@ -1,8 +1,11 @@
 package com.dmcapps.navigationfragmentexample.NavigationFragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +29,10 @@ import com.marshalchen.ultimaterecyclerview.uiUtils.ScrollSmoothLineaerLayoutMan
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.marshalchen.ultimaterecyclerview.UltimateViewAdapter.VIEW_TYPES.FOOTER;
+import static com.marshalchen.ultimaterecyclerview.UltimateViewAdapter.VIEW_TYPES.HEADER;
+import static com.marshalchen.ultimaterecyclerview.UltimateViewAdapter.VIEW_TYPES.NORMAL;
 
 /**
  * Created by hesk on 29/2/16.
@@ -93,6 +100,40 @@ public class UltimateSwipeRefreshFragment extends NavigationFragment {
         }
     }
 
+
+    public class LoadMoreGridLayoutManager extends GridLayoutManager {
+        private final easyRegularAdapter mAdapter;
+
+
+        private GridLayoutManager.SpanSizeLookup m = new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (mAdapter.getItemViewType(position) == FOOTER) {
+                    return getSpanCount();
+                } else if (mAdapter.getItemViewType(position) == HEADER) {
+                    return getSpanCount();
+                } else if (mAdapter.getItemViewType(position) == NORMAL) {
+                    return 1;
+                }
+                return 1;
+            }
+        };
+
+        public LoadMoreGridLayoutManager(Context context, int spanCount, easyRegularAdapter mAdapter) {
+            super(context, spanCount);
+            this.mAdapter = mAdapter;
+            setSpanSizeLookup(m);
+        }
+
+
+        public LoadMoreGridLayoutManager(Context context, int spanCount, int orientation, boolean reverseLayout, easyRegularAdapter mAdapter) {
+            super(context, spanCount, orientation, reverseLayout);
+            this.mAdapter = mAdapter;
+            setSpanSizeLookup(m);
+        }
+    }
+
+
     public static UltimateSwipeRefreshFragment newInstance(String param1, int fragCount) {
         UltimateSwipeRefreshFragment fragment = new UltimateSwipeRefreshFragment();
         Bundle args = new Bundle();
@@ -144,14 +185,18 @@ public class UltimateSwipeRefreshFragment extends NavigationFragment {
                     @Override
                     public void onItemClick(RecyclerView parent, View clickedView, int position) {
 
-                        SampleFragment another_nav = SampleFragment.newInstance("This is a replaced root Fragment", 0);
-                        Log.d("nice", "this is something nice to happen");
-                        replaceRootFragment(another_nav);
+                        presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
+
                     }
 
                     @Override
                     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
-                        presentFragment(SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1)));
+
+
+                        SampleFragment another_nav = SampleFragment.newInstance("This is a replaced root Fragment", 0);
+                        Log.d("nice", "this is something nice to happen");
+                        replaceRootFragment(another_nav);
+
                     }
                 });
         listview_layout.mRecyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
@@ -197,6 +242,14 @@ public class UltimateSwipeRefreshFragment extends NavigationFragment {
         listview_layout.setParallaxHeader(LayoutInflater.from(getActivity()).inflate(R.layout.empty, listview_layout, false));
     }
 
+    protected SwipeRefreshLayout.OnRefreshListener refresher = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            additems();
+        }
+    };
+
+    Handler h = new Handler();
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -206,13 +259,30 @@ public class UltimateSwipeRefreshFragment extends NavigationFragment {
         listview_layout.setHasFixedSize(true);
         listview_layout.setSaveEnabled(true);
 
+
         ScrollSmoothLineaerLayoutManager linearLayoutManager = new ScrollSmoothLineaerLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false, 300);
-        listview_layout.setLayoutManager(linearLayoutManager);
-        madapter = new adp(getList());
+
+        madapter = new adp(new ArrayList<String>());
+        LoadMoreGridLayoutManager mhLayoutManager = new LoadMoreGridLayoutManager(getActivity(), 2, madapter);
+        listview_layout.setLayoutManager(mhLayoutManager);
+
         listview_layout.setAdapter(madapter);
         enableItemClick();
         top_line_buttons(view);
         processInsertHeader();
+        additems();
+        listview_layout.setDefaultOnRefreshListener(refresher);
+    }
 
+    private void additems() {
+        synchronized (h) {
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    madapter.insert(getList());
+                    listview_layout.setRefreshing(false);
+                }
+            }, 2000);
+        }
     }
 }

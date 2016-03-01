@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragmentexample.GitIssue5Example;
+package com.dmcapps.navigationfragmentexample.GitIssues;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,7 +30,7 @@ public abstract class basicImplementation extends AppCompatActivity {
         }
     }
 
-    protected abstract NavigationFragment initFragment() ;
+    protected abstract NavigationFragment initFragment();
 
     @Override
     protected void onResume() {
@@ -72,7 +72,6 @@ public abstract class basicImplementation extends AppCompatActivity {
 
     private void showFragment(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-
         if (fragment != null && fragment.isDetached()) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.attach(fragment);
