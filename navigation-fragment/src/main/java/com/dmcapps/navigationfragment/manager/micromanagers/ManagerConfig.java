@@ -3,10 +3,12 @@ package com.dmcapps.navigationfragment.manager.micromanagers;
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 
+import java.io.Serializable;
+
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class ManagerConfig {
+public class ManagerConfig implements Serializable {
 
     public static final int NO_ANIMATION = 0;
 
