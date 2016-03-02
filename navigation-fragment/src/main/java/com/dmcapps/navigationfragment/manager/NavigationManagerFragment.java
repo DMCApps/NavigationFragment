@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.parent;
+package com.dmcapps.navigationfragment.manager;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.stack.StackManager;
+import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 
 import java.io.Serializable;
 

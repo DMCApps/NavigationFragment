@@ -1,6 +1,6 @@
 package com.dmcapps.navigationfragment.fragments;
 
-import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 
 import java.io.Serializable;
 

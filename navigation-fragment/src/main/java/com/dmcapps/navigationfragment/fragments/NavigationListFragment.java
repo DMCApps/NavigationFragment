@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.fragments;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 
-import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.parent;
+package com.dmcapps.navigationfragment.helper;
 
 import android.content.Context;
 import android.os.Bundle;

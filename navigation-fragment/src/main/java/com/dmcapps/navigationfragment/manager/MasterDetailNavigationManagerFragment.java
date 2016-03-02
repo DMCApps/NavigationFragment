@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.managers;
+package com.dmcapps.navigationfragment.manager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.MasterDetailLifecycleManager;
-import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.

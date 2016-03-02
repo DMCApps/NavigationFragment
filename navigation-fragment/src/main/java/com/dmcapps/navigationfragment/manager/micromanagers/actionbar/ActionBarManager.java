@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.manager.managers.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.

@@ -11,9 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.manager.managers.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.managers.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;

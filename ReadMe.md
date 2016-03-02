@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.3'
+compile 'com.dmcapps:navigation-fragment:0.1.3.1'
 ```
 
 ##Current Version
 
-0.1.3
+0.1.3.1
 
 ##Introduction
 
@@ -282,6 +282,9 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ``` 
 
 ##Change Log
+
+###0.1.3.1
+- Reverted package naming to not cause issues in existing apps
 
 ###0.1.3
 - Made all micromanagers Serializable
