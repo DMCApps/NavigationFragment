@@ -363,8 +363,6 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ###Next Release
 - Add method for showing the back button based on the stack position.
 - Add in ability to update the icon on the back button.
-- Ability to invalidate menu from NavigationFragment.
-- getActivity from a NavigationFragment seems to always return the old instance. Need to override this and call getActivity() on the NavigationManager to always get the NavigationManagers Activity.
 
 ###Future Implementation Notes
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
