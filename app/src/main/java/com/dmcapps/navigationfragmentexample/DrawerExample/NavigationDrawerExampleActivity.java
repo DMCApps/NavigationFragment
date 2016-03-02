@@ -14,8 +14,8 @@ import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.managers.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
 

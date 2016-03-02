@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
-import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by hesk on 29/2/16.

@@ -1,8 +1,6 @@
 package com.dmcapps.navigationfragment.fragments;
 
-import android.graphics.drawable.Drawable;
-
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.parent.NavigationManagerFragment;
 
 import java.io.Serializable;
 

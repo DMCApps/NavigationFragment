@@ -1,32 +1,20 @@
-package com.dmcapps.navigationfragment.manager;
+package com.dmcapps.navigationfragment.manager.parent;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
-import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
 import com.dmcapps.navigationfragment.manager.micromanagers.stack.StackManager;
 
 import java.io.Serializable;
-import java.util.Stack;
 
 /**
  * A simple {@link Fragment} subclass.
