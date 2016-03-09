@@ -362,13 +362,14 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ###In Progress
 - Code clean up into smaller managers to use Builder pattern more effectively
-- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
-- Expose the current stack size.
-- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
 
 ###Next Release
 - Add method for showing the back button based on the stack position.
 - Add in ability to update the icon on the back button.
+- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
+- Expose the current stack size.
+- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
+- Save the title in a variable and allow retrieval through getTitle()
 
 ###Future Implementation Notes
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
