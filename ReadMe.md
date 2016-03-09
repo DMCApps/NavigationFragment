@@ -354,6 +354,8 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ###In Progress
 - Code clean up into smaller managers to use Builder pattern more effectively
+- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
+- Release the current stack size.
 
 ###Next Release
 - Add method for showing the back button based on the stack position.
@@ -377,6 +379,7 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ###TO BE DECIDED/FIGURE OUT
 - Find a way to manage the fragments without using setRetainInstance(true) as it makes the child fragment manager not update it's activity.
+- https://code.google.com/p/android/issues/detail?id=42601
 - Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager. (When I went to implement this, I came to the conclusion that it might not work. If you try to do what is explained in [issue 5](https://github.com/DMCApps/NavigationFragment/issues/5) it won't work). Maybe a method that keeps checking the parents until it finds a NavigationManagerFragment and then present on that one?
 - Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
 - Should the manager manage the back button (ie home up enabled).
