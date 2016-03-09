@@ -3,24 +3,16 @@ package com.dmcapps.navigationfragment.manager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
-import com.dmcapps.navigationfragment.helper.AnimationStartListener;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**

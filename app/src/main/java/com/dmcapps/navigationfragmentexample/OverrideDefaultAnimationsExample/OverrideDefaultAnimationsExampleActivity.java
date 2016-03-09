@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
 

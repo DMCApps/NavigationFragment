@@ -1,13 +1,9 @@
 package com.dmcapps.navigationfragment.fragments;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;

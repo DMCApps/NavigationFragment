@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.2.2'
+compile 'com.dmcapps:navigation-fragment:0.1.3.1'
 ```
 
 ##Current Version
 
-0.1.2.2
+0.1.3.1
 
 ##Introduction
 
@@ -283,6 +283,14 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
+###0.1.3.1
+- Reverted package naming to not cause issues in existing apps
+
+###0.1.3
+- Made all micromanagers Serializable
+- Updated package naming
+- Fixed [Git issue 16](https://github.com/DMCApps/NavigationFragment/issues/16) Issue with getActivity() and mHost not updating in Child Fragments on rotation
+
 ###0.1.2.2
 - Made the ManagerConfig and ManagerState Serializable classes.
 
@@ -360,8 +368,6 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ###Next Release
 - Add method for showing the back button based on the stack position.
 - Add in ability to update the icon on the back button.
-- Ability to invalidate menu from NavigationFragment.
-- getActivity from a NavigationFragment seems to always return the old instance. Need to override this and call getActivity() on the NavigationManager to always get the NavigationManagers Activity.
 
 ###Future Implementation Notes
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)

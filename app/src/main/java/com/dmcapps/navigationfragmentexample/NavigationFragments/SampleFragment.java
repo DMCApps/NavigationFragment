@@ -1,8 +1,10 @@
 package com.dmcapps.navigationfragmentexample.NavigationFragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -71,6 +73,13 @@ public class SampleFragment extends NavigationFragment {
 
         setTitle("Sample Fragment " + mFragCount);
         setMasterToggleTitle("Master");
+
+        // Using this to test if the memory space of the activity changes on rotation in the child
+        Activity activity = getActivity();
+        if (activity != null) {
+            // Debug into this to check mHost is changed.
+            setHasOptionsMenu(false);
+        }
     }
 
     @Override

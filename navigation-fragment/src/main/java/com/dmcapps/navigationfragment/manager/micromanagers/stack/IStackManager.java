@@ -5,10 +5,12 @@ import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 
+import java.io.Serializable;
+
 /**
  * Created by dcarmo on 2016-02-25.
  */
-public interface IStackManager {
+public interface IStackManager extends Serializable {
 
     void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, int animIn, int animOut);
 

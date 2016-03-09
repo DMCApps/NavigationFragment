@@ -9,12 +9,12 @@ import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
 import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 
-import java.util.zip.Inflater;
+import java.io.Serializable;
 
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public interface ILifecycleManager {
+public interface ILifecycleManager extends Serializable {
 
     void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config);
 
