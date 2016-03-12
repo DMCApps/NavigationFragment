@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.2.0'
+compile 'com.dmcapps:navigation-fragment:0.2.0.1'
 ```
 
 ##Current Version
 
-0.2.0
+0.2.0.1
 
 ##Introduction
 
@@ -282,6 +282,9 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ``` 
 
 ##Change Log
+
+###0.2.0.1
+- Removed the code to execute pending transactions after clearing stack as it causes illegal state error.
 
 ###0.2.0
 - No longer a need for the setNavigationManager(NavigationManagerFragment) method. The NavigationFragmentManager is now smart enough to look at it's parent (or parent's parent, etc.) until it finds a NavigationManagerFragment to use.
