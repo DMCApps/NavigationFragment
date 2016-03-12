@@ -180,6 +180,12 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         }
     }
 
+    /**
+     * Returns the fragment at the 0 index.
+     *
+     * @return
+     *      {@link INavigationFragment} at the 0 index if available.
+     */
     public INavigationFragment getRootFragment() {
         return getFragmentAtIndex(0);
     }
@@ -254,6 +260,16 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      */
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
+    }
+
+    /**
+     * Returns the {@link NavigationManagerFragment} stack size. A stack size of 0 represents empty.
+     *
+     * @return
+     *      The current stack size.
+     */
+    public int getCurrentStackSize() {
+        return mState.fragmentTagStack.size();
     }
 
     // ===============================
