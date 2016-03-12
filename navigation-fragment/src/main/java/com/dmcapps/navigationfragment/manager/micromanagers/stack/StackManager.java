@@ -67,7 +67,7 @@ public class StackManager implements IStackManager {
         }
 
         childFragTrans.commit();
-        //childFragManager.executePendingTransactions();
+        childFragManager.executePendingTransactions();
     }
 
     /**
