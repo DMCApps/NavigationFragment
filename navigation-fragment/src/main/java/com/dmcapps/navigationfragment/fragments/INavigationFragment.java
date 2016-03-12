@@ -11,7 +11,6 @@ public interface INavigationFragment extends Serializable {
 
     String getNavTag();
 
-    void setNavigationManager(NavigationManagerFragment navigationManager);
     NavigationManagerFragment getNavigationManager();
 
     void presentFragment(INavigationFragment navFragment);

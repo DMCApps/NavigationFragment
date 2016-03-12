@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.helper;
+package com.dmcapps.navigationfragment.helper.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

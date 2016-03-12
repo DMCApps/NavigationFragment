@@ -43,12 +43,7 @@ public class SmartTabLayout extends NavigationFragment {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Object item = super.instantiateItem(container, position);
-            if (item instanceof NavigationFragment) {
-                NavigationFragment nav = (NavigationFragment) item;
-                nav.setNavigationManager(nmf);
-            }
-            return item;
+            return super.instantiateItem(container, position);
         }
     }
 

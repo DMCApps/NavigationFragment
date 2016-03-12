@@ -3,6 +3,7 @@ package com.dmcapps.navigationfragment.fragments;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 
+import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
@@ -19,8 +20,6 @@ public class NavigationListFragment extends ListFragment implements INavigationF
 
     private final String TAG;
 
-    private NavigationManagerFragment mNavMgrFragment;
-
     public NavigationListFragment() {
         TAG = UUID.randomUUID().toString();
     }
@@ -29,23 +28,22 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         return TAG;
     }
 
-    public void setNavigationManager(NavigationManagerFragment navMgrFragment) {
-        mNavMgrFragment = navMgrFragment;
+    public NavigationManagerFragment getNavigationManager() {
+        return getNavigationManager(getParentFragment());
     }
 
-    public NavigationManagerFragment getNavigationManager() {
-        return mNavMgrFragment;
-        /*
-        if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
-            return (SingleStackNavigationManagerFragment)getParentFragment();
+    public NavigationManagerFragment getNavigationManager(Fragment fragment) {
+        NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, fragment);
+
+        if (navFragment != null) {
+            return navFragment;
         }
-        else if (getParentFragment() instanceof MasterDetailNavigationManagerFragment) {
-            return (MasterDetailNavigationManagerFragment)getParentFragment();
+        else if (fragment.getParentFragment() != null) {
+            return getNavigationManager(fragment.getParentFragment());
         }
         else {
-            throw new RuntimeException("Parent is not a NavigationManagerFragment.");
+            throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
         }
-        */
     }
 
     public void presentFragment(INavigationFragment navFragment) {
