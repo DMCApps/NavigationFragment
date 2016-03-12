@@ -359,6 +359,8 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ##Future Plans and Examples
 
 ###Complete Features in 'develop' Branch
+- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
+- Save the title in a variable and allow retrieval through getTitle()
 
 ###In Progress
 - Code clean up into smaller managers to use Builder pattern more effectively
@@ -368,8 +370,6 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - Add in ability to update the icon on the back button.
 - Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
 - Expose the current stack size.
-- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
-- Save the title in a variable and allow retrieval through getTitle()
 
 ###Future Implementation Notes
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)

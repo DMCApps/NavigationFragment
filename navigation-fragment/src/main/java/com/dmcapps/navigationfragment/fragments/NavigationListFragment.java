@@ -19,6 +19,7 @@ import java.util.UUID;
 public class NavigationListFragment extends ListFragment implements INavigationFragment {
 
     private final String TAG;
+    private String mTitle;
 
     public NavigationListFragment() {
         TAG = UUID.randomUUID().toString();
@@ -74,22 +75,34 @@ public class NavigationListFragment extends ListFragment implements INavigationF
      * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
      *
      * @param
-     *      title -> String of the title you would like to set.
+     *      resId -> Resource Id of the title you would like to set.
      */
     @Override
-    public void setTitle(String title) {
-        ActionBarManager.setTitle(getActivity(), title);
+    public void setTitle(int resId) {
+        setTitle(getString(resId));
     }
 
     /**
      * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
      *
      * @param
-     *      resId -> Resource Id of the title you would like to set.
+     *      title -> String of the title you would like to set.
      */
     @Override
-    public void setTitle(int resId) {
-        ActionBarManager.setTitle(getActivity(), resId);
+    public void setTitle(String title) {
+        mTitle = title;
+        ActionBarManager.setTitle(getActivity(), mTitle);
+    }
+
+    /**
+     * A method for retrieving the currently set title for the NavigationFragment
+     *
+     * @return
+     *      The current title of the NavigationFragment
+     */
+    @Override
+    public String getTitle() {
+        return mTitle;
     }
 
     /*
