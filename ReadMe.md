@@ -62,7 +62,7 @@ Now that the SingleStackNavigationManagerFragment is being put to work, we need 
 ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
+        presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
     }
 });
 ```
@@ -82,7 +82,7 @@ In order to remove fragments from the screen we must follow a similar style as p
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.dismissFragment();
+        dismissFragment();
     }
 });
 ```
@@ -167,7 +167,7 @@ In order to present a fragment we follow the same pattern as the SingleStackFrag
         // Just for the example so that we can keep the count correct.
         int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
         SampleFragment sample = SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1);
-        MasterFragment.this.presentFragment(sample);
+        presentFragment(sample);
     }
 });
 ```
@@ -191,7 +191,7 @@ In order to remove fragments from the detail flow we must follow a similar style
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.dismissFragment();
+        dismissFragment();
     }
 });
 ```
