@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.3.1'
+compile 'com.dmcapps:navigation-fragment:0.2.0'
 ```
 
 ##Current Version
 
-0.1.3.1
+0.2.0
 
 ##Introduction
 
@@ -283,6 +283,15 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
+###0.2.0
+- No longer a need for the setNavigationManager(NavigationManagerFragment) method. The NavigationFragmentManager is now smart enough to look at it's parent (or parent's parent, etc.) until it finds a NavigationManagerFragment to use.
+- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
+- Save the title in a variable and allow retrieval through getTitle().
+- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
+- Added in protection against getFragmentAtIndex( > stackSize) by checking and returning null.
+- Expose the current stack size.
+- Clear to stack position now executes after completion such that the attached view shows if there is a presentation immediately after.
+
 ###0.1.3.1
 - Reverted package naming to not cause issues in existing apps
 
@@ -359,12 +368,6 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ##Future Plans and Examples
 
 ###Complete Features in 'develop' Branch
-- No longer a need for the setNavigationManager(NavigationManagerFragment) method. The NavigationFragmentManager is now smart enough to look at it's parent (or parent's parent, etc.) until it finds a NavigationManagerFragment to use.
-- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
-- Save the title in a variable and allow retrieval through getTitle().
-- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
-- Added in protection against getFragmentAtIndex( > stackSize) by checking and returning null.
-- Expose the current stack size.
 
 ###In Progress
 - Code clean up into smaller managers to use Builder pattern more effectively
