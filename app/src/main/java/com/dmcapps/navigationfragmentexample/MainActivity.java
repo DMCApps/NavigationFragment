@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.dmcapps.navigationfragmentexample.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity;
 import com.dmcapps.navigationfragmentexample.DrawerExample.NavigationDrawerExampleActivity;
 import com.dmcapps.navigationfragmentexample.GitIssue5Example.GitIssue10ExampleActivity;
 import com.dmcapps.navigationfragmentexample.GitIssue5Example.GitIssue5ExampleActivity;
@@ -38,8 +39,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         items.add("Navigation Drawer Example (uses replace and remove as well as non-Navigation Fragments)");
         items.add("Override Default Animations Example");
         items.add("Navigation Fragment with View Pager. Navigating on view pager tab and view pager itself (git issue 5)");
-
         items.add("Navigation Fragment with View Pager and SmartTabLayout. Navigating on view pager tab and view pager itself (git issue 10)");
+        items.add("Navigation Fragment clears stack before presenting");
+
         mList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
     }
@@ -64,6 +66,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             intent = new Intent(this, GitIssue5ExampleActivity.class);
         } else if (position == 7) {
             intent = new Intent(this, GitIssue10ExampleActivity.class);
+        } else if (position == 8) {
+            intent = new Intent(this, NavigationDrawerClearStackExampleActivity.class);
         }
 
         startActivity(intent);

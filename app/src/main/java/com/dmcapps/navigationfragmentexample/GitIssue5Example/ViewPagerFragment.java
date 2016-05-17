@@ -72,15 +72,11 @@ public class ViewPagerFragment extends NavigationFragment {
                 case 0:
                     return NonNavigationFragment.newInstance("Non Nav Fragment 1");
                 case 1:
-                    NavigationFragment navFragment = SampleFragment.newInstance("Start Frag 3", 0);
-                    navFragment.setNavigationManager(getNavigationManager());
-                    return navFragment;
+                    return SampleFragment.newInstance("Start Frag 3", 0);
                 case 2:
                     return NonNavigationFragment.newInstance("Non Nav Fragment 2");
                 case 3:
-                    UltimateSwipeRefreshFragment navFlag = UltimateSwipeRefreshFragment.newInstance("NavUlt", 0);
-                    navFlag.setNavigationManager(getNavigationManager());
-                    return navFlag;
+                    return UltimateSwipeRefreshFragment.newInstance("NavUlt", 0);
             }
             return null;
         }

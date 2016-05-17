@@ -2,6 +2,7 @@ package com.dmcapps.navigationfragment.fragments;
 
 import android.support.v4.app.Fragment;
 
+import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
 
@@ -17,8 +18,7 @@ import java.util.UUID;
 public class NavigationFragment extends Fragment implements INavigationFragment {
 
     private final String TAG;
-
-    private NavigationManagerFragment mNavMgrFragment;
+    private String mTitle;
 
     public NavigationFragment() {
         TAG = UUID.randomUUID().toString();
@@ -28,27 +28,22 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         return TAG;
     }
 
-    public void setNavigationManager(NavigationManagerFragment navMgrFragment) {
-        mNavMgrFragment = navMgrFragment;
+    public NavigationManagerFragment getNavigationManager() {
+        return getNavigationManager(getParentFragment());
     }
 
-    public NavigationManagerFragment getNavigationManager() {
-        return mNavMgrFragment;
+    private NavigationManagerFragment getNavigationManager(Fragment fragment) {
+        NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, fragment);
 
-        /*
-        if (getParentFragment() instanceof SingleStackNavigationManagerFragment) {
-            return (SingleStackNavigationManagerFragment)getParentFragment();
+        if (navFragment != null) {
+            return navFragment;
         }
-        else if (getParentFragment() instanceof MasterDetailNavigationManagerFragment) {
-            return (MasterDetailNavigationManagerFragment)getParentFragment();
-        }
-        else if (getParentFragment() instanceof NavigationManagerFragment) {
-            return (NavigationManagerFragment)getParentFragment();
+        else if (fragment.getParentFragment() != null) {
+            return getNavigationManager(fragment.getParentFragment());
         }
         else {
-            throw new RuntimeException("Parent is not a known NavigationManagerFragment.");
+            throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
         }
-        */
     }
 
     public void presentFragment(INavigationFragment navFragment) {
@@ -79,22 +74,34 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
      * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
      *
      * @param
-     *      title -> String of the title you would like to set.
+     *      resId -> Resource Id of the title you would like to set.
      */
     @Override
-    public void setTitle(String title) {
-        ActionBarManager.setTitle(getActivity(), title);
+    public void setTitle(int resId) {
+        setTitle(getString(resId));
     }
 
     /**
      * A method for setting the title of the action bar. (Saves you from having to call getActivity().setTitle())
      *
      * @param
-     *      resId -> Resource Id of the title you would like to set.
+     *      title -> String of the title you would like to set.
      */
     @Override
-    public void setTitle(int resId) {
-        ActionBarManager.setTitle(getActivity(), resId);
+    public void setTitle(String title) {
+        mTitle = title;
+        ActionBarManager.setTitle(getActivity(), mTitle);
+    }
+
+    /**
+     * A method for retrieving the currently set title for the NavigationFragment
+     *
+     * @return
+     *      The current title of the NavigationFragment
+     */
+    @Override
+    public String getTitle() {
+        return mTitle;
     }
 
     /*

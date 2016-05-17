@@ -59,7 +59,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
             mListener = (NavigationManagerFragmentListener)context;
         }
         catch (ClassCastException classCastException) {
-            Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for displaying buttons for Master-Detail implementation.");
+            Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for listening to present and dismiss events.");
         }
     }
 
@@ -171,9 +171,21 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      {@link INavigationFragment} that is on the top of the stack.
      */
     public INavigationFragment getTopFragment() {
-        return getFragmentAtIndex(mState.fragmentTagStack.size() - 1);
+        if (mState.fragmentTagStack.size() > 0) {
+            return getFragmentAtIndex(mState.fragmentTagStack.size() - 1);
+        }
+        else {
+            Log.e(TAG, "No fragments in the navigation stack, returning null.");
+            return null;
+        }
     }
 
+    /**
+     * Returns the fragment at the 0 index.
+     *
+     * @return
+     *      {@link INavigationFragment} at the 0 index if available.
+     */
     public INavigationFragment getRootFragment() {
         return getFragmentAtIndex(0);
     }
@@ -185,7 +197,13 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      {@link INavigationFragment} that is on the top of the stack.
      */
     public INavigationFragment getFragmentAtIndex(int index) {
-        return mStackManager.getFragmentAtIndex(this, mState, index);
+        if (mState.fragmentTagStack.size() > index) {
+            return mStackManager.getFragmentAtIndex(this, mState, index);
+        }
+        else {
+            Log.e(TAG, "No fragment at that position in the navigation stack, returning null. (Stack size: " + mState.fragmentTagStack.size() + ". Index attempted: " + index + ".");
+            return null;
+        }
     }
 
     /**
@@ -242,6 +260,16 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      */
     public boolean isOnRootFragment() {
         return mState.fragmentTagStack.size() == mConfig.minStackSize;
+    }
+
+    /**
+     * Returns the {@link NavigationManagerFragment} stack size. A stack size of 0 represents empty.
+     *
+     * @return
+     *      The current stack size.
+     */
+    public int getCurrentStackSize() {
+        return mState.fragmentTagStack.size();
     }
 
     // ===============================

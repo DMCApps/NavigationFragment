@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.1.3.1'
+compile 'com.dmcapps:navigation-fragment:0.2.0.2'
 ```
 
 ##Current Version
 
-0.1.3.1
+0.2.0.2
 
 ##Introduction
 
@@ -62,7 +62,7 @@ Now that the SingleStackNavigationManagerFragment is being put to work, we need 
 ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
+        presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
     }
 });
 ```
@@ -82,7 +82,7 @@ In order to remove fragments from the screen we must follow a similar style as p
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.dismissFragment();
+        dismissFragment();
     }
 });
 ```
@@ -167,7 +167,7 @@ In order to present a fragment we follow the same pattern as the SingleStackFrag
         // Just for the example so that we can keep the count correct.
         int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
         SampleFragment sample = SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1);
-        MasterFragment.this.presentFragment(sample);
+        presentFragment(sample);
     }
 });
 ```
@@ -191,7 +191,7 @@ In order to remove fragments from the detail flow we must follow a similar style
 ((Button)view.findViewById(R.id.sample_btn_back)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        SampleFragment.this.dismissFragment();
+        dismissFragment();
     }
 });
 ```
@@ -283,6 +283,17 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
+###0.2.0.2
+- Clear to stack position now executes after completion such that the attached view shows if there is a presentation immediately after.
+
+###0.2.0
+- No longer a need for the setNavigationManager(NavigationManagerFragment) method. The NavigationFragmentManager is now smart enough to look at it's parent (or parent's parent, etc.) until it finds a NavigationManagerFragment to use.
+- Change ActionBarManager to use the getSupportActionBar() method when setting the title.
+- Save the title in a variable and allow retrieval through getTitle().
+- Need to protect against getFragmentAtIndex( < 0) by checking and returning null.
+- Added in protection against getFragmentAtIndex( > stackSize) by checking and returning null.
+- Expose the current stack size.
+
 ###0.1.3.1
 - Reverted package naming to not cause issues in existing apps
 
@@ -368,6 +379,8 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - Add in ability to update the icon on the back button.
 
 ###Future Implementation Notes
+- Ability to change the master width
+- Remove helper method for present/dismiss with animations and force a call to setNextOverrideAnimation instead.
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
@@ -383,8 +396,7 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ###TO BE DECIDED/FIGURE OUT
 - Find a way to manage the fragments without using setRetainInstance(true) as it makes the child fragment manager not update it's activity.
-- Do I even need to pass the manager along to each navigation fragment? Since they are child fragments, isnt the navigation manager just the parent? ie I should use (NavigationManagerFragment)getParent() to get an instance of the navigation manager. (When I went to implement this, I came to the conclusion that it might not work. If you try to do what is explained in [issue 5](https://github.com/DMCApps/NavigationFragment/issues/5) it won't work). Maybe a method that keeps checking the parents until it finds a NavigationManagerFragment and then present on that one?
-- Possible better way to handle Child Manager not being retained instead of a superclass http://stackoverflow.com/a/15656428/845038
+- https://code.google.com/p/android/issues/detail?id=42601
 - Should the manager manage the back button (ie home up enabled).
 - Is there a way to make the on back pressed in the fragment vs the activity?
 

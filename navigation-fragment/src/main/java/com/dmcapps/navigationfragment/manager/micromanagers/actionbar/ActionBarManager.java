@@ -21,8 +21,8 @@ public class ActionBarManager {
      *      resId -> Resource Id of the title you would like to set.
      */
     public static void setTitle(Activity activity, int resId) {
-        if (isAppCompatActivity(activity)) {
-            activity.setTitle(resId);
+        if (isAppCompatActivity(activity) && ((AppCompatActivity)activity).getSupportActionBar() != null) {
+            ((AppCompatActivity)activity).getSupportActionBar().setTitle(resId);
         }
     }
 
@@ -33,25 +33,25 @@ public class ActionBarManager {
      *      title -> String of the title you would like to set.
      */
     public static void setTitle(Activity activity, String title) {
-        if (isAppCompatActivity(activity)) {
-            activity.setTitle(title);
+        if (isAppCompatActivity(activity) && ((AppCompatActivity)activity).getSupportActionBar() != null) {
+            ((AppCompatActivity)activity).getSupportActionBar().setTitle(title);
         }
     }
 
     public static void setDisplayHomeAsUpEnabled(Activity activity, boolean enabled) {
-        if (isAppCompatActivity(activity)) {
+        if (isAppCompatActivity(activity) && ((AppCompatActivity)activity).getSupportActionBar() != null) {
             ((AppCompatActivity)activity).getSupportActionBar().setDisplayHomeAsUpEnabled(enabled);
         }
     }
 
     public static void setHomeAsUpIndicator(Activity activity, Drawable drawable) {
-        if (isAppCompatActivity(activity)) {
+        if (isAppCompatActivity(activity) && ((AppCompatActivity)activity).getSupportActionBar() != null) {
             ((AppCompatActivity)activity).getSupportActionBar().setHomeAsUpIndicator(drawable);
         }
     }
 
     public static void setHomeAsUpIndicator(Activity activity, int resId) {
-        if (isAppCompatActivity(activity)) {
+        if (isAppCompatActivity(activity) && ((AppCompatActivity)activity).getSupportActionBar() != null) {
             ((AppCompatActivity)activity).getSupportActionBar().setHomeAsUpIndicator(resId);
         }
     }

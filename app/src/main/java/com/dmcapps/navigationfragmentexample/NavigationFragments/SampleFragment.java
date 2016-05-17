@@ -33,7 +33,7 @@ public class SampleFragment extends NavigationFragment {
     private String mFragText;
     private SampleModel model;
 
-    EditText edit1;
+    private EditText edit1;
 
     private int mFragCount;
 

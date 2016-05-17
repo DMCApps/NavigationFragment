@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dmcapps.navigationfragmentexample">
+    package="com.dmcapps.navigationfragmentexample" >
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme" >
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,23 +16,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".SingleStackExample.SingleStackNavigationExampleActivity" />
-        <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity"></activity>
+        <activity android:name=".MasterDetailExample.MasterDetailNavigationExampleActivity" />
         <activity
             android:name=".ViewPagerExample.ViewPagerNavigationExampleActivity"
             android:label="@string/title_activity_tab_navigation_example"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TestIntentLaunchingActivity"
             android:label="@string/title_activity_test_intent_launching"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ListExample.ListExampleActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ListExample.ListExampleActivity" />
         <activity
             android:name=".DrawerExample.NavigationDrawerExampleActivity"
             android:label="@string/title_activity_navigation_drawer_example"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity"></activity>
-        <activity android:name=".GitIssue5Example.GitIssue5ExampleActivity"></activity>
-        <activity android:name=".GitIssue5Example.GitIssue10ExampleActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity" />
+        <activity android:name=".GitIssue5Example.GitIssue5ExampleActivity" />
+        <activity android:name=".GitIssue5Example.GitIssue10ExampleActivity" />
+        <activity
+            android:name=".DrawerClearStackExample.NavigationDrawerClearStackExampleActivity"
+            android:label="@string/title_activity_navigation_drawer_clear_stack_example"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

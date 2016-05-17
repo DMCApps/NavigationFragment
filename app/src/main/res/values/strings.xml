@@ -17,4 +17,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_navigation_drawer_clear_stack_example">
+        NavigationDrawerClearStackExampleActivity
+    </string>
 </resources>

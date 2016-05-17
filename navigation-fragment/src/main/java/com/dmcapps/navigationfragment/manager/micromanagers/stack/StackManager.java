@@ -15,7 +15,6 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
 public class StackManager implements IStackManager {
 
     public void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, int animIn, int animOut) {
-        navFragment.setNavigationManager(manager);
         FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
@@ -68,6 +67,7 @@ public class StackManager implements IStackManager {
         }
 
         childFragTrans.commit();
+        childFragManager.executePendingTransactions();
     }
 
     /**
