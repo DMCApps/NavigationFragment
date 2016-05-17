@@ -379,6 +379,8 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - Add in ability to update the icon on the back button.
 
 ###Future Implementation Notes
+- Ability to change the master width
+- Remove helper method for present/dismiss with animations and force a call to setNextOverrideAnimation instead.
 - Passing a bundle in present and dismiss (add the bundle to the existing on under it's own key)
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait
