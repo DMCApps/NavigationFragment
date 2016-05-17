@@ -283,6 +283,10 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
+###0.2.1.0
+- Remove Serializable requirement from all classes. There is no need for it anymore and the Navigation Fragment shouldn't make that decision.
+- 
+
 ###0.2.0.2
 - Clear to stack position now executes after completion such that the attached view shows if there is a presentation immediately after.
 
