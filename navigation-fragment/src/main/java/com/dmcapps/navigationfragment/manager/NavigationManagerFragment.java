@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements Serializable {
+public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 

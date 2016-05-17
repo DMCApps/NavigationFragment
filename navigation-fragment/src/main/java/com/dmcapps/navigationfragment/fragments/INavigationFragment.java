@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by DCarmo on 16-02-09.
  */
-public interface INavigationFragment extends Serializable {
+public interface INavigationFragment {
 
     String getNavTag();
 

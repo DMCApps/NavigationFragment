@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * Created by dcarmo on 2016-02-25.
  */
-public interface IStackManager extends Serializable {
+public interface IStackManager {
 
     void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, int animIn, int animOut);
 
