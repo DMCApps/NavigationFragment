@@ -283,6 +283,10 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
+###0.2.0.3
+- Fixed [Git issue 21](https://github.com/DMCApps/NavigationFragment/issues/21) and [Git issue 22](https://github.com/DMCApps/NavigationFragment/issues/22) 
+- State of the navigation manager is no longer lost when configuration changes occur.
+
 ###0.2.0.2
 - Clear to stack position now executes after completion such that the attached view shows if there is a presentation immediately after.
 
