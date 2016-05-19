@@ -2,6 +2,7 @@ package com.dmcapps.navigationfragment.manager;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,11 @@ import java.io.Serializable;
 public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements Serializable {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
+
+    private static final String KEY_MANAGER_CONFIG = "KEY_MANAGER_CONFIG";
+    private static final String KEY_MANAGER_STATE = "KEY_MANAGER_STATE";
+    private static final String KEY_MANAGER_STACK_MANAGER = "KEY_MANAGER_STACK_MANAGER";
+    private static final String KEY_LIFECYCLE_MANAGER = "KEY_LIFECYCLE_MANAGER";
 
     private NavigationManagerFragmentListener mListener;
 
@@ -64,12 +70,25 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycleManager);
+        outState.putSerializable(KEY_MANAGER_CONFIG, mConfig);
+        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStackManager);
+        outState.putSerializable(KEY_MANAGER_STATE, mState);
+    }
 
-        mLifecycleManager.onResume(this, mState, mConfig);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mLifecycleManager = (ILifecycleManager)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
+            mConfig = (ManagerConfig)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
+            mStackManager = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
+            mState = (ManagerState)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
+        }
     }
 
     @Override
@@ -81,6 +100,15 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLifecycleManager.onViewCreated(view, mState, mConfig);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mLifecycleManager.onResume(this, mState, mConfig);
     }
 
     @Override
