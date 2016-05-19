@@ -41,13 +41,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     public void setDefaultPresentAnimations(int animIn, int animOut) {
-        mConfig.presentAnimationIn = animIn;
-        mConfig.presentAnimationOut = animOut;
+        mConfig.setDefaultPresetAnim(animIn, animOut);
     }
 
     public void setDefaultDismissAnimations(int animIn, int animOut) {
-        mConfig.dismissAnimationIn = animIn;
-        mConfig.dismissAnimationOut = animOut;
+        mConfig.setDefaultDismissAnim(animIn, animOut);
     }
 
     @Override
@@ -66,9 +64,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     @Override
     public void onResume() {
         super.onResume();
-
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mLifecycleManager.onResume(this, mState, mConfig);
     }
 
@@ -89,19 +84,17 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         mLifecycleManager.onPause(this, mState);
     }
 
-    /*
-     * This needs to be moved to the NavigationFragment to automatically handle the back button.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    /**
+     * Override the animation in and out of the next present, dismiss or clear stack call.
+     *
+     * @param
+     *      animIn -> The resource of the new in animation.
+     * @param
+     *      animOut -> The resource of the new in animation.
      */
+    public void overrideNextAnimation(int animIn, int animOut) {
+        mConfig.setNextAnim(animIn, animOut);
+    }
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
@@ -111,7 +104,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
     public void pushFragment(INavigationFragment navFragment) {
-        pushFragment(navFragment, mConfig.presentAnimationIn, mConfig.presentAnimationOut);
+        mStackManager.pushFragment(this, mState, mConfig, navFragment);
+
+        if (mListener != null) {
+            mListener.didPresentFragment();
+        }
     }
 
     /**
@@ -126,7 +123,10 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being sent to the back.
+     *
+     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before presenting. This method will be removed as of 0.4.0.
      */
+    @Deprecated
     public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
         mStackManager.pushFragment(this, mState, mConfig, navFragment, animIn, animOut);
 
@@ -140,7 +140,11 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Uses default animation of slide in from left and slide out to right animation.
      */
     public void popFragment() {
-        popFragment(mConfig.dismissAnimationIn, mConfig.dismissAnimationOut);
+        mStackManager.popFragment(this, mState, mConfig);
+
+        if (mListener != null) {
+            mListener.didDismissFragment();
+        }
     }
 
     /**
@@ -151,7 +155,10 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      animIn -> The animation of the fragment about to be shown.
      * @param
      *      animOut -> The animation of the fragment that is being dismissed.
+     *
+     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before dismissing. This method will be removed as of 0.4.0.
      */
+    @Deprecated
     public void popFragment(int animIn, int animOut) {
         mStackManager.popFragment(this, mState, mConfig, animIn, animOut);
 

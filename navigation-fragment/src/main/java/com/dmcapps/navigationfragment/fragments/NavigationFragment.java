@@ -28,6 +28,13 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
         return TAG;
     }
 
+    /**
+     * Get the {@link NavigationManagerFragment} of the Fragment in the stack. This method will crash with
+     * a RuntimeException if no Parent fragment is a {@link NavigationManagerFragment}.
+     *
+     * @return
+     *      The Parent Fragment in the stack of fragments that is the Navigation Manager of the Fragment.
+     */
     public NavigationManagerFragment getNavigationManager() {
         return getNavigationManager(getParentFragment());
     }
@@ -42,30 +49,92 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
             return getNavigationManager(fragment.getParentFragment());
         }
         else {
-            throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
+            throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the NavigationManagerFragment this fragment must be presented on a NavigationManagerFragment.");
         }
     }
 
+    /**
+     * Override the default animation for the next present or dismiss action.
+     *
+     * @param
+     *      animIn -> Resource for the in animation.
+     * @param
+     *      animOut -> Resource for the out animation.
+     */
+    @Override
+    public void overrideNextAnimation(int animIn, int animOut) {
+        getNavigationManager().overrideNextAnimation(animIn, animOut);
+    }
+
+    /**
+     * Present a fragment on the Navigation Manager using the default slide in and out.
+     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling presentFragment.
+     *
+     * @param
+     *      navFragment -> The Fragment to present.
+     */
+    @Override
     public void presentFragment(INavigationFragment navFragment) {
         getNavigationManager().pushFragment(navFragment);
     }
 
+    /**
+     * Present a fragment on the Navigation Manager overriding the default animation
+     *
+     * @param
+     *      navFragment -> The Fragment to present.
+     * @param
+     *      animationIn -> The Resource to override the animation in with.
+     * @param
+     *      animationOut -> The Resource to override the animation out with.
+     *
+     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before presenting. This method will be removed as of 0.4.0.
+     */
+    @Override
+    @Deprecated
     public void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
         getNavigationManager().pushFragment(navFragment, animationIn, animationOut);
     }
 
+    /**
+     * Dismiss all the fragments on the Navigation Manager stack until the root fragment using the default slide in and out.
+     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
+     */
+    @Override
     public void dismissToRoot() {
         getNavigationManager().clearNavigationStackToRoot();
     }
 
+    @Override
     public void dismissFragment() {
         getNavigationManager().popFragment();
     }
 
+    /**
+     * Dimiss a fragment on the Navigation Manager overriding the default animation.
+     *
+     * @param
+     *      animationIn -> The Resource to override the animation in with.
+     * @param
+     *      animationOut -> The Resource to override the animation out with.
+     *
+     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before dismissing. This method will be removed as of 0.4.0.
+     */
+    @Override
+    @Deprecated
     public void dismissFragment(int animationIn, int animationOut) {
         getNavigationManager().popFragment(animationIn, animationOut);
     }
 
+    /**
+     * Dismiss all the fragments on the Navigation Manager stack including the root fragment using the default slide in and out.
+     * Present a fragment on the Navigation Manager using the default slide in and out.
+     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
+     *
+     * @param
+     *      navFragment -> The Fragment to present.
+     */
+    @Override
     public void replaceRootFragment(INavigationFragment navFragment) {
         getNavigationManager().replaceRootFragment(navFragment);
     }
@@ -103,23 +172,6 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
     public String getTitle() {
         return mTitle;
     }
-
-    /*
-    @Override
-    public void setDisplayHomeAsUpEnabled(boolean enabled) {
-        ActionBarManager.setDisplayHomeAsUpEnabled(getActivity(), enabled);
-    }
-
-    @Override
-    public void setHomeAsUpIndicator(Drawable indicator) {
-        ActionBarManager.setHomeAsUpIndicator(getActivity(), indicator);
-    }
-
-    @Override
-    public void setHomeAsUpIndicator(int resId) {
-        ActionBarManager.setHomeAsUpIndicator(getActivity(), resId);
-    }
-    */
 
     @Override
     public void setMasterToggleTitle(String title) {

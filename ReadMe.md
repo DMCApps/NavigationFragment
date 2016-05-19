@@ -283,9 +283,9 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ##Change Log
 
-###0.2.1.0
+###0.3.0
 - Remove Serializable requirement from all classes. There is no need for it anymore and the Navigation Fragment shouldn't make that decision.
-- 
+- Updated the method for animations. Depreciated helper methods for present/dismiss that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
 
 ###0.2.0.2
 - Clear to stack position now executes after completion such that the attached view shows if there is a presentation immediately after.

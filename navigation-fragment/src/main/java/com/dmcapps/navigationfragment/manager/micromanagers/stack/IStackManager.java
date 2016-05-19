@@ -12,6 +12,10 @@ import java.io.Serializable;
  */
 public interface IStackManager {
 
+    void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment);
+
+    void popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config);
+
     void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, int animIn, int animOut);
 
     void popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, int animIn, int animOut);

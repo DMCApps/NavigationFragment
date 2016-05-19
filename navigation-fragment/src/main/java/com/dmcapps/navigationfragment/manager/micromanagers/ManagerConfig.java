@@ -16,11 +16,14 @@ public class ManagerConfig implements Serializable {
 
     public int pushContainerId;
 
-    public int presentAnimationIn;
-    public int presentAnimationOut;
+    private int mNextAnimIn = Integer.MIN_VALUE;
+    private int mNextAnimOut = Integer.MIN_VALUE;
 
-    public int dismissAnimationIn;
-    public int dismissAnimationOut;
+    private int mPresentAnimIn;
+    private int mPresentAnimOut;
+
+    private int mDismissAnimIn;
+    private int mDismissAnimOut;
 
     public INavigationFragment rootFragment;
 
@@ -28,11 +31,11 @@ public class ManagerConfig implements Serializable {
     public INavigationFragment detailFragment;
 
     public ManagerConfig() {
-        presentAnimationIn = R.anim.slide_in_from_right;
-        presentAnimationOut = R.anim.slide_out_to_left;
+        mPresentAnimIn = R.anim.slide_in_from_right;
+        mPresentAnimOut = R.anim.slide_out_to_left;
 
-        dismissAnimationIn = R.anim.slide_in_from_left;
-        dismissAnimationOut = R.anim.slide_out_to_right;
+        mDismissAnimIn = R.anim.slide_in_from_left;
+        mDismissAnimOut = R.anim.slide_out_to_right;
     }
 
     public void nullifyInitialFragments() {
@@ -41,4 +44,54 @@ public class ManagerConfig implements Serializable {
         detailFragment = null;
     }
 
+    public void setDefaultPresetAnim(int animIn, int animOut) {
+        mPresentAnimIn = animIn;
+        mPresentAnimOut = animOut;
+    }
+
+    public void setDefaultDismissAnim(int animIn, int animOut) {
+        mDismissAnimIn = animIn;
+        mDismissAnimOut = animOut;
+    }
+
+    public void setNextAnim(int animIn, int animOut) {
+        mNextAnimIn = animIn;
+        mNextAnimOut = animOut;
+    }
+
+    public int getPresentAnimIn() {
+        int nextAnim = mPresentAnimIn;
+        if (mNextAnimIn > Integer.MIN_VALUE) {
+            nextAnim = mNextAnimIn;
+            mNextAnimIn = Integer.MIN_VALUE;
+        }
+        return nextAnim;
+    }
+
+    public int getPresentAnimOut() {
+        int nextAnim = mPresentAnimOut;
+        if (mNextAnimOut > Integer.MIN_VALUE) {
+            nextAnim = mNextAnimOut;
+            mNextAnimOut = Integer.MIN_VALUE;
+        }
+        return nextAnim;
+    }
+
+    public int getDismissAnimIn() {
+        int nextAnim = mDismissAnimIn;
+        if (mNextAnimIn > Integer.MIN_VALUE) {
+            nextAnim = mNextAnimIn;
+            mNextAnimIn = Integer.MIN_VALUE;
+        }
+        return nextAnim;
+    }
+
+    public int getDismissAnimOut() {
+        int nextAnim = mDismissAnimOut;
+        if (mNextAnimOut > Integer.MIN_VALUE) {
+            nextAnim = mNextAnimOut;
+            mNextAnimOut = Integer.MIN_VALUE;
+        }
+        return nextAnim;
+    }
 }

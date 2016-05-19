@@ -13,6 +13,15 @@ public interface INavigationFragment {
 
     NavigationManagerFragment getNavigationManager();
 
+    void overrideNextAnimation(int animIn, int animOut);
+
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     */
     void presentFragment(INavigationFragment navFragment);
     void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut);
 
@@ -28,13 +37,6 @@ public interface INavigationFragment {
 
     void setMasterToggleTitle(String title);
     void setMasterToggleTitle(int resId);
-
-    /*
-    void setDisplayHomeAsUpEnabled(boolean enabled);
-
-    void setHomeAsUpIndicator(Drawable indicator);
-    void setHomeAsUpIndicator(int resId);
-    */
 
     boolean isPortrait();
     boolean isTablet();

@@ -14,6 +14,48 @@ import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
  */
 public class StackManager implements IStackManager {
 
+    public void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment) {
+        FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+
+        if (state.fragmentTagStack.size() >= config.minStackSize) {
+            childFragTrans.setCustomAnimations(config.getPresentAnimIn(), config.getPresentAnimOut());
+            Fragment topFrag = childFragManager.findFragmentByTag(state.fragmentTagStack.peek());
+            // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
+            childFragTrans.detach(topFrag);
+        }
+
+        // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
+        childFragTrans.add(config.pushContainerId, (Fragment) navFragment, navFragment.getNavTag());
+        childFragTrans.commit();
+
+        manager.addFragmentToStack(navFragment);
+    }
+
+    public void popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config) {
+        if (state.fragmentTagStack.size() > config.minStackSize) {
+            FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.setCustomAnimations(config.getDismissAnimIn(), config.getDismissAnimOut());
+            childFragTrans.remove(childFragManager.findFragmentByTag(state.fragmentTagStack.pop()));
+
+            if (state.fragmentTagStack.size() > 0) {
+                childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
+            }
+
+            childFragTrans.commit();
+        }
+        else {
+            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
+            // TODO: Dismiss root and self?
+            manager.getActivity().onBackPressed();
+        }
+    }
+
+    /**
+     * @deprecated Remove in 0.4.0. ManagerConfig is now smart enough to give us the next animation for in and out. This is no longer needed.
+     */
+    @Deprecated
     public void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, int animIn, int animOut) {
         FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -32,6 +74,10 @@ public class StackManager implements IStackManager {
         manager.addFragmentToStack(navFragment);
     }
 
+    /**
+     * @deprecated Remove in 0.4.0. ManagerConfig is now smart enough to give us the next animation for in and out. This is no longer needed.
+     */
+    @Deprecated
     public void popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, int animIn, int animOut) {
         if (state.fragmentTagStack.size() > config.minStackSize) {
             FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
