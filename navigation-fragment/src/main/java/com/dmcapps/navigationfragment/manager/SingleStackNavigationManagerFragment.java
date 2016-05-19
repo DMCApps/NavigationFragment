@@ -1,6 +1,8 @@
 package com.dmcapps.navigationfragment.manager;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.SingleStackLifecycleManager;
@@ -20,6 +22,8 @@ public class SingleStackNavigationManagerFragment extends NavigationManagerFragm
     public static SingleStackNavigationManagerFragment newInstance(INavigationFragment rootFragment) {
         return new SingleStackNavigationManagerFragment(rootFragment);
     }
+
+    public SingleStackNavigationManagerFragment() {}
 
     // NOTE I need to pass in the fragments to be used by the constructor.
     // If I serialize them into the bundle then whenever the application is backgrounded

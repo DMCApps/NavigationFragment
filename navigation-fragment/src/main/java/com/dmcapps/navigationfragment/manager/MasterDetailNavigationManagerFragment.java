@@ -38,6 +38,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
     }
 
+    public MasterDetailNavigationManagerFragment() {}
+
     // NOTE I need to pass in the fragments to be used by the constructor.
     // If I serialize them into the bundle then whenever the application is backgrounded
     // or an activity is launched, the application will crash with NotSerializableException
