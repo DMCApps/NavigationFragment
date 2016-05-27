@@ -10,6 +10,7 @@
 - Library for support and non support fragment
 
 ###Future Implementation Notes
+- Annotation processing for creating ListFragment and Fragment extended classes and Support/Non-support versions (https://deors.wordpress.com/2011/09/26/annotation-types/, http://hannesdorfmann.com/annotation-processing/annotationprocessing101)
 - Ability to change the master width
 - Add in Acceptance Testing using Robotium.
 - Master-Detail additional animations for showing and hiding the master when in portrait

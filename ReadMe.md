@@ -288,7 +288,7 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - Updated the method for animations. Depreciated helper methods for present/dismiss that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
 - Fixed [Git issue 6](https://github.com/DMCApps/NavigationFragment/issues/6). You can now present and dismiss with a bundle attached using `presentFragment(INavigationFragment fragment, Bundle bundle);` `and dimissFragment(Bundle bundle);`. Bundle is retreived in the Dismissed/Presented Fragment using `Bundle bundle = getNavBundle();`
 
-See [CHANGELOG](https://github.com/DMCApps/NavigationFragment/blob/develop/ReadMe.md) for past implementation notes and current in progress items.
+See [CHANGELOG](https://github.com/DMCApps/NavigationFragment/blob/develop/ChangeLog.md) for past implementation notes and current in progress items.
 
 In Android Studio Terminal use:
 ```
