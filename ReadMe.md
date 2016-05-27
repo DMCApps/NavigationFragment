@@ -62,15 +62,18 @@ Now that the SingleStackNavigationManagerFragment is being put to work, we need 
 ((Button)view.findViewById(R.id.sample_btn_continue)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
+        INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
+        presentFragment(fragmentToPresent);
     }
 });
 ```
 
-OR if you would like to provide your own animations you can use the same as the above but use the method with the following signiture
+OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `presentFragment`.
 
 ```java
-presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
+overrideNextAnimation(int animIn, int animOut);
+INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
+presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
 ```
 
 ###Dismissing a Fragment
@@ -87,10 +90,11 @@ In order to remove fragments from the screen we must follow a similar style as p
 });
 ```
 
-OR if you would like to provide your own animations your can use the same as the above but use the method with the following signiture.
+OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `dismissFragment`.
 
 ```java
-dismissFragment(int animationIn, int animationOut);
+overrideNextAnimation(int animIn, int animOut);
+dismissFragment();
 ```
 
 ###Setting the page title
@@ -164,20 +168,20 @@ In order to present a fragment we follow the same pattern as the SingleStackFrag
 ((Button)view.findViewById(R.id.master_btn_add)).setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        // Just for the example so that we can keep the count correct.
-        int fragCount = ((SampleFragment)MasterFragment.this.getNavigationManager().topFragment()).getFragCount();
-        SampleFragment sample = SampleFragment.newInstance("Fragment added to the Stack", fragCount + 1);
-        presentFragment(sample);
+        INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
+        presentFragment(fragmentToPresent);
     }
 });
 ```
 
 While on a Tablet this will transition the Current detail fragment into a new fragment on the stack. This will then cause there to be 2 fragments currently on the Detail view stack. If we are on the Phone it will transition the current view as if it was a single stack fragment. This uses the default animation of slide out to left and slide in from right.
 
-If you would like to present the fragment with a custom animation then you should use the following method signature.
+OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `presentFragment`.
 
 ```java
-presentFragment(NavigationFragment fragment, int animationIn, int animationOut);
+overrideNextAnimation(int animIn, int animOut);
+INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
+presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
 ```
 
 We execute the pending transations so that we can freely grab the fragment immediately after this code is complete and get its current state to manage the Home button in the action bar for use in displaying the Master when the Tablet is in Portrait. We can use the following to manage the actions of showing and hiding the Master when we are in Portrait. Please see below for a method for managing the Action Bar as a possible solution for showing and hiding the Master while in Portrait.
@@ -196,10 +200,11 @@ In order to remove fragments from the detail flow we must follow a similar style
 });
 ```
 
-OR if you would like to provide your own animations your can use the same as the above but use the method with the following signiture.
+OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `dismissFragment`.
 
 ```java
-dismissFragment(int animationIn, int animationOut);
+overrideNextAnimation(int animIn, int animOut);
+dismissFragment();
 ```
 
 ###Setting the page title
@@ -249,7 +254,6 @@ In the Master-Detail pattern we can replace the entire Detail stack by calling a
 ###Managing the Showing and Hiding of the Master while on a Tablet in Portrait
 
 The MasterDetailManagerFragment now handles the showing and hiding of the master whil on a tablet in portrait. All you need to do is set the title of the button shown in the menu
-
 
 ```java
 setMasterToggleTitle(String title);

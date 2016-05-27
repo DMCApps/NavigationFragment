@@ -34,12 +34,50 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/sample_btn_back"
+            android:id="@+id/sample_btn_present"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Back"/>
+            android:text="Present"/>
+
+        <Button
+            android:id="@+id/sample_btn_present_override_animation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Present with override animation"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/sample_btn_dismiss"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Dismiss (Back)"/>
+
+        <Button
+            android:id="@+id/sample_btn_dismiss_override_animation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Dismiss (Back) with override animation" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/sample_btn_replace_root"
@@ -56,14 +94,6 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:text="Activity"/>
-
-        <Button
-            android:id="@+id/sample_btn_continue"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="Continue"/>
 
     </LinearLayout>
 
