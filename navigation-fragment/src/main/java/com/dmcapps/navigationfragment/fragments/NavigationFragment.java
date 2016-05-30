@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.fragments;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
@@ -17,15 +18,17 @@ import java.util.UUID;
  */
 public class NavigationFragment extends Fragment implements INavigationFragment {
 
-    private final String TAG;
+    private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
 
-    public NavigationFragment() {
-        TAG = UUID.randomUUID().toString();
-    }
+    public NavigationFragment() { }
 
     public String getNavTag() {
         return TAG;
+    }
+
+    public Bundle getNavBundle() {
+        return getArguments().getBundle(ARG_NAVIGATION_FRAGMENT_BUNDLE);
     }
 
     /**
@@ -79,6 +82,20 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
     }
 
     /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     * Sends a Bundle with the Fragment that can be retrieved using {@link INavigationFragment#getNavBundle()}
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     * @param
+     *      navBundle -> Bundle to add to the presenting of the Fragment.
+     */
+    public void presentFragment(INavigationFragment navFragment, Bundle navBundle) {
+        getNavigationManager().pushFragment(navFragment, navBundle);
+    }
+
+    /**
      * Present a fragment on the Navigation Manager overriding the default animation
      *
      * @param
@@ -108,6 +125,11 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
     @Override
     public void dismissFragment() {
         getNavigationManager().popFragment();
+    }
+
+    @Override
+    public void dismissFragment(Bundle navBundle) {
+        getNavigationManager().popFragment(navBundle);
     }
 
     /**

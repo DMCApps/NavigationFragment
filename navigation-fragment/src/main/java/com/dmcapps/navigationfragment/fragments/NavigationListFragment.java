@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.fragments;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 
@@ -18,15 +19,17 @@ import java.util.UUID;
  */
 public class NavigationListFragment extends ListFragment implements INavigationFragment {
 
-    private final String TAG;
+    private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
 
-    public NavigationListFragment() {
-        TAG = UUID.randomUUID().toString();
-    }
+    public NavigationListFragment() { }
 
     public String getNavTag() {
         return TAG;
+    }
+
+    public Bundle getNavBundle() {
+        return getArguments().getBundle(ARG_NAVIGATION_FRAGMENT_BUNDLE);
     }
 
     /**

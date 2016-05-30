@@ -47,7 +47,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Present with override animation"/>
+            android:text="Present\n(Override)" />
+
+        <Button
+            android:id="@+id/sample_btn_present_bundle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Present\n(Bundle)" />
 
     </LinearLayout>
 
@@ -62,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Dismiss (Back)"/>
+            android:text="Dismiss"/>
 
         <Button
             android:id="@+id/sample_btn_dismiss_override_animation"
@@ -70,7 +78,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="Dismiss (Back) with override animation" />
+            android:text="Dismiss\n(Override)" />
+
+        <Button
+            android:id="@+id/sample_btn_dismiss_bundle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Dismiss\n(Bundle)" />
 
     </LinearLayout>
 

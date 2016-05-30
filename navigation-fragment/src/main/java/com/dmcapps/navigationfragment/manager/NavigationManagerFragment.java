@@ -141,6 +141,21 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     */
+    public void pushFragment(INavigationFragment navFragment, Bundle navBundle) {
+        mStackManager.pushFragment(this, mState, mConfig, navFragment);
+
+        if (mListener != null) {
+            mListener.didPresentFragment();
+        }
+    }
+
+    /**
      * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
      * the animations defined.
      * Detaching the top fragment if the stack is at or above minStackSize
@@ -169,6 +184,21 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      * Uses default animation of slide in from left and slide out to right animation.
      */
     public void popFragment() {
+        mStackManager.popFragment(this, mState, mConfig);
+
+        if (mListener != null) {
+            mListener.didDismissFragment();
+        }
+    }
+
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right animation.
+     *
+     * @param
+     *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
+     */
+    public void popFragment(Bundle navBundle) {
         mStackManager.popFragment(this, mState, mConfig);
 
         if (mListener != null) {

@@ -163,6 +163,16 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
+        view.findViewById(R.id.sample_btn_present_bundle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                INavigationFragment fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
+
+                overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+                presentFragment(fragmentToPresent, new Bundle());
+            }
+        });
+
         view.findViewById(R.id.sample_btn_dismiss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +185,14 @@ public class SampleFragment extends NavigationFragment {
             public void onClick(View v) {
                 overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
                 dismissFragment();
+            }
+        });
+
+        view.findViewById(R.id.sample_btn_dismiss_bundle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
+                dismissFragment(new Bundle());
             }
         });
 
