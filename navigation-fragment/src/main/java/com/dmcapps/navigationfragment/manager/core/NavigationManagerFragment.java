@@ -1,8 +1,7 @@
-package com.dmcapps.navigationfragment.manager;
+package com.dmcapps.navigationfragment.manager.core;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
-import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.ILifecycleManager;
-import com.dmcapps.navigationfragment.manager.micromanagers.stack.StackManager;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.ILifecycleManager;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.stack.StackManager;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
-
-import java.io.Serializable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -148,7 +145,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
      */
     public void pushFragment(INavigationFragment navFragment, Bundle navBundle) {
-        mStackManager.pushFragment(this, mState, mConfig, navFragment);
+        mStackManager.pushFragment(this, mState, mConfig, navFragment, navBundle);
 
         if (mListener != null) {
             mListener.didPresentFragment();
@@ -199,7 +196,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
     public void popFragment(Bundle navBundle) {
-        mStackManager.popFragment(this, mState, mConfig);
+        mStackManager.popFragment(this, mState, mConfig, navBundle);
 
         if (mListener != null) {
             mListener.didDismissFragment();

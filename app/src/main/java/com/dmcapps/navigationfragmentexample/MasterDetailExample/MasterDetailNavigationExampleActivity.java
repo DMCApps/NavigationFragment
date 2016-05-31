@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 

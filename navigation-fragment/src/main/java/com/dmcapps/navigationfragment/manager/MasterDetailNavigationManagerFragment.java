@@ -13,7 +13,8 @@ import android.view.animation.AnimationUtils;
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
 import com.dmcapps.navigationfragment.helper.AnimationEndListener;
-import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * A simple {@link Fragment} subclass.

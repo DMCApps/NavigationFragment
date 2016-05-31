@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 
 import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
 
@@ -21,15 +21,23 @@ public class NavigationListFragment extends ListFragment implements INavigationF
 
     private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
+    private Bundle mNavBundle;
 
     public NavigationListFragment() { }
 
+    @Override
     public String getNavTag() {
         return TAG;
     }
 
+    @Override
+    public void setNavBundle(Bundle navBundle) {
+        mNavBundle = navBundle;
+    }
+
+    @Override
     public Bundle getNavBundle() {
-        return getArguments().getBundle(ARG_NAVIGATION_FRAGMENT_BUNDLE);
+        return mNavBundle;
     }
 
     /**
@@ -39,6 +47,7 @@ public class NavigationListFragment extends ListFragment implements INavigationF
      * @return
      *      The Parent Fragment in the stack of fragments that is the Navigation Manager of the Fragment.
      */
+    @Override
     public NavigationManagerFragment getNavigationManager() {
         return getNavigationManager(getParentFragment());
     }
@@ -83,6 +92,20 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     }
 
     /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     * Sends a Bundle with the Fragment that can be retrieved using {@link INavigationFragment#getNavBundle()}
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     * @param
+     *      navBundle -> Bundle to add to the presenting of the Fragment.
+     */
+    public void presentFragment(INavigationFragment navFragment, Bundle navBundle) {
+        getNavigationManager().pushFragment(navFragment, navBundle);
+    }
+
+    /**
      * Present a fragment on the Navigation Manager overriding the default animation
      *
      * @param
@@ -112,6 +135,11 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     @Override
     public void dismissFragment() {
         getNavigationManager().popFragment();
+    }
+
+    @Override
+    public void dismissFragment(Bundle navBundle) {
+        getNavigationManager().popFragment(navBundle);
     }
 
     /**

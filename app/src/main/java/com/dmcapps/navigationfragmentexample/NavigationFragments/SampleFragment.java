@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
+import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragment.fragments.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
@@ -29,10 +30,14 @@ public class SampleFragment extends NavigationFragment {
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";
     private static final String ARG_FRAG_COUNT = "ARG_FRAG_COUNT";
 
+    private static final String ARG_MODEL_FROM_NAV_BUNDLE = "ARG_MODEL_FROM_NAV_BUNDLE";
+
     private String mFragText;
     private SampleModel model;
 
     private EditText edit1;
+    private EditText edit2;
+    private EditText edit3;
 
     private int mFragCount;
 
@@ -70,8 +75,21 @@ public class SampleFragment extends NavigationFragment {
     public void onResume() {
         super.onResume();
 
+        if (getNavBundle() != null) {
+            model = (SampleModel)getNavBundle().getSerializable(ARG_MODEL_FROM_NAV_BUNDLE);
+
+            if (edit1 != null) {
+                edit1.setText(model.text1);
+                edit2.setText(model.text2);
+                edit3.setText(model.text3);
+            }
+        }
+
         setTitle("Sample Fragment " + mFragCount);
-        setMasterToggleTitle("Master");
+
+        if (getNavigationManager() instanceof MasterDetailNavigationManagerFragment) {
+            setMasterToggleTitle("Master");
+        }
 
         // Using this to test if the memory space of the activity changes on rotation in the child
         Activity activity = getActivity();
@@ -107,7 +125,7 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
-        EditText edit2 = (EditText) view.findViewById(R.id.sample_et_text_2);
+        edit2 = (EditText) view.findViewById(R.id.sample_et_text_2);
         edit2.setText(model.text2);
         edit2.addTextChangedListener(new TextWatcher() {
             @Override
@@ -126,7 +144,7 @@ public class SampleFragment extends NavigationFragment {
             }
         });
 
-        EditText edit3 = (EditText) view.findViewById(R.id.sample_et_text_3);
+        edit3 = (EditText) view.findViewById(R.id.sample_et_text_3);
         edit3.setText(model.text3);
         edit3.addTextChangedListener(new TextWatcher() {
             @Override
@@ -167,9 +185,9 @@ public class SampleFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 INavigationFragment fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
-
-                overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
-                presentFragment(fragmentToPresent, new Bundle());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ARG_MODEL_FROM_NAV_BUNDLE, new SampleModel(model));
+                presentFragment(fragmentToPresent, bundle);
             }
         });
 
@@ -191,8 +209,9 @@ public class SampleFragment extends NavigationFragment {
         view.findViewById(R.id.sample_btn_dismiss_bundle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
-                dismissFragment(new Bundle());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ARG_MODEL_FROM_NAV_BUNDLE, new SampleModel(model));
+                dismissFragment(bundle);
             }
         });
 
@@ -222,5 +241,15 @@ public class SampleFragment extends NavigationFragment {
         public String text1;
         public String text2;
         public String text3;
+
+        public SampleModel() {
+
+        }
+
+        public SampleModel(SampleModel model) {
+            text1 = model.text1;
+            text2 = model.text2;
+            text3 = model.text3;
+        }
     }
 }

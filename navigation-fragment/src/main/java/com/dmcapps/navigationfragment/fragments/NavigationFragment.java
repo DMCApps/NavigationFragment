@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.actionbar.ActionBarManager;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
 
@@ -20,15 +20,24 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
 
     private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
+    // Need to store the bundle myself as you can't change the bundle after the fragment has been presented.
+    private Bundle mNavBundle;
 
     public NavigationFragment() { }
 
+    @Override
     public String getNavTag() {
         return TAG;
     }
 
+    @Override
+    public void setNavBundle(Bundle navBundle) {
+        mNavBundle = navBundle;
+    }
+
+    @Override
     public Bundle getNavBundle() {
-        return getArguments().getBundle(ARG_NAVIGATION_FRAGMENT_BUNDLE);
+        return mNavBundle;
     }
 
     /**
@@ -38,6 +47,7 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
      * @return
      *      The Parent Fragment in the stack of fragments that is the Navigation Manager of the Fragment.
      */
+    @Override
     public NavigationManagerFragment getNavigationManager() {
         return getNavigationManager(getParentFragment());
     }

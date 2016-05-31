@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.micromanagers;
+package com.dmcapps.navigationfragment.manager.core.micromanagers;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;

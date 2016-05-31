@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.micromanagers.actionbar;
+package com.dmcapps.navigationfragment.manager.core.micromanagers.actionbar;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.

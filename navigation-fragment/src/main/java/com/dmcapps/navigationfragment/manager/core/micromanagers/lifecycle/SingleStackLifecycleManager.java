@@ -1,7 +1,6 @@
-package com.dmcapps.navigationfragment.manager.micromanagers.lifecycle;
+package com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -9,55 +8,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
 
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class MasterDetailLifecycleManager implements ILifecycleManager {
+public class SingleStackLifecycleManager implements ILifecycleManager {
 
-    private static final int MASTER_DETAIL_PHONE_MIN_ACTION_SIZE = 1;
-    private static final int MASTER_DETAIL_TABLET_MIN_ACTION_SIZE = 2;
+    private static final int SINGLE_STACK_MIN_ACTION_SIZE = 1;
 
+    @Override
     public void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
-
-        // No Fragments have been added. Attach the master and detail.
+        // No Fragments have been added. Attach the root.
         if (state.fragmentTagStack.size() == 0) {
-            FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            if (state.isTablet) {
-                // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.navigation_manager_container_master, (Fragment) config.masterFragment, config.masterFragment.getNavTag());
-                navMgrFragment.addFragmentToStack(config.masterFragment);
-            }
-            else {
-                navMgrFragment.pushFragment(config.masterFragment);
-            }
-            childFragTrans.commit();
-
-            if (state.isTablet) {
-                navMgrFragment.pushFragment(config.detailFragment);
-            }
-
-            config.nullifyInitialFragments();
+            navMgrFragment.pushFragment(config.rootFragment);
         }
         // Fragments are in the stack, resume at the top.
         else {
             FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-            if (state.isTablet) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.firstElement()));
-            }
             childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
             childFragTrans.commit();
         }
 
-        if (navMgrFragment.getActivity() != null) {
-            navMgrFragment.getActivity().invalidateOptionsMenu();
-        }
+        config.nullifyInitialFragments();
     }
 
     @Override
@@ -72,22 +49,21 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
         state.isPortrait = view.findViewById(R.id.navigation_manager_phone_portrait) != null
                 || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
 
-        config.minStackSize = state.isTablet ? MASTER_DETAIL_TABLET_MIN_ACTION_SIZE : MASTER_DETAIL_PHONE_MIN_ACTION_SIZE;
+        config.minStackSize = SINGLE_STACK_MIN_ACTION_SIZE;
         config.pushContainerId = R.id.navigation_manager_fragment_container;
+
+        if (view.findViewById(R.id.navigation_manager_container_master) != null) {
+            view.findViewById(R.id.navigation_manager_container_master).setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onPause(NavigationManagerFragment navMgrFragment, ManagerState state) {
-
         FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        if (state.isTablet) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(state.fragmentTagStack.firstElement()));
-        }
         childFragTrans.detach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
         childFragTrans.commit();
-
     }
 
 }

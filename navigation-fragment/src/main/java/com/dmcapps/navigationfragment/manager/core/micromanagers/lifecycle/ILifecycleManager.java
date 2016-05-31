@@ -1,13 +1,13 @@
-package com.dmcapps.navigationfragment.manager.micromanagers.lifecycle;
+package com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
 
 import java.io.Serializable;
 

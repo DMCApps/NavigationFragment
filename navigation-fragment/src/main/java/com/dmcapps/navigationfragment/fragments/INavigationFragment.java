@@ -2,19 +2,16 @@ package com.dmcapps.navigationfragment.fragments;
 
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-
-import java.io.Serializable;
-import java.util.UUID;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
 
 /**
  * Created by DCarmo on 16-02-09.
  */
 public interface INavigationFragment {
-    // Ensure uniqueness from user bundle items.
-    String ARG_NAVIGATION_FRAGMENT_BUNDLE = "ARG_" + UUID.randomUUID().toString();
 
     String getNavTag();
+
+    void setNavBundle(Bundle bundle);
     Bundle getNavBundle();
 
     NavigationManagerFragment getNavigationManager();

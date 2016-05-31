@@ -1,11 +1,10 @@
 package com.dmcapps.navigationfragment.manager;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.lifecycle.SingleStackLifecycleManager;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.SingleStackLifecycleManager;
 
 
 /**

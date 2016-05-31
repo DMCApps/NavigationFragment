@@ -1,20 +1,27 @@
-package com.dmcapps.navigationfragment.manager.micromanagers.stack;
+package com.dmcapps.navigationfragment.manager.core.micromanagers.stack;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.manager.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
 
 /**
  * Created by dcarmo on 2016-02-25.
  */
 public class StackManager implements IStackManager {
 
-    public void pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment) {
+    public INavigationFragment pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment, Bundle navBundle) {
+        navFragment.setNavBundle(navBundle);
+        pushFragment(manager, state, config, navFragment);
+        return navFragment;
+    }
+
+    public INavigationFragment pushFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, INavigationFragment navFragment) {
         FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
@@ -30,9 +37,13 @@ public class StackManager implements IStackManager {
         childFragTrans.commit();
 
         manager.addFragmentToStack(navFragment);
+
+        return navFragment;
     }
 
-    public void popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config) {
+    public INavigationFragment popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, Bundle navBundle) {
+        INavigationFragment navFragment = null;
+
         if (state.fragmentTagStack.size() > config.minStackSize) {
             FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -40,7 +51,9 @@ public class StackManager implements IStackManager {
             childFragTrans.remove(childFragManager.findFragmentByTag(state.fragmentTagStack.pop()));
 
             if (state.fragmentTagStack.size() > 0) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
+                navFragment = (INavigationFragment)childFragManager.findFragmentByTag(state.fragmentTagStack.peek());
+                navFragment.setNavBundle(navBundle);
+                childFragTrans.attach((Fragment)navFragment);
             }
 
             childFragTrans.commit();
@@ -50,6 +63,32 @@ public class StackManager implements IStackManager {
             // TODO: Dismiss root and self?
             manager.getActivity().onBackPressed();
         }
+        return navFragment;
+    }
+
+    public INavigationFragment popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config) {
+        INavigationFragment navFragment = null;
+
+        if (state.fragmentTagStack.size() > config.minStackSize) {
+            FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.setCustomAnimations(config.getDismissAnimIn(), config.getDismissAnimOut());
+            childFragTrans.remove(childFragManager.findFragmentByTag(state.fragmentTagStack.pop()));
+
+            if (state.fragmentTagStack.size() > 0) {
+                navFragment = (INavigationFragment)childFragManager.findFragmentByTag(state.fragmentTagStack.peek());
+                childFragTrans.attach((Fragment)navFragment);
+            }
+
+            childFragTrans.commit();
+        }
+        else {
+            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
+            // TODO: Dismiss root and self?
+            manager.getActivity().onBackPressed();
+        }
+
+        return navFragment;
     }
 
     /**
