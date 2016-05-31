@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:0.2.0.3'
+compile 'com.dmcapps:navigation-fragment:0.3.0'
 ```
 
 ##Current Version
 
-0.2.0.3
+0.3.0
 
 ##Introduction
 
@@ -289,8 +289,17 @@ setManageMasterActionBarToggle(boolean manageToggle);
 
 ###0.3.0
 - Remove Serializable requirement from all classes. There is no need for it anymore and the Navigation Fragment shouldn't make that decision.
-- Updated the method for animations. Depreciated helper methods for present/dismiss that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
+- Updated the method for animations. Depreciated helper methods for `present`/`dismiss` that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
 - Fixed [Git issue 6](https://github.com/DMCApps/NavigationFragment/issues/6). You can now present and dismiss with a bundle attached using `presentFragment(INavigationFragment fragment, Bundle bundle);` `and dimissFragment(Bundle bundle);`. Bundle is retreived in the Dismissed/Presented Fragment using `Bundle bundle = getNavBundle();`
+
+NOTE: The present and dismiss share the same bundle. If you would like to use two different bundles you should pass the bundle back and forth with multiple bundles in it. Example:
+```java
+// Presenting
+Bundle bundle = getNavBundle();
+if ( == null) {
+
+
+```
 
 See [CHANGELOG](https://github.com/DMCApps/NavigationFragment/blob/develop/ChangeLog.md) for past implementation notes and current in progress items.
 

@@ -2,7 +2,6 @@ package com.dmcapps.navigationfragment.manager.core;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,6 @@ import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.ILife
 import com.dmcapps.navigationfragment.manager.core.micromanagers.stack.StackManager;
 import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();

@@ -42,26 +42,9 @@ public class StackManager implements IStackManager {
     }
 
     public INavigationFragment popFragment(NavigationManagerFragment manager, ManagerState state, ManagerConfig config, Bundle navBundle) {
-        INavigationFragment navFragment = null;
-
-        if (state.fragmentTagStack.size() > config.minStackSize) {
-            FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
-            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(config.getDismissAnimIn(), config.getDismissAnimOut());
-            childFragTrans.remove(childFragManager.findFragmentByTag(state.fragmentTagStack.pop()));
-
-            if (state.fragmentTagStack.size() > 0) {
-                navFragment = (INavigationFragment)childFragManager.findFragmentByTag(state.fragmentTagStack.peek());
-                navFragment.setNavBundle(navBundle);
-                childFragTrans.attach((Fragment)navFragment);
-            }
-
-            childFragTrans.commit();
-        }
-        else {
-            // TODO: Nothing above stack size to dismiss ... Exception? Call activity onBackPressed()? what to do?
-            // TODO: Dismiss root and self?
-            manager.getActivity().onBackPressed();
+        INavigationFragment navFragment = popFragment(manager, state, config);
+        if (navFragment != null) {
+            navFragment.setNavBundle(navBundle);
         }
         return navFragment;
     }
