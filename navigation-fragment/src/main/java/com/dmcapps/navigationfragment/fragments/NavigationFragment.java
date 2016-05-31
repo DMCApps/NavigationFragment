@@ -49,21 +49,20 @@ public class NavigationFragment extends Fragment implements INavigationFragment 
      */
     @Override
     public NavigationManagerFragment getNavigationManager() {
-        return getNavigationManager(getParentFragment());
-    }
+        Fragment parent = this;
 
-    private NavigationManagerFragment getNavigationManager(Fragment fragment) {
-        NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, fragment);
+        // Loop until we find a parent that is a NavigationFragmentManager or there are no parents left to check.
+        do {
+            parent = parent.getParentFragment();
+            if (parent == null) {
+                throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
+            }
 
-        if (navFragment != null) {
-            return navFragment;
-        }
-        else if (fragment.getParentFragment() != null) {
-            return getNavigationManager(fragment.getParentFragment());
-        }
-        else {
-            throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the NavigationManagerFragment this fragment must be presented on a NavigationManagerFragment.");
-        }
+            NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
+            if (navFragment != null) {
+                return navFragment;
+            }
+        } while(true);
     }
 
     /**
