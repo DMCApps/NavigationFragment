@@ -33,10 +33,22 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
             SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
-            addFragment(navManager);
+
+            mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(android.R.id.content, navManager, mSingleStackNavigationManagerFragmentTag);
+            ft.commit();
         }
         else {
-            showFragment(mSingleStackNavigationManagerFragmentTag);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
+
+            if (fragment != null && fragment.isDetached()) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.attach(fragment);
+                ft.commit();
+            }
         }
     }
 
@@ -55,25 +67,6 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putString(STATE_NAV_TAG, mSingleStackNavigationManagerFragmentTag);
-    }
-
-    private void addFragment(SingleStackNavigationManagerFragment fragment)  {
-        mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.add(android.R.id.content, fragment, mSingleStackNavigationManagerFragmentTag);
-        ft.commit();
-    }
-
-    private void showFragment(String tag)  {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-
-        if (fragment != null && fragment.isDetached()) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.attach(fragment);
-            ft.commit();
-        }
     }
 
     @Override

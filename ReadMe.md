@@ -71,6 +71,11 @@ Now that the SingleStackNavigationManagerFragment is being put to work, we need 
 OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `presentFragment`.
 
 ```java
+@Depreciated
+// DEPRECIATED in 0.3.0 to be removed in 0.4.0
+// USE method below.
+presentFragment(INavigationFragment fragment, int animIn, int animOut);
+
 overrideNextAnimation(int animIn, int animOut);
 INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
 presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
@@ -93,6 +98,11 @@ In order to remove fragments from the screen we must follow a similar style as p
 OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `dismissFragment`.
 
 ```java
+@Depreciated
+// DEPRECIATED in 0.3.0 to be removed in 0.4.0
+// USE method below.
+dismissFragment(int animIn, int animOut);
+
 overrideNextAnimation(int animIn, int animOut);
 dismissFragment();
 ```
@@ -179,6 +189,11 @@ While on a Tablet this will transition the Current detail fragment into a new fr
 OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `presentFragment`.
 
 ```java
+@Depreciated
+// DEPRECIATED in 0.3.0 to be removed in 0.4.0
+// USE method below.
+presentFragment(INavigationFragment fragment, int animIn, int animOut);
+
 overrideNextAnimation(int animIn, int animOut);
 INavigationFragment fragmentToPresent = SampleFragment.newInstance(++fragCount + " Fragment In The Stack.");
 presentFragment(SampleFragment.newInstance(++fragCount + " Fragment In The Stack."));
@@ -203,6 +218,11 @@ In order to remove fragments from the detail flow we must follow a similar style
 OR if you would like to provide your own animations you can override the next transition by calling the below method before calling `dismissFragment`.
 
 ```java
+@Depreciated
+// DEPRECIATED in 0.3.0 to be removed in 0.4.0
+// USE method below.
+dismissFragment(int animIn, int animOut);
+
 overrideNextAnimation(int animIn, int animOut);
 dismissFragment();
 ```
@@ -292,14 +312,7 @@ setManageMasterActionBarToggle(boolean manageToggle);
 - Updated the method for animations. Depreciated helper methods for `present`/`dismiss` that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
 - Fixed [Git issue 6](https://github.com/DMCApps/NavigationFragment/issues/6). You can now present and dismiss with a bundle attached using `presentFragment(INavigationFragment fragment, Bundle bundle);` `and dimissFragment(Bundle bundle);`. Bundle is retreived in the Dismissed/Presented Fragment using `Bundle bundle = getNavBundle();`
 
-NOTE: The present and dismiss share the same bundle. If you would like to use two different bundles you should pass the bundle back and forth with multiple bundles in it. Example:
-```java
-// Presenting
-Bundle bundle = getNavBundle();
-if ( == null) {
-
-
-```
+NOTE: The present and dismiss share the same bundle and hence setting a bundle on present/dismiss will override the current nav bundle for the specific fragment that is presented or the fragment that is returned to on dismiss.
 
 See [CHANGELOG](https://github.com/DMCApps/NavigationFragment/blob/develop/ChangeLog.md) for past implementation notes and current in progress items.
 

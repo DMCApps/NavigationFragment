@@ -37,10 +37,24 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
             SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
             MasterDetailNavigationManagerFragment managerFragment = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
             managerFragment.setManageMasterActionBarToggle(true);
-            addFragment(managerFragment);
+
+            mNavigationManagerFragmentTag = UUID.randomUUID().toString();
+
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(android.R.id.content, managerFragment, mNavigationManagerFragmentTag);
+            ft.commit();
+            fm.executePendingTransactions();
         }
         else {
-            showFragment(mNavigationManagerFragmentTag);
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+
+            if (fragment != null && fragment.isDetached()) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.attach(fragment);
+                ft.commit();
+                getSupportFragmentManager().executePendingTransactions();
+            }
         }
     }
 
@@ -70,27 +84,6 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void addFragment(MasterDetailNavigationManagerFragment fragment)  {
-        mNavigationManagerFragmentTag = UUID.randomUUID().toString();
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.add(android.R.id.content, fragment, mNavigationManagerFragmentTag);
-        ft.commit();
-        fm.executePendingTransactions();
-    }
-
-    private void showFragment(String tag)  {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-
-        if (fragment != null && fragment.isDetached()) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.attach(fragment);
-            ft.commit();
-            getSupportFragmentManager().executePendingTransactions();
-        }
     }
 
     @Override
