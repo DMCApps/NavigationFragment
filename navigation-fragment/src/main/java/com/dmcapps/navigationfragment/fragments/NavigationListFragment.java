@@ -54,15 +54,14 @@ public class NavigationListFragment extends ListFragment implements INavigationF
         // Loop until we find a parent that is a NavigationFragmentManager or there are no parents left to check.
         do {
             parent = parent.getParentFragment();
-            if (parent == null) {
-                throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
-            }
 
             NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
             if (navFragment != null) {
                 return navFragment;
             }
-        } while(true);
+        } while(parent != null);
+
+        throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
     }
 
     /**
