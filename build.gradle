@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
 
@@ -22,4 +22,42 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    supportDependencies = [
+            percent               : "com.android.support:percent:${SUPPORT_LIBRARY}",
+            annotation            : "com.android.support:support-annotations:${SUPPORT_LIBRARY}",
+            support               : "com.android.support:support-v13:${SUPPORT_LIBRARY}",
+            supportv4             : "com.android.support:support-v4:${SUPPORT_LIBRARY}",
+            appCompat             : "com.android.support:appcompat-v7:${SUPPORT_LIBRARY}",
+            recycler              : "com.android.support:recyclerview-v7:${SUPPORT_LIBRARY}",
+            design                : "com.android.support:design:${SUPPORT_LIBRARY}",
+            cardView              : "com.android.support:cardview-v7:${SUPPORT_LIBRARY}",
+
+
+            retrofitAdapter       : "com.squareup.retrofit2:retrofit-adapters:${RETROFIT_LIBRARY}",
+            retrofitCore          : "com.squareup.retrofit2:retrofit:${RETROFIT_LIBRARY}",
+            retrofitRXJava        : "com.squareup.retrofit2:adapter-rxjava:${RETROFIT_LIBRARY}",
+            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:${RETROFIT_LIBRARY}",
+            retrofitParent        : "com.squareup.retrofit2:parent:${RETROFIT_LIBRARY}",
+
+            okhttpLogger          : "com.squareup.okhttp3:logging-interceptor:${OKHTTP_LIBRARY}",
+            okhttpWebsocket       : "com.squareup.okhttp3:okhttp-ws:${OKHTTP_LIBRARY}",
+            okhttpCore            : "com.squareup.okhttp3:okhttp:${OKHTTP_LIBRARY}",
+
+            icepick               : "frankiesardo:icepick:${FRANKIES_ICEPICK}",
+            icepickProcessor      : "frankiesardo:icepick-processor:${FRANKIES_ICEPICK}",
+
+            smartTabLayoutUtilsV13: "com.ogaclejapan.smarttablayout:utils-v13:${SMARTTABLAYOUT}@aar",
+            smartTabLayoutUtilsV4 : "com.ogaclejapan.smarttablayout:utils-v4:${SMARTTABLAYOUT}@aar",
+            smartTabLayoutCore    : "com.ogaclejapan.smarttablayout:library:${SMARTTABLAYOUT}@aar",
+
+            leakcanary            : "com.squareup.leakcanary:leakcanary-android:${LEAKCANARY}",
+            leakcanarynoop        : "com.squareup.leakcanary:leakcanary-android-no-op:${LEAKCANARY}",
+
+            gms_facial            : "com.google.android.gms:play-services-vision:${GOOGLE_PLAY_SERVICE}",
+            gms_anayltics         : "com.google.android.gms:play-services-analytics:${GOOGLE_PLAY_SERVICE}",
+
+    ]
 }
