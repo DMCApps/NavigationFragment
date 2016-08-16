@@ -14,7 +14,7 @@ compile 'com.dmcapps:navigation-fragment:0.3.0'
 
 ##Current Version
 
-0.3.0
+0.3.1
 
 ##Introduction
 
@@ -306,6 +306,9 @@ setManageMasterActionBarToggle(boolean manageToggle);
 ``` 
 
 ##Change Log
+
+###0.3.1
+- Marked the `INavigationManager` properties in the ManagerConfig as Transient per [Git issue 26](https://github.com/DMCApps/NavigationFragment/issues/26)
 
 ###0.3.0
 - Remove Serializable requirement from all classes. There is no need for it anymore and the Navigation Fragment shouldn't make that decision.
