@@ -25,10 +25,10 @@ public class ManagerConfig implements Serializable {
     private int mDismissAnimIn;
     private int mDismissAnimOut;
 
-    public INavigationFragment rootFragment;
+    public transient INavigationFragment rootFragment;
 
-    public INavigationFragment masterFragment;
-    public INavigationFragment detailFragment;
+    public transient INavigationFragment masterFragment;
+    public transient INavigationFragment detailFragment;
 
     public ManagerConfig() {
         mPresentAnimIn = R.anim.slide_in_from_right;
