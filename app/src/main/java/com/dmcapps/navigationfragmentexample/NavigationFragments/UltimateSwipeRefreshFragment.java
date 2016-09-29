@@ -3,7 +3,6 @@ package com.dmcapps.navigationfragmentexample.NavigationFragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 import com.marshalchen.ultimaterecyclerview.ItemTouchListenerAdapter;
-import com.marshalchen.ultimaterecyclerview.URLogs;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.quickAdapter.easyRegularAdapter;
@@ -30,7 +27,7 @@ import java.util.List;
 /**
  * Created by hesk on 29/2/16.
  */
-public class UltimateSwipeRefreshFragment extends NavigationFragment {
+public class UltimateSwipeRefreshFragment extends SupportNavigationFragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";

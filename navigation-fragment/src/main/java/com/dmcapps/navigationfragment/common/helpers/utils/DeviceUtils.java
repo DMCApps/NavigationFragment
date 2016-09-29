@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.helper.utils;
+package com.dmcapps.navigationfragment.common.helpers.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

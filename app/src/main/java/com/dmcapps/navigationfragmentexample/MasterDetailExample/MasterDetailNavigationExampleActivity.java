@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 
@@ -88,7 +88,7 @@ public class MasterDetailNavigationExampleActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
+        SupportNavigationManagerFragment fragment = (SupportNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

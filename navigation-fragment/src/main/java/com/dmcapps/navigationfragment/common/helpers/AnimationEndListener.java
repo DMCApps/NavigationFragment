@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.helper;
+package com.dmcapps.navigationfragment.common.helpers;
 
 import android.view.animation.Animation;
 

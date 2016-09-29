@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.core;
+package com.dmcapps.navigationfragment.supportv7.manager.core;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.ILifecycleManager;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.stack.StackManager;
-import com.dmcapps.navigationfragment.helper.RetainedChildFragmentManagerFragment;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle.ILifecycleManager;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.stack.StackManager;
+import com.dmcapps.navigationfragment.common.helpers.RetainedChildFragmentManagerFragment;
 
-public abstract class NavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+public abstract class SupportNavigationManagerFragment extends RetainedChildFragmentManagerFragment {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
-    private static final String TAG = NavigationManagerFragment.class.getSimpleName();
+    private static final String TAG = SupportNavigationManagerFragment.class.getSimpleName();
 
     private static final String KEY_MANAGER_CONFIG = "KEY_MANAGER_CONFIG";
     private static final String KEY_MANAGER_STATE = "KEY_MANAGER_STATE";
@@ -36,7 +36,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
         void didDismissFragment();
     }
 
-    public NavigationManagerFragment() {
+    public SupportNavigationManagerFragment() {
     }
 
     public void setDefaultPresentAnimations(int animIn, int animOut) {
@@ -149,30 +149,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     /**
-     * Push a new Fragment onto the stack of {@link INavigationFragment} and present it using
-     * the animations defined.
-     * Detaching the top fragment if the stack is at or above minStackSize
-     * Adding the new fragment to the containerId
-     *
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being sent to the back.
-     *
-     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before presenting. This method will be removed as of 0.4.0.
-     */
-    @Deprecated
-    public void pushFragment(INavigationFragment navFragment, int animIn, int animOut) {
-        mStackManager.pushFragment(this, mState, mConfig, navFragment, animIn, animOut);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
-    }
-
-    /**
      * Pop the current fragment off the top of the stack and dismiss it.
      * Uses default animation of slide in from left and slide out to right animation.
      */
@@ -193,26 +169,6 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      */
     public void popFragment(Bundle navBundle) {
         mStackManager.popFragment(this, mState, mConfig, navBundle);
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
-    }
-
-    /**
-     * Pop the current fragment off the top of the stack given it is above
-     * the passed in stackSize. Dismiss it using the animations defined.
-     *
-     * @param
-     *      animIn -> The animation of the fragment about to be shown.
-     * @param
-     *      animOut -> The animation of the fragment that is being dismissed.
-     *
-     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before dismissing. This method will be removed as of 0.4.0.
-     */
-    @Deprecated
-    public void popFragment(int animIn, int animOut) {
-        mStackManager.popFragment(this, mState, mConfig, animIn, animOut);
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -290,7 +246,8 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
      */
     public void replaceRootFragment(INavigationFragment navFragment) {
         clearNavigationStackToPosition(mConfig.minStackSize - 1);
-        pushFragment(navFragment, ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        // overrideNextAnimation(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        pushFragment(navFragment);
     }
 
     /**
@@ -322,7 +279,7 @@ public abstract class NavigationManagerFragment extends RetainedChildFragmentMan
     }
 
     /**
-     * Returns the {@link NavigationManagerFragment} stack size. A stack size of 0 represents empty.
+     * Returns the {@link SupportNavigationManagerFragment} stack size. A stack size of 0 represents empty.
      *
      * @return
      *      The current stack size.

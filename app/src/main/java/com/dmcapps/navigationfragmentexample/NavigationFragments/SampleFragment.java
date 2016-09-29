@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 import java.io.Serializable;
@@ -25,7 +25,7 @@ import java.io.Serializable;
  * Use the {@link SampleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SampleFragment extends NavigationFragment {
+public class SampleFragment extends SupportNavigationFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";
     private static final String ARG_FRAG_COUNT = "ARG_FRAG_COUNT";

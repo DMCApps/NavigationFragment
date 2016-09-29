@@ -12,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
 
@@ -48,8 +48,8 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            if(mVisibleFragment instanceof NavigationManagerFragment) {
-                if (!((NavigationManagerFragment)mVisibleFragment).onBackPressed()) {
+            if(mVisibleFragment instanceof SupportNavigationManagerFragment) {
+                if (!((SupportNavigationManagerFragment)mVisibleFragment).onBackPressed()) {
                     super.onBackPressed();
                 }
             }
@@ -113,8 +113,8 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
         if (title != null) {
             setTitle(title);
         }
-        if (firstFragment instanceof NavigationFragment) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance((INavigationFragment)firstFragment);
+        if (firstFragment instanceof SupportNavigationFragment) {
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance((INavigationFragment)firstFragment);
             setFragment(navManager, title, mVisibleFragment, false);
         }
         else if (firstFragment instanceof Fragment) {

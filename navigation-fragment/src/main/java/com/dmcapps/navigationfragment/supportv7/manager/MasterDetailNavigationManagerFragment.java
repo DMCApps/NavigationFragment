@@ -1,8 +1,7 @@
-package com.dmcapps.navigationfragment.manager;
+package com.dmcapps.navigationfragment.supportv7.manager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,16 +10,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.helper.AnimationEndListener;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**
- * A simple {@link Fragment} subclass.
+ * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.
  */
+@Deprecated
 @SuppressLint("ValidFragment")
-public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
+public class MasterDetailNavigationManagerFragment extends SupportNavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
     // TODO: Should this manager take care of making the home up enabled show?
@@ -85,12 +85,6 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
             toggleMaster();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void pushFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        hideMaster();
-        super.pushFragment(navFragment, animationIn, animationOut);
     }
 
     public boolean shouldMasterToggle() {

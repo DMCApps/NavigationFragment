@@ -1,12 +1,12 @@
-package com.dmcapps.navigationfragment.manager.core.micromanagers.actionbar;
+package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.actionbar;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.
@@ -56,13 +56,13 @@ public class ActionBarManager {
         }
     }
 
-    public static void setMasterToggleTitle(NavigationManagerFragment manager, String title) {
+    public static void setMasterToggleTitle(SupportNavigationManagerFragment manager, String title) {
         if (isMasterDetailManager(manager)) {
             ((MasterDetailNavigationManagerFragment)manager).setMasterToggleTitle(title);
         }
     }
 
-    public static void setMasterToggleTitle(NavigationManagerFragment manager, int resId) {
+    public static void setMasterToggleTitle(SupportNavigationManagerFragment manager, int resId) {
         if (isMasterDetailManager(manager)) {
             ((MasterDetailNavigationManagerFragment) manager).setMasterToggleTitle(resId);
         }
@@ -78,12 +78,12 @@ public class ActionBarManager {
         }
     }
 
-    private static boolean isMasterDetailManager(NavigationManagerFragment manager) {
+    private static boolean isMasterDetailManager(SupportNavigationManagerFragment manager) {
         if (manager instanceof MasterDetailNavigationManagerFragment) {
             return true;
         }
         else {
-            Log.e("NavigationFragment", "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
+            Log.e(TAG, "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
             return false;
         }
     }

@@ -11,9 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
@@ -71,7 +71,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavigationManagerFragment page = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
+        SupportNavigationManagerFragment page = (SupportNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
         if (!page.onBackPressed()) {
             super.onBackPressed();
         }
@@ -93,7 +93,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 1", 0));
+                    return StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 1", 0));
                 case 1:
                     MasterFragment masterFrag = MasterFragment.newInstance();
                     SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
@@ -101,7 +101,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
                     managerFragment.setManageMasterActionBarToggle(true);
                     return managerFragment;
                 case 2:
-                    return SingleStackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 2", 0));
+                    return StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 2", 0));
             }
             return null;
         }

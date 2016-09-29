@@ -1,29 +1,30 @@
-package com.dmcapps.navigationfragment.fragments;
+package com.dmcapps.navigationfragment.supportv7.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 
-import com.dmcapps.navigationfragment.helper.utils.ObjectUtils;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.actionbar.ActionBarManager;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.actionbar.ActionBarManager;
 
 import java.util.UUID;
 
 /**
- * This is the NavigationFragment that all classes in the stack must implement
+ * This is the SupportNavigationFragment that all classes in the stack must implement
  * The extension of this class in the child fragments allows access to the presenting
  * and dismissing of existing {@link Fragment} in the stack. The class will also generate
  * and maintain a constant TAG for the class allowing the navigation manager to
  * effectively store and present the Fragments as needed.
  */
-public class NavigationListFragment extends ListFragment implements INavigationFragment {
+public class SupportNavigationListFragment extends ListFragment implements INavigationFragment {
 
     private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
     private Bundle mNavBundle;
 
-    public NavigationListFragment() { }
+    public SupportNavigationListFragment() { }
 
     @Override
     public String getNavTag() {
@@ -41,27 +42,27 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     }
 
     /**
-     * Get the {@link NavigationManagerFragment} of the Fragment in the stack. This method will crash with
-     * a RuntimeException if no Parent fragment is a {@link NavigationManagerFragment}.
+     * Get the {@link SupportNavigationManagerFragment} of the Fragment in the stack. This method will crash with
+     * a RuntimeException if no Parent fragment is a {@link SupportNavigationManagerFragment}.
      *
      * @return
      *      The Parent Fragment in the stack of fragments that is the Navigation Manager of the Fragment.
      */
     @Override
-    public NavigationManagerFragment getNavigationManager() {
+    public SupportNavigationManagerFragment getNavigationManager() {
         Fragment parent = this;
 
         // Loop until we find a parent that is a NavigationFragmentManager or there are no parents left to check.
         do {
             parent = parent.getParentFragment();
 
-            NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
+            SupportNavigationManagerFragment navFragment = ObjectUtils.as(SupportNavigationManagerFragment.class, parent);
             if (navFragment != null) {
                 return navFragment;
             }
         } while(parent != null);
 
-        throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
+        throw new RuntimeException("No parent SupportNavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
     }
 
     /**
@@ -104,24 +105,6 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     }
 
     /**
-     * Present a fragment on the Navigation Manager overriding the default animation
-     *
-     * @param
-     *      navFragment -> The Fragment to present.
-     * @param
-     *      animationIn -> The Resource to override the animation in with.
-     * @param
-     *      animationOut -> The Resource to override the animation out with.
-     *
-     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before presenting. This method will be removed as of 0.4.0.
-     */
-    @Override
-    @Deprecated
-    public void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut) {
-        getNavigationManager().pushFragment(navFragment, animationIn, animationOut);
-    }
-
-    /**
      * Dismiss all the fragments on the Navigation Manager stack until the root fragment using the default slide in and out.
      * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
      */
@@ -138,22 +121,6 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     @Override
     public void dismissFragment(Bundle navBundle) {
         getNavigationManager().popFragment(navBundle);
-    }
-
-    /**
-     * Dimiss a fragment on the Navigation Manager overriding the default animation.
-     *
-     * @param
-     *      animationIn -> The Resource to override the animation in with.
-     * @param
-     *      animationOut -> The Resource to override the animation out with.
-     *
-     * @deprecated Depreciated as of 0.3.0. Use {@link #overrideNextAnimation(int, int)} instead before dismissing. This method will be removed as of 0.4.0.
-     */
-    @Override
-    @Deprecated
-    public void dismissFragment(int animationIn, int animationOut) {
-        getNavigationManager().popFragment(animationIn, animationOut);
     }
 
     /**
@@ -193,10 +160,10 @@ public class NavigationListFragment extends ListFragment implements INavigationF
     }
 
     /**
-     * A method for retrieving the currently set title for the NavigationFragment
+     * A method for retrieving the currently set title for the SupportNavigationFragment
      *
      * @return
-     *      The current title of the NavigationFragment
+     *      The current title of the SupportNavigationFragment
      */
     @Override
     public String getTitle() {

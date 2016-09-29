@@ -1,7 +1,7 @@
-package com.dmcapps.navigationfragment.manager.core.micromanagers;
+package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
+import com.dmcapps.navigationfragment.common.INavigationFragment;
 
 import java.io.Serializable;
 

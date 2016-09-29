@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle;
+package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,19 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerState;
 
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class SingleStackLifecycleManager implements ILifecycleManager {
+public class StackLifecycleManager implements ILifecycleManager {
 
     private static final int SINGLE_STACK_MIN_ACTION_SIZE = 1;
 
     @Override
-    public void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
+    public void onResume(SupportNavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
         // No Fragments have been added. Attach the root.
         if (state.fragmentTagStack.size() == 0) {
             navMgrFragment.pushFragment(config.rootFragment);
@@ -58,7 +58,7 @@ public class SingleStackLifecycleManager implements ILifecycleManager {
     }
 
     @Override
-    public void onPause(NavigationManagerFragment navMgrFragment, ManagerState state) {
+    public void onPause(SupportNavigationManagerFragment navMgrFragment, ManagerState state) {
         FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);

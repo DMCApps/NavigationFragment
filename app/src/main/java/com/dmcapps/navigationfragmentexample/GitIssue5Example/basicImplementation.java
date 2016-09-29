@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
 
 import java.util.UUID;
 
@@ -30,14 +30,14 @@ public abstract class basicImplementation extends AppCompatActivity {
         }
     }
 
-    protected abstract NavigationFragment initFragment() ;
+    protected abstract SupportNavigationFragment initFragment() ;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(initFragment());
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(initFragment());
             addFragment(navManager);
         } else {
             showFragment(mSingleStackNavigationManagerFragmentTag);
@@ -61,7 +61,7 @@ public abstract class basicImplementation extends AppCompatActivity {
         outState.putString(STATE_NAV_TAG, mSingleStackNavigationManagerFragmentTag);
     }
 
-    private void addFragment(SingleStackNavigationManagerFragment fragment) {
+    private void addFragment(StackNavigationManagerFragment fragment) {
         mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
         FragmentManager fm = getSupportFragmentManager();
@@ -82,7 +82,7 @@ public abstract class basicImplementation extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        NavigationManagerFragment fragment = (NavigationManagerFragment) getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
+        SupportNavigationManagerFragment fragment = (SupportNavigationManagerFragment) getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

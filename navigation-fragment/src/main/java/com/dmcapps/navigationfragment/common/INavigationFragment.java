@@ -1,8 +1,8 @@
-package com.dmcapps.navigationfragment.fragments;
+package com.dmcapps.navigationfragment.common;
 
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
 
 /**
  * Created by DCarmo on 16-02-09.
@@ -14,7 +14,7 @@ public interface INavigationFragment {
     void setNavBundle(Bundle bundle);
     Bundle getNavBundle();
 
-    NavigationManagerFragment getNavigationManager();
+    SupportNavigationManagerFragment getNavigationManager();
 
     void overrideNextAnimation(int animIn, int animOut);
 
@@ -38,12 +38,10 @@ public interface INavigationFragment {
      *      navBundle -> Bundle to add to the presenting of the Fragment.
      */
     void presentFragment(INavigationFragment navFragment, Bundle navBundle);
-    void presentFragment(INavigationFragment navFragment, int animationIn, int animationOut);
 
     void dismissToRoot();
     void dismissFragment();
     void dismissFragment(Bundle navBundle);
-    void dismissFragment(int animationIn, int animationOut);
 
     void replaceRootFragment(INavigationFragment navFragment);
 

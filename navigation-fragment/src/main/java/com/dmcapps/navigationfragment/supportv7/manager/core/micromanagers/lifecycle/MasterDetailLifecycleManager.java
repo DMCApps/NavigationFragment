@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.core.micromanagers.lifecycle;
+package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.manager.core.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerState;
 
 /**
  * Created by dcarmo on 2016-02-24.
@@ -21,7 +21,7 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
     private static final int MASTER_DETAIL_PHONE_MIN_ACTION_SIZE = 1;
     private static final int MASTER_DETAIL_TABLET_MIN_ACTION_SIZE = 2;
 
-    public void onResume(NavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
+    public void onResume(SupportNavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
 
         // No Fragments have been added. Attach the master and detail.
         if (state.fragmentTagStack.size() == 0) {
@@ -77,7 +77,7 @@ public class MasterDetailLifecycleManager implements ILifecycleManager {
     }
 
     @Override
-    public void onPause(NavigationManagerFragment navMgrFragment, ManagerState state) {
+    public void onPause(SupportNavigationManagerFragment navMgrFragment, ManagerState state) {
 
         FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();

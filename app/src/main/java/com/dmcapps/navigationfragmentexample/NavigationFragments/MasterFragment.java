@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
 
-public class MasterFragment extends NavigationFragment {
+public class MasterFragment extends SupportNavigationFragment {
 
     public static MasterFragment newInstance() {
         MasterFragment fragment = new MasterFragment();

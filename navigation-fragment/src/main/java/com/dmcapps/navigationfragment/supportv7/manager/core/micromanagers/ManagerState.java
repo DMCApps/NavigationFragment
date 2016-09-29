@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.manager.core.micromanagers;
+package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers;
 
 import java.io.Serializable;
 import java.util.Stack;

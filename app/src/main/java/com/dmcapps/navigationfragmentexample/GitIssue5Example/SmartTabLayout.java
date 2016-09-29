@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by hesk on 29/2/16.
  */
-public class SmartTabLayout extends NavigationFragment {
+public class SmartTabLayout extends SupportNavigationFragment {
 
     public static SmartTabLayout newInstance() {
         return new SmartTabLayout();
@@ -34,9 +34,9 @@ public class SmartTabLayout extends NavigationFragment {
 
     public class NavFragmentPagerItemAdapter extends com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter {
 
-        private final NavigationManagerFragment nmf;
+        private final SupportNavigationManagerFragment nmf;
 
-        public NavFragmentPagerItemAdapter(FragmentManager fm, NavigationManagerFragment navh, FragmentPagerItems pages) {
+        public NavFragmentPagerItemAdapter(FragmentManager fm, SupportNavigationManagerFragment navh, FragmentPagerItems pages) {
             super(fm, pages);
             nmf = navh;
         }
