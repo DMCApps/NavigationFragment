@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.supportv7.manager.core;
+package com.dmcapps.navigationfragment.support.v7.manager.core;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,16 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.common.INavigationFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerState;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle.ILifecycleManager;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.stack.StackManager;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.common.interfaces.Stack;
+import com.dmcapps.navigationfragment.common.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
 import com.dmcapps.navigationfragment.common.helpers.RetainedChildFragmentManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.State;
 
-public abstract class SupportNavigationManagerFragment extends RetainedChildFragmentManagerFragment {
+public class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements NavigationManager {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
-    private static final String TAG = SupportNavigationManagerFragment.class.getSimpleName();
+    private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
     private static final String KEY_MANAGER_CONFIG = "KEY_MANAGER_CONFIG";
     private static final String KEY_MANAGER_STATE = "KEY_MANAGER_STATE";
@@ -25,27 +29,18 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
 
     private NavigationManagerFragmentListener mListener;
 
-    protected ILifecycleManager mLifecycleManager;
+    protected Lifecycle mLifecycle;
 
-    protected ManagerConfig mConfig = new ManagerConfig();
-    protected ManagerState mState = new ManagerState();
-    protected StackManager mStackManager = new StackManager();
+    protected Config mConfig = new ManagerConfig();
+    protected State mState = new ManagerState();
+    protected Stack mStack = new StackManager();
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
         void didDismissFragment();
     }
 
-    public SupportNavigationManagerFragment() {
-    }
-
-    public void setDefaultPresentAnimations(int animIn, int animOut) {
-        mConfig.setDefaultPresetAnim(animIn, animOut);
-    }
-
-    public void setDefaultDismissAnimations(int animIn, int animOut) {
-        mConfig.setDefaultDismissAnim(animIn, animOut);
-    }
+    public NavigationManagerFragment() { }
 
     @Override
     public void onAttach(Context context) {
@@ -59,12 +54,14 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
             Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for listening to present and dismiss events.");
         }
     }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycleManager);
+        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycle);
         outState.putSerializable(KEY_MANAGER_CONFIG, mConfig);
-        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStackManager);
+        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStack);
         outState.putSerializable(KEY_MANAGER_STATE, mState);
     }
 
@@ -73,37 +70,82 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
-            mLifecycleManager = (ILifecycleManager)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
+            mLifecycle = (Lifecycle)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
             mConfig = (ManagerConfig)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
-            mStackManager = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
+            mStack = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
             mState = (ManagerState)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return mLifecycleManager.onCreateView(inflater, container, savedInstanceState);
+        return mLifecycle.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mLifecycleManager.onViewCreated(view, mState, mConfig);
+        mLifecycle.onViewCreated(view, mState, mConfig);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mLifecycleManager.onResume(this, mState, mConfig);
+        mLifecycle.onResume(this, mState, mConfig);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mLifecycleManager.onPause(this, mState);
+        mLifecycle.onPause(this, mState);
+    }
+
+    @Override
+    public void setStack(Stack stack) {
+        mStack = stack;
+    }
+
+    @Override
+    public Stack getStack() {
+        return mStack;
+    }
+
+    @Override
+    public void setConfig(Config config) {
+        mConfig = config;
+    }
+
+    @Override
+    public Config getConfig() {
+        return mConfig;
+    }
+
+    @Override
+    public void setState(State state) {
+        mState = state;
+    }
+
+    @Override
+    public State getState() {
+        return mState;
+    }
+
+    @Override
+    public void setLifecycle(Lifecycle lifecycle) {
+        mLifecycle = lifecycle;
+    }
+
+    @Override
+    public Lifecycle getLifecycle() {
+        return mLifecycle;
+    }
+
+    public void setDefaultPresentAnimations(int animIn, int animOut) {
+        mConfig.setDefaultPresetAnim(animIn, animOut);
+    }
+
+    public void setDefaultDismissAnimations(int animIn, int animOut) {
+        mConfig.setDefaultDismissAnim(animIn, animOut);
     }
 
     /**
@@ -123,10 +165,10 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Uses default animation of slide in from right and slide out to left.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      */
-    public void pushFragment(INavigationFragment navFragment) {
-        mStackManager.pushFragment(this, mState, mConfig, navFragment);
+    public void pushFragment(Navigation navFragment) {
+        mStack.pushFragment(this, mState, mConfig, navFragment);
 
         if (mListener != null) {
             mListener.didPresentFragment();
@@ -138,10 +180,10 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Uses default animation of slide in from right and slide out to left.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      */
-    public void pushFragment(INavigationFragment navFragment, Bundle navBundle) {
-        mStackManager.pushFragment(this, mState, mConfig, navFragment, navBundle);
+    public void pushFragment(Navigation navFragment, Bundle navBundle) {
+        mStack.pushFragment(this, mState, mConfig, navFragment, navBundle);
 
         if (mListener != null) {
             mListener.didPresentFragment();
@@ -153,7 +195,7 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Uses default animation of slide in from left and slide out to right animation.
      */
     public void popFragment() {
-        mStackManager.popFragment(this, mState, mConfig);
+        mStack.popFragment(this, mState, mConfig);
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -168,26 +210,26 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
     public void popFragment(Bundle navBundle) {
-        mStackManager.popFragment(this, mState, mConfig, navBundle);
+        mStack.popFragment(this, mState, mConfig, navBundle);
 
         if (mListener != null) {
             mListener.didDismissFragment();
         }
     }
 
-    public void addFragmentToStack(INavigationFragment navFragment) {
-        mState.fragmentTagStack.add(navFragment.getNavTag());
+    public void addFragmentToStack(Navigation navFragment) {
+        mState.getStack().add(navFragment.getNavTag());
     }
 
     /**
      * Access the fragment that is on the top of the navigation stack.
      *
      * @return
-     *      {@link INavigationFragment} that is on the top of the stack.
+     *      {@link Navigation} that is on the top of the stack.
      */
-    public INavigationFragment getTopFragment() {
-        if (mState.fragmentTagStack.size() > 0) {
-            return getFragmentAtIndex(mState.fragmentTagStack.size() - 1);
+    public Navigation getTopFragment() {
+        if (mState.getStack().size() > 0) {
+            return getFragmentAtIndex(mState.getStack().size() - 1);
         }
         else {
             Log.e(TAG, "No fragments in the navigation stack, returning null.");
@@ -199,9 +241,9 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Returns the fragment at the 0 index.
      *
      * @return
-     *      {@link INavigationFragment} at the 0 index if available.
+     *      {@link Navigation} at the 0 index if available.
      */
-    public INavigationFragment getRootFragment() {
+    public Navigation getRootFragment() {
         return getFragmentAtIndex(0);
     }
 
@@ -209,27 +251,27 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Access the fragment at the given index of the navigation stack.
      *
      * @return
-     *      {@link INavigationFragment} that is on the top of the stack.
+     *      {@link Navigation} that is on the top of the stack.
      */
-    public INavigationFragment getFragmentAtIndex(int index) {
-        if (mState.fragmentTagStack.size() > index) {
-            return mStackManager.getFragmentAtIndex(this, mState, index);
+    public Navigation getFragmentAtIndex(int index) {
+        if (mState.getStack().size() > index) {
+            return mStack.getFragmentAtIndex(this, mState, index);
         }
         else {
-            Log.e(TAG, "No fragment at that position in the navigation stack, returning null. (Stack size: " + mState.fragmentTagStack.size() + ". Index attempted: " + index + ".");
+            Log.e(TAG, "No fragment at that position in the navigation stack, returning null. (Stack size: " + mState.getStack().size() + ". Index attempted: " + index + ".");
             return null;
         }
     }
 
     /**
-     * Remove the {@link INavigationFragment} that is on the top of the stack.
+     * Remove the {@link Navigation} that is on the top of the stack.
      *
      * @return
-     *      true -> A {@link INavigationFragment} has been removed
+     *      true -> A {@link Navigation} has been removed
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     public boolean onBackPressed() {
-        if (mState.fragmentTagStack.size() > mConfig.minStackSize) {
+        if (mState.getStack().size() > mConfig.getMinStackSize()) {
             popFragment();
             return true;
         }
@@ -238,15 +280,14 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
     }
 
     /**
-     * Remove all fragments from the stack including the Root. The add the given {@link INavigationFragment}
+     * Remove all fragments from the stack including the Root. The add the given {@link Navigation}
      * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
      *
      * @param
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
-    public void replaceRootFragment(INavigationFragment navFragment) {
-        clearNavigationStackToPosition(mConfig.minStackSize - 1);
-        // overrideNextAnimation(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+    public void replaceRootFragment(Navigation navFragment) {
+        clearNavigationStackToPosition(mConfig.getMinStackSize() - 1);
         pushFragment(navFragment);
     }
 
@@ -254,7 +295,7 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
      */
     public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(mConfig.minStackSize);
+        clearNavigationStackToPosition(mConfig.getMinStackSize());
     }
 
     /**
@@ -264,7 +305,7 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      *      stackPosition -> The position (0 indexed) that you would like to pop to.
      */
     protected void clearNavigationStackToPosition(int stackPosition) {
-        mStackManager.clearNavigationStackToPosition(this, mState, stackPosition);
+        mStack.clearNavigationStackToPosition(this, mState, stackPosition);
     }
 
     /**
@@ -275,17 +316,17 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      *      false -> Stack is not at the root fragment
      */
     public boolean isOnRootFragment() {
-        return mState.fragmentTagStack.size() == mConfig.minStackSize;
+        return mState.getStack().size() == mConfig.getMinStackSize();
     }
 
     /**
-     * Returns the {@link SupportNavigationManagerFragment} stack size. A stack size of 0 represents empty.
+     * Returns the {@link NavigationManagerFragment} stack size. A stack size of 0 represents empty.
      *
      * @return
      *      The current stack size.
      */
     public int getCurrentStackSize() {
-        return mState.fragmentTagStack.size();
+        return mState.getStack().size();
     }
 
     // ===============================
@@ -300,7 +341,7 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      *      false -> Current device is in landscape mode based on the layout used.
      */
     public boolean isPortrait() {
-        return mState.isPortrait;
+        return mState.isPortrait();
     }
 
     /**
@@ -311,7 +352,7 @@ public abstract class SupportNavigationManagerFragment extends RetainedChildFrag
      *      false -> Current device is a phone based on the layout used.
      */
     public boolean isTablet() {
-        return mState.isTablet;
+        return mState.isTablet();
     }
 
     // ===============================

@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 
 import java.util.UUID;
 
@@ -30,7 +30,7 @@ public abstract class basicImplementation extends AppCompatActivity {
         }
     }
 
-    protected abstract SupportNavigationFragment initFragment() ;
+    protected abstract NavigationFragment initFragment() ;
 
     @Override
     protected void onResume() {
@@ -82,7 +82,7 @@ public abstract class basicImplementation extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        SupportNavigationManagerFragment fragment = (SupportNavigationManagerFragment) getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
+        NavigationManagerFragment fragment = (NavigationManagerFragment) getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
         if (!fragment.onBackPressed()) {
             super.onBackPressed();
         }

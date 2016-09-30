@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle;
+package com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,29 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
+import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
+import com.dmcapps.navigationfragment.common.interfaces.State;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
 
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class StackLifecycleManager implements ILifecycleManager {
+public class StackLifecycleManager implements Lifecycle {
 
     private static final int SINGLE_STACK_MIN_ACTION_SIZE = 1;
 
     @Override
-    public void onResume(SupportNavigationManagerFragment navMgrFragment, ManagerState state, ManagerConfig config) {
+    public void onResume(NavigationManagerFragment navMgrFragment, State state, Config config) {
         // No Fragments have been added. Attach the root.
-        if (state.fragmentTagStack.size() == 0) {
-            navMgrFragment.pushFragment(config.rootFragment);
+        if (state.getStack().size() == 0) {
+            navMgrFragment.pushFragment(config.getRootFragment());
         }
         // Fragments are in the stack, resume at the top.
         else {
             FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-            childFragTrans.attach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
+            childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().peek()));
             childFragTrans.commit();
         }
 
@@ -43,14 +45,14 @@ public class StackLifecycleManager implements ILifecycleManager {
     }
 
     @Override
-    public void onViewCreated(View view, ManagerState state, ManagerConfig config) {
-        state.isTablet = view.findViewById(R.id.navigation_manager_tablet_land) != null
-                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
-        state.isPortrait = view.findViewById(R.id.navigation_manager_phone_portrait) != null
-                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null;
+    public void onViewCreated(View view, State state, Config config) {
+        state.isTablet(view.findViewById(R.id.navigation_manager_tablet_land) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null);
+        state.isPortrait(view.findViewById(R.id.navigation_manager_phone_portrait) != null
+                || view.findViewById(R.id.navigation_manager_tablet_portrait) != null);
 
-        config.minStackSize = SINGLE_STACK_MIN_ACTION_SIZE;
-        config.pushContainerId = R.id.navigation_manager_fragment_container;
+        config.setMinStackSize(SINGLE_STACK_MIN_ACTION_SIZE);
+        config.setPushContainerId(R.id.navigation_manager_fragment_container);
 
         if (view.findViewById(R.id.navigation_manager_container_master) != null) {
             view.findViewById(R.id.navigation_manager_container_master).setVisibility(View.GONE);
@@ -58,11 +60,11 @@ public class StackLifecycleManager implements ILifecycleManager {
     }
 
     @Override
-    public void onPause(SupportNavigationManagerFragment navMgrFragment, ManagerState state) {
+    public void onPause(NavigationManagerFragment navMgrFragment, State state) {
         FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
-        childFragTrans.detach(childFragManager.findFragmentByTag(state.fragmentTagStack.peek()));
+        childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
         childFragTrans.commit();
     }
 

@@ -1,12 +1,12 @@
-package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.actionbar;
+package com.dmcapps.navigationfragment.common.micromanagers;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.
@@ -56,13 +56,13 @@ public class ActionBarManager {
         }
     }
 
-    public static void setMasterToggleTitle(SupportNavigationManagerFragment manager, String title) {
+    public static void setMasterToggleTitle(NavigationManagerFragment manager, String title) {
         if (isMasterDetailManager(manager)) {
             ((MasterDetailNavigationManagerFragment)manager).setMasterToggleTitle(title);
         }
     }
 
-    public static void setMasterToggleTitle(SupportNavigationManagerFragment manager, int resId) {
+    public static void setMasterToggleTitle(NavigationManagerFragment manager, int resId) {
         if (isMasterDetailManager(manager)) {
             ((MasterDetailNavigationManagerFragment) manager).setMasterToggleTitle(resId);
         }
@@ -78,7 +78,7 @@ public class ActionBarManager {
         }
     }
 
-    private static boolean isMasterDetailManager(SupportNavigationManagerFragment manager) {
+    private static boolean isMasterDetailManager(NavigationManagerFragment manager) {
         if (manager instanceof MasterDetailNavigationManagerFragment) {
             return true;
         }

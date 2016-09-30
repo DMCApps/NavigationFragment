@@ -1,13 +1,13 @@
 package com.dmcapps.navigationfragmentexample.GitIssue5Example;
 
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
 
 /**
  * Created by hesk on 29/2/16.
  */
 public class GitIssue10ExampleActivity extends basicImplementation {
     @Override
-    protected SupportNavigationFragment initFragment() {
+    protected NavigationFragment initFragment() {
         return SmartTabLayout.newInstance();
     }
 }

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 import com.marshalchen.ultimaterecyclerview.ItemTouchListenerAdapter;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by hesk on 29/2/16.
  */
-public class UltimateSwipeRefreshFragment extends SupportNavigationFragment {
+public class UltimateSwipeRefreshFragment extends NavigationFragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";

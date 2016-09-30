@@ -12,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.common.INavigationFragment;
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
 
@@ -48,8 +48,8 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            if(mVisibleFragment instanceof SupportNavigationManagerFragment) {
-                if (!((SupportNavigationManagerFragment)mVisibleFragment).onBackPressed()) {
+            if(mVisibleFragment instanceof NavigationManagerFragment) {
+                if (!((NavigationManagerFragment)mVisibleFragment).onBackPressed()) {
                     super.onBackPressed();
                 }
             }
@@ -113,8 +113,8 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
         if (title != null) {
             setTitle(title);
         }
-        if (firstFragment instanceof SupportNavigationFragment) {
-            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance((INavigationFragment)firstFragment);
+        if (firstFragment instanceof NavigationFragment) {
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance((Navigation)firstFragment);
             setFragment(navManager, title, mVisibleFragment, false);
         }
         else if (firstFragment instanceof Fragment) {

@@ -1,20 +1,20 @@
-package com.dmcapps.navigationfragment.common;
+package com.dmcapps.navigationfragment.common.interfaces;
 
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
 
 /**
  * Created by DCarmo on 16-02-09.
  */
-public interface INavigationFragment {
+public interface Navigation {
 
     String getNavTag();
 
     void setNavBundle(Bundle bundle);
     Bundle getNavBundle();
 
-    SupportNavigationManagerFragment getNavigationManager();
+    NavigationManagerFragment getNavigationManager();
 
     void overrideNextAnimation(int animIn, int animOut);
 
@@ -23,27 +23,27 @@ public interface INavigationFragment {
      * Uses default animation of slide in from right and slide out to left.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      */
-    void presentFragment(INavigationFragment navFragment);
+    void presentFragment(Navigation navFragment);
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
      * Uses default animation of slide in from right and slide out to left.
-     * Sends a Bundle with the Fragment that can be retrieved using {@link INavigationFragment#getNavBundle()}
+     * Sends a Bundle with the Fragment that can be retrieved using {@link Navigation#getNavBundle()}
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link INavigationFragment}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      * @param
      *      navBundle -> Bundle to add to the presenting of the Fragment.
      */
-    void presentFragment(INavigationFragment navFragment, Bundle navBundle);
+    void presentFragment(Navigation navFragment, Bundle navBundle);
 
     void dismissToRoot();
     void dismissFragment();
     void dismissFragment(Bundle navBundle);
 
-    void replaceRootFragment(INavigationFragment navFragment);
+    void replaceRootFragment(Navigation navFragment);
 
     void setTitle(String title);
     void setTitle(int resId);

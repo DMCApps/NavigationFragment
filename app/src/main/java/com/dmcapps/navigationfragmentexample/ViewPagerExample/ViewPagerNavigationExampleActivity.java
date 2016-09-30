@@ -11,9 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.StackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
@@ -71,7 +71,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        SupportNavigationManagerFragment page = (SupportNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
+        NavigationManagerFragment page = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
         if (!page.onBackPressed()) {
             super.onBackPressed();
         }

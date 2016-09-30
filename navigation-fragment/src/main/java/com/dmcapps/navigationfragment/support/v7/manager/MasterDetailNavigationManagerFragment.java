@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.supportv7.manager;
+package com.dmcapps.navigationfragment.support.v7.manager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,17 +10,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.common.INavigationFragment;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
-import com.dmcapps.navigationfragment.supportv7.manager.core.SupportNavigationManagerFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.
  */
 @Deprecated
 @SuppressLint("ValidFragment")
-public class MasterDetailNavigationManagerFragment extends SupportNavigationManagerFragment {
+public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
     // TODO: Should this manager take care of making the home up enabled show?
@@ -35,7 +35,7 @@ public class MasterDetailNavigationManagerFragment extends SupportNavigationMana
 
     private boolean mManageMasterActionBarToggle = false;
 
-    public static MasterDetailNavigationManagerFragment newInstance(INavigationFragment masterFragment, INavigationFragment detailFragment) {
+    public static MasterDetailNavigationManagerFragment newInstance(Navigation masterFragment, Navigation detailFragment) {
         return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
     }
 
@@ -45,10 +45,10 @@ public class MasterDetailNavigationManagerFragment extends SupportNavigationMana
     // If I serialize them into the bundle then whenever the application is backgrounded
     // or an activity is launched, the application will crash with NotSerializableException
     // if any of the Fragments in the stack have properties that are no Serializable.
-    public MasterDetailNavigationManagerFragment(INavigationFragment masterFragment, INavigationFragment detailFragment) {
-        mConfig.masterFragment = masterFragment;
-        mConfig.detailFragment = detailFragment;
-        mLifecycleManager = new MasterDetailLifecycleManager();
+    public MasterDetailNavigationManagerFragment(Navigation masterFragment, Navigation detailFragment) {
+        mConfig.setMasterFragment(masterFragment);
+        mConfig.setDetailFragment(detailFragment);
+        mLifecycle = new MasterDetailLifecycleManager();
     }
 
     public void setManageMasterActionBarToggle(boolean manageToggle) {

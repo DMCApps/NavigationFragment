@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dmcapps.navigationfragment.common.INavigationFragment;
-import com.dmcapps.navigationfragment.supportv7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
+import com.dmcapps.navigationfragment.support.v7.manager.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 import java.io.Serializable;
@@ -25,7 +25,7 @@ import java.io.Serializable;
  * Use the {@link SampleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SampleFragment extends SupportNavigationFragment {
+public class SampleFragment extends NavigationFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";
     private static final String ARG_FRAG_COUNT = "ARG_FRAG_COUNT";
@@ -166,7 +166,7 @@ public class SampleFragment extends SupportNavigationFragment {
         view.findViewById(R.id.sample_btn_present).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                INavigationFragment fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
+                Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
                 presentFragment(fragmentToPresent);
             }
         });
@@ -174,7 +174,7 @@ public class SampleFragment extends SupportNavigationFragment {
         view.findViewById(R.id.sample_btn_present_override_animation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                INavigationFragment fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
+                Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 
                 overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
                 presentFragment(fragmentToPresent);
@@ -184,7 +184,7 @@ public class SampleFragment extends SupportNavigationFragment {
         view.findViewById(R.id.sample_btn_present_bundle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                INavigationFragment fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
+                Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ARG_MODEL_FROM_NAV_BUNDLE, new SampleModel(model));
                 presentFragment(fragmentToPresent, bundle);
@@ -225,7 +225,7 @@ public class SampleFragment extends SupportNavigationFragment {
         view.findViewById(R.id.sample_btn_replace_root).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                INavigationFragment fragmentAsNewRoot = SampleFragment.newInstance("This is a replaced root Fragment", 0);
+                Navigation fragmentAsNewRoot = SampleFragment.newInstance("This is a replaced root Fragment", 0);
                 replaceRootFragment(fragmentAsNewRoot);
             }
         });

@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationListFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationListFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 /**
  * A fragment representing a list of Items.
  */
-public class ListExampleFragment extends SupportNavigationListFragment {
+public class ListExampleFragment extends NavigationListFragment {
 
     public static ListExampleFragment newInstance() {
         ListExampleFragment fragment = new ListExampleFragment();

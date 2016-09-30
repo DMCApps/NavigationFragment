@@ -1,20 +1,19 @@
-package com.dmcapps.navigationfragment.supportv7.manager.core.micromanagers;
+package com.dmcapps.navigationfragment.common.micromanagers;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.common.INavigationFragment;
-
-import java.io.Serializable;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class ManagerConfig implements Serializable {
+public class ManagerConfig implements Config {
 
     public static final int NO_ANIMATION = 0;
 
-    public int minStackSize;
+    private int mMinStackSize;
 
-    public int pushContainerId;
+    private int mPushContainerId;
 
     private int mNextAnimIn = Integer.MIN_VALUE;
     private int mNextAnimOut = Integer.MIN_VALUE;
@@ -25,10 +24,10 @@ public class ManagerConfig implements Serializable {
     private int mDismissAnimIn;
     private int mDismissAnimOut;
 
-    public transient INavigationFragment rootFragment;
+    private transient Navigation mRootFragment;
 
-    public transient INavigationFragment masterFragment;
-    public transient INavigationFragment detailFragment;
+    private transient Navigation mMasterFragment;
+    private transient Navigation mDetailFragment;
 
     public ManagerConfig() {
         mPresentAnimIn = R.anim.slide_in_from_right;
@@ -38,10 +37,61 @@ public class ManagerConfig implements Serializable {
         mDismissAnimOut = R.anim.slide_out_to_right;
     }
 
+    @Override
+    public void setRootFragment(Navigation rootFragment) {
+        mRootFragment = rootFragment;
+    }
+
+    @Override
+    public Navigation getRootFragment() {
+        return mRootFragment;
+    }
+
+    @Override
+    public void setMasterFragment(Navigation masterFragment) {
+        mMasterFragment = masterFragment;
+    }
+
+    @Override
+    public Navigation getMasterFragment() {
+        return mMasterFragment;
+    }
+
+    @Override
+    public void setDetailFragment(Navigation detailFragment) {
+        mDetailFragment = detailFragment;
+    }
+
+    @Override
+    public Navigation getDetailFragment() {
+        return mDetailFragment;
+    }
+
+    @Override
+    public void setMinStackSize(int minStackSize) {
+        mMinStackSize = minStackSize;
+    }
+
+    @Override
+    public int getMinStackSize() {
+        return mMinStackSize;
+    }
+
+    @Override
+    public void setPushContainerId(int pushContainerId) {
+        mPushContainerId = pushContainerId;
+    }
+
+    @Override
+    public int getPushContainerId() {
+        return mPushContainerId;
+    }
+
+    @Override
     public void nullifyInitialFragments() {
-        rootFragment = null;
-        masterFragment = null;
-        detailFragment = null;
+        mRootFragment = null;
+        mMasterFragment = null;
+        mDetailFragment = null;
     }
 
     public void setDefaultPresetAnim(int animIn, int animOut) {

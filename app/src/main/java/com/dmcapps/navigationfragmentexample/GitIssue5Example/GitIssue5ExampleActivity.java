@@ -1,10 +1,10 @@
 package com.dmcapps.navigationfragmentexample.GitIssue5Example;
 
-import com.dmcapps.navigationfragment.supportv7.fragments.SupportNavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
 
 public class GitIssue5ExampleActivity extends basicImplementation {
     @Override
-    protected SupportNavigationFragment initFragment() {
+    protected NavigationFragment initFragment() {
         return ViewPagerFragment.newInstance();
     }
 }
