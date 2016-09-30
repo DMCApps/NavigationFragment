@@ -1,9 +1,11 @@
-package com.dmcapps.navigationfragment.support.v7.manager.core;
+package com.dmcapps.navigationfragment.v17.manager.core;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,6 +145,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public FragmentManager getNavigationFragmentManager() {
         return getChildFragmentManager();
     }

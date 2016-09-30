@@ -1,9 +1,12 @@
-package com.dmcapps.navigationfragment.v17;
+package com.dmcapps.navigationfragment.v17.manager;
 
+import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
+import com.dmcapps.navigationfragment.v17.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.manager.core.StackLifecycleManager;
+import com.dmcapps.navigationfragment.v17.manager.core.StackManager;
 
 /**
  * Created by dcarmo on 2016-09-29.
@@ -18,6 +21,8 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
 
         navigationManagerFragment.setConfig(config);
         navigationManagerFragment.setLifecycle(new StackLifecycleManager());
+        navigationManagerFragment.setStack(new StackManager());
+        navigationManagerFragment.setState(new StateManager());
 
         return navigationManagerFragment;
     }

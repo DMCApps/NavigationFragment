@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.support.v7.fragments;
+package com.dmcapps.navigationfragment.common.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,8 +6,8 @@ import android.support.v4.app.ListFragment;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
+import com.dmcapps.navigationfragment.common.core.ActionBarManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.common.micromanagers.ActionBarManager;
 
 import java.util.UUID;
 

@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.common.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;

@@ -2,8 +2,6 @@ package com.dmcapps.navigationfragment.common.interfaces;
 
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-
 /**
  * Created by DCarmo on 16-02-09.
  */
@@ -14,7 +12,7 @@ public interface Navigation {
     void setNavBundle(Bundle bundle);
     Bundle getNavBundle();
 
-    NavigationManagerFragment getNavigationManager();
+    NavigationManager getNavigationManager();
 
     void overrideNextAnimation(int animIn, int animOut);
 

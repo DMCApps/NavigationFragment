@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-
 import java.io.Serializable;
 
 /**
@@ -14,12 +12,12 @@ import java.io.Serializable;
  */
 public interface Lifecycle extends Serializable {
 
-    void onResume(NavigationManagerFragment navMgrFragment, State state, Config config);
+    void onResume(NavigationManager navigationManager);
 
     View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
-    void onViewCreated(View view, State state, Config config);
+    void onViewCreated(View view, NavigationManager navigationManager);
 
-    void onPause(NavigationManagerFragment navMgrFragment, State state);
+    void onPause(NavigationManager navigationManager);
 
 }

@@ -3,7 +3,8 @@ package com.dmcapps.navigationfragment.common.helpers.utils;
 /**
  * Created by DCarmo on 16-03-07.
  */
-public class ObjectUtils {
+public final class ObjectUtils {
+    private static final String TAG = ObjectUtils.class.getSimpleName();
 
     private ObjectUtils() { }
 

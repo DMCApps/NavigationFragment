@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.common.micromanagers;
+package com.dmcapps.navigationfragment.common.core;
 
 import com.dmcapps.navigationfragment.common.interfaces.State;
 

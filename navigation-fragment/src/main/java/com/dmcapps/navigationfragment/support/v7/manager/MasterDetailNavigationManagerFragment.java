@@ -13,12 +13,11 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
-import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
-import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
+import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.StackManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.

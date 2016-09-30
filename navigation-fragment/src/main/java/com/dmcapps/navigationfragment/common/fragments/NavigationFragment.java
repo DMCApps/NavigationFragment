@@ -1,12 +1,13 @@
-package com.dmcapps.navigationfragment.support.v7.fragments;
+package com.dmcapps.navigationfragment.common.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.core.ActionBarManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.common.micromanagers.ActionBarManager;
 
 import java.util.UUID;
 
@@ -49,14 +50,14 @@ public class NavigationFragment extends Fragment implements Navigation {
      *      The Parent Fragment in the stack of fragments that is the Navigation Manager of the Fragment.
      */
     @Override
-    public NavigationManagerFragment getNavigationManager() {
+    public NavigationManager getNavigationManager() {
         Fragment parent = this;
 
         // Loop until we find a parent that is a NavigationFragmentManager or there are no parents left to check.
         do {
             parent = parent.getParentFragment();
 
-            NavigationManagerFragment navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
+            NavigationManager navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
             if (navFragment != null) {
                 return navFragment;
             }

@@ -2,12 +2,11 @@ package com.dmcapps.navigationfragment.support.v7.manager;
 
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
-import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
+import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
-
+import com.dmcapps.navigationfragment.support.v7.manager.core.StackManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.lifecycle.StackLifecycleManager;
 
 /**
  * This Fragment manages the stack of single navigation on fragments.

@@ -6,7 +6,10 @@ import android.util.DisplayMetrics;
 /**
  * Created by DCarmo on 16-02-07.
  */
-public class DeviceUtils {
+public final class DeviceUtils {
+    private static final String TAG = DeviceUtils.class.getSimpleName();
+
+    private DeviceUtils() { }
 
     /**
      * Returns the density of the screen

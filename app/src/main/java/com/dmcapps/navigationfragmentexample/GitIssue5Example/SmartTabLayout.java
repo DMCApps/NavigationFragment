@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.support.v7.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.fragments.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -34,9 +34,9 @@ public class SmartTabLayout extends NavigationFragment {
 
     public class NavFragmentPagerItemAdapter extends com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter {
 
-        private final NavigationManagerFragment nmf;
+        private final NavigationManager nmf;
 
-        public NavFragmentPagerItemAdapter(FragmentManager fm, NavigationManagerFragment navh, FragmentPagerItems pages) {
+        public NavFragmentPagerItemAdapter(FragmentManager fm, NavigationManager navh, FragmentPagerItems pages) {
             super(fm, pages);
             nmf = navh;
         }
