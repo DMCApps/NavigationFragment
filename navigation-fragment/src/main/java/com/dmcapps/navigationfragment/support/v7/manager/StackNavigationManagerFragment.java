@@ -1,11 +1,11 @@
 package com.dmcapps.navigationfragment.support.v7.manager;
 
-import android.annotation.SuppressLint;
-
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
+import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
 
 
@@ -22,11 +22,13 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
     public static StackNavigationManagerFragment newInstance(Navigation fragment) {
         StackNavigationManagerFragment navigationManagerFragment = new StackNavigationManagerFragment();
 
-        Config config = new ManagerConfig();
+        Config config = new CofigManager();
         config.setRootFragment(fragment);
 
         navigationManagerFragment.setConfig(config);
         navigationManagerFragment.setLifecycle(new StackLifecycleManager());
+        navigationManagerFragment.setStack(new StackManager());
+        navigationManagerFragment.setState(new StateManager());
 
         return navigationManagerFragment;
     }

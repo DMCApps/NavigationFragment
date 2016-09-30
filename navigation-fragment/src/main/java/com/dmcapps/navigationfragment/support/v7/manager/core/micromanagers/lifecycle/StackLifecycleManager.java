@@ -12,7 +12,7 @@ import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
 
 /**
  * Created by dcarmo on 2016-02-24.
@@ -29,9 +29,9 @@ public class StackLifecycleManager implements Lifecycle {
         }
         // Fragments are in the stack, resume at the top.
         else {
-            FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
+            FragmentManager childFragManager = navMgrFragment.getNavigationFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+            childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
             childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().peek()));
             childFragTrans.commit();
         }
@@ -61,9 +61,9 @@ public class StackLifecycleManager implements Lifecycle {
 
     @Override
     public void onPause(NavigationManagerFragment navMgrFragment, State state) {
-        FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
+        FragmentManager childFragManager = navMgrFragment.getNavigationFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
         childFragTrans.commit();
     }

@@ -7,7 +7,7 @@ import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class ManagerConfig implements Config {
+public class CofigManager implements Config {
 
     public static final int NO_ANIMATION = 0;
 
@@ -29,7 +29,7 @@ public class ManagerConfig implements Config {
     private transient Navigation mMasterFragment;
     private transient Navigation mDetailFragment;
 
-    public ManagerConfig() {
+    public CofigManager() {
         mPresentAnimIn = R.anim.slide_in_from_right;
         mPresentAnimOut = R.anim.slide_out_to_left;
 

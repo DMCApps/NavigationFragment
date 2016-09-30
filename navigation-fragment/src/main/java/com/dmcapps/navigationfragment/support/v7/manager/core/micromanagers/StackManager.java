@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerState;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
+import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
@@ -25,7 +25,7 @@ public class StackManager implements Stack {
     }
 
     public Navigation pushFragment(NavigationManagerFragment manager, State state, Config config, Navigation navFragment) {
-        FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+        FragmentManager childFragManager = manager.getNavigationFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         if (state.getStack().size() >= config.getMinStackSize()) {
@@ -56,7 +56,7 @@ public class StackManager implements Stack {
         Navigation navFragment = null;
 
         if (state.getStack().size() > config.getMinStackSize()) {
-            FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+            FragmentManager childFragManager = manager.getNavigationFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             childFragTrans.setCustomAnimations(config.getDismissAnimIn(), config.getDismissAnimOut());
             childFragTrans.remove(childFragManager.findFragmentByTag(state.getStack().pop()));
@@ -77,9 +77,9 @@ public class StackManager implements Stack {
 
     @Override
     public void clearNavigationStackToPosition(NavigationManagerFragment manager, State state, int stackPosition) {
-        FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+        FragmentManager childFragManager = manager.getNavigationFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
 
         while (state.getStack().size() > stackPosition) {
             childFragTrans.remove(childFragManager.findFragmentByTag(state.getStack().pop()));
@@ -99,7 +99,7 @@ public class StackManager implements Stack {
      * @param
      *      manager -> The current {@link NavigationManagerFragment} managing the state of the Navigation.
      * @param
-     *      state -> The current {@link ManagerState} that has the current navigation stack state.
+     *      state -> The current {@link StateManager} that has the current navigation stack state.
      * @param
      *      index -> The index of the {@link Navigation} you would like to get.
      * @return
@@ -107,7 +107,7 @@ public class StackManager implements Stack {
      */
     public Navigation getFragmentAtIndex(NavigationManagerFragment manager, State state, int index) {
         String navFragTag = state.getStack().get(index);
-        FragmentManager childFragManager = manager.getRetainedChildFragmentManager();
+        FragmentManager childFragManager = manager.getNavigationFragmentManager();
         return (Navigation)childFragManager.findFragmentByTag(navFragTag);
     }
 }

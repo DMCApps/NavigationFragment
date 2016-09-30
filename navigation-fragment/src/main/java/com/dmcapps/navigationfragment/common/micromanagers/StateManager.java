@@ -8,14 +8,14 @@ import java.util.Stack;
 /**
  * Created by dcarmo on 2016-02-24.
  */
-public class ManagerState implements State, Serializable {
+public class StateManager implements State, Serializable {
 
     private boolean mIsTablet;
     private boolean mIsPortrait;
 
     private Stack<String> mFragmentTagStack;
 
-    public ManagerState() {
+    public StateManager() {
         mFragmentTagStack = new Stack<>();
     }
 

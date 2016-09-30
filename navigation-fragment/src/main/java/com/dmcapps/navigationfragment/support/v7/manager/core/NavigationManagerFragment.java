@@ -2,23 +2,25 @@ package com.dmcapps.navigationfragment.support.v7.manager.core;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.interfaces.Config;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
-import com.dmcapps.navigationfragment.common.interfaces.Stack;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerState;
-import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
-import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
 import com.dmcapps.navigationfragment.common.helpers.RetainedChildFragmentManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
+import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
+import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
 
-public class NavigationManagerFragment extends RetainedChildFragmentManagerFragment implements NavigationManager {
+public class NavigationManagerFragment extends Fragment implements NavigationManager<FragmentManager> {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
@@ -29,11 +31,10 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
 
     private NavigationManagerFragmentListener mListener;
 
-    protected Lifecycle mLifecycle;
-
-    protected Config mConfig = new ManagerConfig();
-    protected State mState = new ManagerState();
-    protected Stack mStack = new StackManager();
+    private Lifecycle mLifecycle;
+    private Config mConfig;
+    private State mState;
+    private Stack mStack;
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -56,24 +57,17 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycle);
-        outState.putSerializable(KEY_MANAGER_CONFIG, mConfig);
-        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStack);
-        outState.putSerializable(KEY_MANAGER_STATE, mState);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
             mLifecycle = (Lifecycle)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
-            mConfig = (ManagerConfig)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
+            mConfig = (CofigManager)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
             mStack = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
-            mState = (ManagerState)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
+            mState = (StateManager)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
+        }
+        else if (mLifecycle == null || mConfig == null || mStack == null || mState == null) {
+            throw new RuntimeException("Your NavigationManagerFragment must call setLifecycle, setConfig, setStack, setState before onCreate()");
         }
     }
 
@@ -98,6 +92,16 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     public void onPause() {
         super.onPause();
         mLifecycle.onPause(this, mState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycle);
+        outState.putSerializable(KEY_MANAGER_CONFIG, mConfig);
+        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStack);
+        outState.putSerializable(KEY_MANAGER_STATE, mState);
     }
 
     @Override
@@ -138,6 +142,11 @@ public class NavigationManagerFragment extends RetainedChildFragmentManagerFragm
     @Override
     public Lifecycle getLifecycle() {
         return mLifecycle;
+    }
+
+    @Override
+    public FragmentManager getNavigationFragmentManager() {
+        return getChildFragmentManager();
     }
 
     public void setDefaultPresentAnimations(int animIn, int animOut) {

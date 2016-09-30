@@ -10,10 +10,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dmcapps.navigationfragment.R;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
+import com.dmcapps.navigationfragment.common.micromanagers.StateManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.StackManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
 
 /**
  * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.
@@ -36,20 +41,21 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
     private boolean mManageMasterActionBarToggle = false;
 
     public static MasterDetailNavigationManagerFragment newInstance(Navigation masterFragment, Navigation detailFragment) {
-        return new MasterDetailNavigationManagerFragment(masterFragment, detailFragment);
+        MasterDetailNavigationManagerFragment navigationManagerFragment = new MasterDetailNavigationManagerFragment();
+
+        Config config = new CofigManager();
+        config.setMasterFragment(masterFragment);
+        config.setDetailFragment(detailFragment);
+
+        navigationManagerFragment.setConfig(config);
+        navigationManagerFragment.setLifecycle(new MasterDetailLifecycleManager());
+        navigationManagerFragment.setStack(new StackManager());
+        navigationManagerFragment.setState(new StateManager());
+
+        return navigationManagerFragment;
     }
 
     public MasterDetailNavigationManagerFragment() {}
-
-    // NOTE I need to pass in the fragments to be used by the constructor.
-    // If I serialize them into the bundle then whenever the application is backgrounded
-    // or an activity is launched, the application will crash with NotSerializableException
-    // if any of the Fragments in the stack have properties that are no Serializable.
-    public MasterDetailNavigationManagerFragment(Navigation masterFragment, Navigation detailFragment) {
-        mConfig.setMasterFragment(masterFragment);
-        mConfig.setDetailFragment(detailFragment);
-        mLifecycle = new MasterDetailLifecycleManager();
-    }
 
     public void setManageMasterActionBarToggle(boolean manageToggle) {
         mManageMasterActionBarToggle = manageToggle;

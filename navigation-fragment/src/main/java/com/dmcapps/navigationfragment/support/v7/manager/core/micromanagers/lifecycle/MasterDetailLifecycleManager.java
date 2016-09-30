@@ -12,7 +12,7 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
 /**
@@ -27,7 +27,7 @@ public class MasterDetailLifecycleManager implements Lifecycle {
 
         // No Fragments have been added. Attach the master and detail.
         if (state.getStack().size() == 0) {
-            FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
+            FragmentManager childFragManager = navMgrFragment.getNavigationFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
             if (state.isTablet()) {
                 // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
@@ -47,9 +47,9 @@ public class MasterDetailLifecycleManager implements Lifecycle {
         }
         // Fragments are in the stack, resume at the top.
         else {
-            FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
+            FragmentManager childFragManager = navMgrFragment.getNavigationFragmentManager();
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+            childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
             if (state.isTablet()) {
                 childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().firstElement()));
             }
@@ -81,9 +81,9 @@ public class MasterDetailLifecycleManager implements Lifecycle {
     @Override
     public void onPause(NavigationManagerFragment navMgrFragment, State state) {
 
-        FragmentManager childFragManager = navMgrFragment.getRetainedChildFragmentManager();
+        FragmentManager childFragManager = navMgrFragment.getNavigationFragmentManager();
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ManagerConfig.NO_ANIMATION, ManagerConfig.NO_ANIMATION);
+        childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
         if (state.isTablet()) {
             childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().firstElement()));
         }

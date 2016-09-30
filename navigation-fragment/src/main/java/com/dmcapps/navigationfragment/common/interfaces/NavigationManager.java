@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.common.interfaces;
 /**
  * Created by dcarmo on 2016-09-29.
  */
-public interface NavigationManager {
+public interface NavigationManager<T> {
 
     void setStack(Stack stack);
 
@@ -20,5 +20,7 @@ public interface NavigationManager {
     void setLifecycle(Lifecycle lifecycle);
 
     Lifecycle getLifecycle();
+
+    T getNavigationFragmentManager();
 
 }

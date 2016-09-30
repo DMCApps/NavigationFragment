@@ -58,7 +58,7 @@ public class RetainedChildFragmentManagerFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public FragmentManager getRetainedChildFragmentManager() {
+    protected FragmentManager getRetainedChildFragmentManager() {
         if (retainedChildFragmentManager == null) {
             retainedChildFragmentManager = getChildFragmentManager();
         }

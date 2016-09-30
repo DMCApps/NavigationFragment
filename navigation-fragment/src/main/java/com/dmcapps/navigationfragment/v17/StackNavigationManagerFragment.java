@@ -1,9 +1,8 @@
 package com.dmcapps.navigationfragment.v17;
 
 import com.dmcapps.navigationfragment.common.interfaces.Config;
-import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.micromanagers.ManagerConfig;
+import com.dmcapps.navigationfragment.common.micromanagers.CofigManager;
 import com.dmcapps.navigationfragment.support.v7.manager.core.micromanagers.lifecycle.StackLifecycleManager;
 
 /**
@@ -14,7 +13,7 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
     public static NavigationManagerFragment newInstance(Navigation fragment) {
         NavigationManagerFragment navigationManagerFragment = new StackNavigationManagerFragment();
 
-        Config config = new ManagerConfig();
+        Config config = new CofigManager();
         config.setRootFragment(fragment);
 
         navigationManagerFragment.setConfig(config);
