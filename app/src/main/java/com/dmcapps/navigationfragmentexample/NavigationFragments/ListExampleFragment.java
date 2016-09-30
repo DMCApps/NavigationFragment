@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.dmcapps.navigationfragment.fragments.NavigationListFragment;
+import com.dmcapps.navigationfragment.common.fragments.NavigationListFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 /**

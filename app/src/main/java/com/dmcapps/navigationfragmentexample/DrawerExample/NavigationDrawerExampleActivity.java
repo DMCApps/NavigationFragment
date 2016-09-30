@@ -12,10 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.fragments.INavigationFragment;
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
+import com.dmcapps.navigationfragment.common.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
 
@@ -114,7 +114,7 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
             setTitle(title);
         }
         if (firstFragment instanceof NavigationFragment) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance((INavigationFragment)firstFragment);
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance((Navigation)firstFragment);
             setFragment(navManager, title, mVisibleFragment, false);
         }
         else if (firstFragment instanceof Fragment) {

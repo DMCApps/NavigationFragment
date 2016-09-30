@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.dmcapps.navigationfragment.fragments.NavigationFragment;
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 
 import java.util.UUID;
 
@@ -38,7 +38,7 @@ public abstract class SingleStackSuperActivity extends AppCompatActivity {
         super.onResume();
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(rootFragment());
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(rootFragment());
             addFragment(navManager, getContainerId());
         } else {
             showFragment(mSingleStackNavigationManagerFragmentTag);
@@ -70,11 +70,11 @@ public abstract class SingleStackSuperActivity extends AppCompatActivity {
         }
     }
 
-    protected SingleStackNavigationManagerFragment getSingleStackNavigationFragmentManager() {
-        return (SingleStackNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
+    protected StackNavigationManagerFragment getSingleStackNavigationFragmentManager() {
+        return (StackNavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
     }
 
-    private void addFragment(SingleStackNavigationManagerFragment fragment, int container) {
+    private void addFragment(StackNavigationManagerFragment fragment, int container) {
         mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
         FragmentManager fm = getSupportFragmentManager();

@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.manager.SingleStackNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.manager.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.NavigationFragments.ListExampleFragment;
 
 import java.util.UUID;
@@ -34,7 +34,7 @@ public class ListExampleActivity extends AppCompatActivity {
         super.onResume();
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
-            SingleStackNavigationManagerFragment navManager = SingleStackNavigationManagerFragment.newInstance(ListExampleFragment.newInstance());
+            StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(ListExampleFragment.newInstance());
             addFragment(navManager);
         }
         else {
@@ -59,7 +59,7 @@ public class ListExampleActivity extends AppCompatActivity {
         outState.putString(STATE_NAV_TAG, mSingleStackNavigationManagerFragmentTag);
     }
 
-    private void addFragment(SingleStackNavigationManagerFragment fragment)  {
+    private void addFragment(StackNavigationManagerFragment fragment)  {
         mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
         FragmentManager fm = getSupportFragmentManager();
