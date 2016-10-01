@@ -12,6 +12,7 @@ import com.dmcapps.navigationfragment.common.core.CofigManager;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
@@ -29,7 +30,12 @@ public class StackLifecycleManager implements Lifecycle {
 
         // No Fragments have been added. Attach the root.
         if (state.getStack().size() == 0) {
-            navigationManager.pushFragment(config.getRootFragment());
+            if (config.getInitialNavigation().size() < 1) {
+                throw new RuntimeException("StackNavigationManagerFragment requires an initial Navigation components. On your config please call addInitialNavigation(Navigation) in order to add your initial navigation components.");
+            }
+
+            Navigation rootFragment = config.getInitialNavigation().get(0);
+            navigationManager.pushFragment(rootFragment);
         }
         // Fragments are in the stack, resume at the top.
         else {

@@ -77,24 +77,29 @@ public class MasterDetailLifecycleManager implements Lifecycle {
 
     @Override
     public void onViewCreated(View view, NavigationManager navigationManager) {
-        navigationManager.getState().isTablet(view.findViewById(R.id.navigation_manager_tablet_land) != null
+        State state = navigationManager.getState();
+        Config config = navigationManager.getConfig();
+
+        state.isTablet(view.findViewById(R.id.navigation_manager_tablet_land) != null
                 || view.findViewById(R.id.navigation_manager_tablet_portrait) != null);
-        navigationManager.getState().isPortrait(view.findViewById(R.id.navigation_manager_phone_portrait) != null
+        state.isPortrait(view.findViewById(R.id.navigation_manager_phone_portrait) != null
                 || view.findViewById(R.id.navigation_manager_tablet_portrait) != null);
 
-        navigationManager.getConfig().setMinStackSize(navigationManager.getState().isTablet() ? MASTER_DETAIL_TABLET_MIN_ACTION_SIZE : MASTER_DETAIL_PHONE_MIN_ACTION_SIZE);
-        navigationManager.getConfig().setPushContainerId(R.id.navigation_manager_fragment_container);
+        config.setMinStackSize(navigationManager.getState().isTablet() ? MASTER_DETAIL_TABLET_MIN_ACTION_SIZE : MASTER_DETAIL_PHONE_MIN_ACTION_SIZE);
+        config.setPushContainerId(R.id.navigation_manager_fragment_container);
     }
 
     @Override
     public void onPause(NavigationManager navigationManager) {
+        State state = navigationManager.getState();
+
         FragmentManager childFragManager = NavigationManagerUtils.getSupportFragmentManager(navigationManager);
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
-        if (navigationManager.getState().isTablet()) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(navigationManager.getState().getStack().firstElement()));
+        if (state.isTablet()) {
+            childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().firstElement()));
         }
-        childFragTrans.detach(childFragManager.findFragmentByTag(navigationManager.getState().getStack().peek()));
+        childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
         childFragTrans.commit();
 
     }

@@ -39,14 +39,14 @@ public class CofigManager implements Config {
 
     @Override
     public void setInitialNavigation(List<Navigation> initialNavigation) {
-        if (initialNavigation == null) {
-            initialNavigation = new ArrayList<>();
-        }
         mInitialNavigation = initialNavigation;
     }
 
     @Override
     public List<Navigation> getInitialNavigation() {
+        if (mInitialNavigation == null) {
+            mInitialNavigation = new ArrayList<>();
+        }
         return mInitialNavigation;
     }
 
