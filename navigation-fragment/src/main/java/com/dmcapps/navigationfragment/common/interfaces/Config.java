@@ -1,23 +1,18 @@
 package com.dmcapps.navigationfragment.common.interfaces;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by dcarmo on 2016-09-29.
  */
 public interface Config extends Serializable {
 
-    void setRootFragment(Navigation rootFragment);
+    void setInitialNavigation(List<Navigation> initialNavigation);
 
-    Navigation getRootFragment();
+    List<Navigation> getInitialNavigation();
 
-    void setMasterFragment(Navigation masterFragment);
-
-    Navigation getMasterFragment();
-
-    void setDetailFragment(Navigation detailFragment);
-
-    Navigation getDetailFragment();
+    void addInitialNavigation(Navigation navigation);
 
     void setMinStackSize(int minStackSize);
 

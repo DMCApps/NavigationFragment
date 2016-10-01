@@ -1,9 +1,11 @@
-package com.dmcapps.navigationfragment.support.v7.manager.core;
+package com.dmcapps.navigationfragment.v17.core;
 
+import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public abstract class NavigationManagerFragment extends Fragment implements NavigationManager {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();

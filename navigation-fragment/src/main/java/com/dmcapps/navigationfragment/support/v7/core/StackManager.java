@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.support.v7.manager.core;
+package com.dmcapps.navigationfragment.support.v7.core;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

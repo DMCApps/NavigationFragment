@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.support.v7.manager.core.lifecycle;
+package com.dmcapps.navigationfragment.support.v7.core.lifecycle;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
-import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
+import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.core.CofigManager;
@@ -33,18 +33,24 @@ public class MasterDetailLifecycleManager implements Lifecycle {
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         // No Fragments have been added. Attach the master and detail.
         if (state.getStack().size() == 0) {
+            if (config.getInitialNavigation().size() < 2) {
+                throw new RuntimeException("MasterDetailNavigationManagerFragment requires 2 initial Navigation components. On your config please call addInitialNavigation(Navigation) in order to add your initial navigation components.");
+            }
+            Navigation masterFragment = config.getInitialNavigation().get(0);
+            Navigation detailFragment = config.getInitialNavigation().get(1);
+
             if (state.isTablet()) {
                 // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.navigation_manager_container_master, (Fragment) config.getMasterFragment(), config.getMasterFragment().getNavTag());
-                navigationManager.addToStack(config.getMasterFragment());
+                childFragTrans.add(R.id.navigation_manager_container_master, (Fragment) masterFragment, masterFragment.getNavTag());
+                navigationManager.addToStack(masterFragment);
             }
             else {
-                navigationManager.pushFragment(config.getMasterFragment());
+                navigationManager.pushFragment(masterFragment);
             }
             childFragTrans.commit();
 
             if (state.isTablet()) {
-                navigationManager.pushFragment(config.getDetailFragment());
+                navigationManager.pushFragment(detailFragment);
             }
 
             config.nullifyInitialFragments();

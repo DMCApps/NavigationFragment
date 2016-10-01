@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.support.v7.manager.MasterDetailNavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.MasterDetailNavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.

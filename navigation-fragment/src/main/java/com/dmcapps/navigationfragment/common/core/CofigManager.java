@@ -4,6 +4,9 @@ import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by dcarmo on 2016-02-24.
  */
@@ -24,10 +27,7 @@ public class CofigManager implements Config {
     private int mDismissAnimIn;
     private int mDismissAnimOut;
 
-    private transient Navigation mRootFragment;
-
-    private transient Navigation mMasterFragment;
-    private transient Navigation mDetailFragment;
+    private transient List<Navigation> mInitialNavigation;
 
     public CofigManager() {
         mPresentAnimIn = R.anim.slide_in_from_right;
@@ -38,33 +38,21 @@ public class CofigManager implements Config {
     }
 
     @Override
-    public void setRootFragment(Navigation rootFragment) {
-        mRootFragment = rootFragment;
+    public void setInitialNavigation(List<Navigation> initialNavigation) {
+        if (initialNavigation == null) {
+            initialNavigation = new ArrayList<>();
+        }
+        mInitialNavigation = initialNavigation;
     }
 
     @Override
-    public Navigation getRootFragment() {
-        return mRootFragment;
+    public List<Navigation> getInitialNavigation() {
+        return mInitialNavigation;
     }
 
     @Override
-    public void setMasterFragment(Navigation masterFragment) {
-        mMasterFragment = masterFragment;
-    }
-
-    @Override
-    public Navigation getMasterFragment() {
-        return mMasterFragment;
-    }
-
-    @Override
-    public void setDetailFragment(Navigation detailFragment) {
-        mDetailFragment = detailFragment;
-    }
-
-    @Override
-    public Navigation getDetailFragment() {
-        return mDetailFragment;
+    public void addInitialNavigation(Navigation navigation) {
+        getInitialNavigation().add(navigation);
     }
 
     @Override
@@ -89,9 +77,7 @@ public class CofigManager implements Config {
 
     @Override
     public void nullifyInitialFragments() {
-        mRootFragment = null;
-        mMasterFragment = null;
-        mDetailFragment = null;
+        mInitialNavigation = null;
     }
 
     public void setDefaultPresetAnim(int animIn, int animOut) {

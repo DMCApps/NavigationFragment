@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.support.v7.manager;
+package com.dmcapps.navigationfragment.support.v7;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,15 +15,14 @@ import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
 import com.dmcapps.navigationfragment.common.core.CofigManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.support.v7.manager.core.StackManager;
-import com.dmcapps.navigationfragment.support.v7.manager.core.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.support.v7.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.support.v7.core.StackManager;
+import com.dmcapps.navigationfragment.support.v7.core.lifecycle.MasterDetailLifecycleManager;
 
 /**
  * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.
  */
 @Deprecated
-@SuppressLint("ValidFragment")
 public class MasterDetailNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = MasterDetailNavigationManagerFragment.class.getSimpleName();
 
@@ -43,8 +42,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         MasterDetailNavigationManagerFragment navigationManagerFragment = new MasterDetailNavigationManagerFragment();
 
         Config config = new CofigManager();
-        config.setMasterFragment(masterFragment);
-        config.setDetailFragment(detailFragment);
+        config.addInitialNavigation(masterFragment);
+        config.addInitialNavigation(detailFragment);
 
         navigationManagerFragment.setConfig(config);
         navigationManagerFragment.setLifecycle(new MasterDetailLifecycleManager());
