@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_navigation_drawer_clear_stack_example"
-    tools:context="com.dmcapps.navigationfragmentexample.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity">
+    tools:context=".v7.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity">
 
     <FrameLayout
         android:id="@+id/frag_container"

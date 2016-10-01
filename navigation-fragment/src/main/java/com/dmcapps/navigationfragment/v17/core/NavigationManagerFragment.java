@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
@@ -63,7 +63,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
 
         if (savedInstanceState != null) {
             mLifecycle = (Lifecycle)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
-            mConfig = (CofigManager)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
+            mConfig = (ConfigManager)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
             mStack = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
             mState = (StateManager)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
         }

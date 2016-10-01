@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
@@ -41,7 +41,7 @@ public class StackLifecycleManager implements Lifecycle {
         else {
             FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
+            childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
             childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().peek()));
             childFragTrans.commit();
         }
@@ -78,7 +78,7 @@ public class StackLifecycleManager implements Lifecycle {
 
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
+        childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
         childFragTrans.commit();
     }

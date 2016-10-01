@@ -5,7 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.common.core.CofigManager;
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
@@ -87,7 +87,7 @@ public class StackManager implements Stack {
 
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(CofigManager.NO_ANIMATION, CofigManager.NO_ANIMATION);
+        childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
 
         while (state.getStack().size() > stackPosition) {
             childFragTrans.remove(childFragManager.findFragmentByTag(state.getStack().pop()));

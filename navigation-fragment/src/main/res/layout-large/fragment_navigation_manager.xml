@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <FrameLayout
+    <com.dmcapps.navigationfragment.common.customview.SlidableFrameLayout
         android:id="@+id/navigation_manager_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <FrameLayout
+    <com.dmcapps.navigationfragment.common.customview.SlidableFrameLayout
         android:id="@+id/navigation_manager_container_master"
         android:layout_width="300dp"
         android:layout_height="match_parent"

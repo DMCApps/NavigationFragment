@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/white"
-    tools:context="com.dmcapps.navigationfragmentexample.NavigationFragments.MasterFragment">
+    tools:context=".v7.NavigationFragments.MasterFragment">
 
     <Button
         android:id="@+id/master_btn_add"
