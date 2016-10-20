@@ -24,18 +24,18 @@ public interface Config extends Serializable {
 
     void nullifyInitialFragments();
 
-    void setDefaultPresetAnim(int animIn, int animOut);
+    void setDefaultPresetAnim(Integer animIn, Integer animOut);
 
-    void setDefaultDismissAnim(int animIn, int animOut);
+    void setDefaultDismissAnim(Integer animIn, Integer animOut);
 
-    void setNextAnim(int animIn, int animOut);
+    void setNextAnim(Integer animIn, Integer animOut);
 
-    int getPresentAnimIn();
+    Integer getPresentAnimIn();
 
-    int getPresentAnimOut();
+    Integer getPresentAnimOut();
 
-    int getDismissAnimIn();
+    Integer getDismissAnimIn();
 
-    int getDismissAnimOut();
+    Integer getDismissAnimOut();
 
 }

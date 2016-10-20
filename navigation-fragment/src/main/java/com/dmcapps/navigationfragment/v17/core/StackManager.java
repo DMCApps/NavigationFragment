@@ -32,7 +32,12 @@ public class StackManager implements Stack {
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
 
         if (state.getStack().size() >= config.getMinStackSize()) {
-            childFragTrans.setCustomAnimations(config.getPresentAnimIn(), config.getPresentAnimOut());
+            Integer presentAnimIn = config.getPresentAnimIn();
+            Integer presentAnimOut = config.getPresentAnimOut();
+            if (presentAnimIn != null && presentAnimOut != null) {
+                childFragTrans.setCustomAnimations(presentAnimIn, presentAnimOut);
+            }
+
             Fragment topFrag = childFragManager.findFragmentByTag(state.getStack().peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
             childFragTrans.detach(topFrag);
@@ -64,7 +69,13 @@ public class StackManager implements Stack {
         if (state.getStack().size() > config.getMinStackSize()) {
             FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-            childFragTrans.setCustomAnimations(config.getDismissAnimIn(), config.getDismissAnimOut());
+
+            Integer dismissAnimIn = config.getDismissAnimIn();
+            Integer dismissAnimOut = config.getDismissAnimOut();
+            if (dismissAnimIn != null && dismissAnimOut != null) {
+                childFragTrans.setCustomAnimations(dismissAnimIn, dismissAnimOut);
+            }
+
             childFragTrans.remove(childFragManager.findFragmentByTag(state.getStack().pop()));
 
             if (state.getStack().size() > 0) {

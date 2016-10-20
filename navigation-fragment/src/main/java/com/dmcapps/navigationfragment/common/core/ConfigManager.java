@@ -18,14 +18,14 @@ public class ConfigManager implements Config {
 
     private int mPushContainerId;
 
-    private int mNextAnimIn = Integer.MIN_VALUE;
-    private int mNextAnimOut = Integer.MIN_VALUE;
+    private Integer mNextAnimIn = null;
+    private Integer mNextAnimOut = null;
 
-    private int mPresentAnimIn;
-    private int mPresentAnimOut;
+    private Integer mPresentAnimIn;
+    private Integer mPresentAnimOut;
 
-    private int mDismissAnimIn;
-    private int mDismissAnimOut;
+    private Integer mDismissAnimIn;
+    private Integer mDismissAnimOut;
 
     private transient List<Navigation> mInitialNavigation;
 
@@ -74,53 +74,53 @@ public class ConfigManager implements Config {
         mInitialNavigation = null;
     }
 
-    public void setDefaultPresetAnim(int animIn, int animOut) {
+    public void setDefaultPresetAnim(Integer animIn, Integer animOut) {
         mPresentAnimIn = animIn;
         mPresentAnimOut = animOut;
     }
 
-    public void setDefaultDismissAnim(int animIn, int animOut) {
+    public void setDefaultDismissAnim(Integer animIn, Integer animOut) {
         mDismissAnimIn = animIn;
         mDismissAnimOut = animOut;
     }
 
-    public void setNextAnim(int animIn, int animOut) {
+    public void setNextAnim(Integer animIn, Integer animOut) {
         mNextAnimIn = animIn;
         mNextAnimOut = animOut;
     }
 
-    public int getPresentAnimIn() {
+    public Integer getPresentAnimIn() {
         int nextAnim = mPresentAnimIn;
-        if (mNextAnimIn > Integer.MIN_VALUE) {
+        if (mNextAnimIn != null) {
             nextAnim = mNextAnimIn;
-            mNextAnimIn = Integer.MIN_VALUE;
+            mNextAnimIn = null;
         }
         return nextAnim;
     }
 
-    public int getPresentAnimOut() {
+    public Integer getPresentAnimOut() {
         int nextAnim = mPresentAnimOut;
-        if (mNextAnimOut > Integer.MIN_VALUE) {
+        if (mNextAnimOut != null) {
             nextAnim = mNextAnimOut;
-            mNextAnimOut = Integer.MIN_VALUE;
+            mNextAnimOut = null;
         }
         return nextAnim;
     }
 
-    public int getDismissAnimIn() {
+    public Integer getDismissAnimIn() {
         int nextAnim = mDismissAnimIn;
-        if (mNextAnimIn > Integer.MIN_VALUE) {
+        if (mNextAnimIn != null) {
             nextAnim = mNextAnimIn;
-            mNextAnimIn = Integer.MIN_VALUE;
+            mNextAnimIn = null;
         }
         return nextAnim;
     }
 
-    public int getDismissAnimOut() {
+    public Integer getDismissAnimOut() {
         int nextAnim = mDismissAnimOut;
-        if (mNextAnimOut > Integer.MIN_VALUE) {
+        if (mNextAnimOut != null) {
             nextAnim = mNextAnimOut;
-            mNextAnimOut = Integer.MIN_VALUE;
+            mNextAnimOut = null;
         }
         return nextAnim;
     }
