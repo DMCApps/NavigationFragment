@@ -90,7 +90,7 @@ public class ConfigManager implements Config {
     }
 
     public Integer getPresentAnimIn() {
-        int nextAnim = mPresentAnimIn;
+        Integer nextAnim = mPresentAnimIn;
         if (mNextAnimIn != null) {
             nextAnim = mNextAnimIn;
             mNextAnimIn = null;
@@ -99,7 +99,7 @@ public class ConfigManager implements Config {
     }
 
     public Integer getPresentAnimOut() {
-        int nextAnim = mPresentAnimOut;
+        Integer nextAnim = mPresentAnimOut;
         if (mNextAnimOut != null) {
             nextAnim = mNextAnimOut;
             mNextAnimOut = null;
@@ -108,7 +108,7 @@ public class ConfigManager implements Config {
     }
 
     public Integer getDismissAnimIn() {
-        int nextAnim = mDismissAnimIn;
+        Integer nextAnim = mDismissAnimIn;
         if (mNextAnimIn != null) {
             nextAnim = mNextAnimIn;
             mNextAnimIn = null;
@@ -117,7 +117,7 @@ public class ConfigManager implements Config {
     }
 
     public Integer getDismissAnimOut() {
-        int nextAnim = mDismissAnimOut;
+        Integer nextAnim = mDismissAnimOut;
         if (mNextAnimOut != null) {
             nextAnim = mNextAnimOut;
             mNextAnimOut = null;
