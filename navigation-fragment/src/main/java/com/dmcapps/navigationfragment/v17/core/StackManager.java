@@ -12,19 +12,20 @@ import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.
  */
-public class StackManager implements Stack {
+public class StackManager implements Stack<NavigationFragment> {
 
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, Bundle navBundle) {
+    public NavigationFragment pushFragment(NavigationManager navigationManager, NavigationFragment navFragment, Bundle navBundle) {
         navFragment.setNavBundle(navBundle);
         pushFragment(navigationManager, navFragment);
         return navFragment;
     }
 
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment) {
+    public NavigationFragment pushFragment(NavigationManager navigationManager, NavigationFragment navFragment) {
         State state = navigationManager.getState();
         Config config = navigationManager.getConfig();
 
@@ -44,7 +45,7 @@ public class StackManager implements Stack {
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        childFragTrans.add(config.getPushContainerId(), (Fragment) navFragment, navFragment.getNavTag());
+        childFragTrans.add(config.getPushContainerId(), navFragment, navFragment.getNavTag());
         childFragTrans.commit();
 
         navigationManager.addToStack(navFragment);
@@ -52,16 +53,16 @@ public class StackManager implements Stack {
         return navFragment;
     }
 
-    public Navigation popFragment(NavigationManager navigationManager, Bundle navBundle) {
-        Navigation navFragment = popFragment(navigationManager);
+    public NavigationFragment popFragment(NavigationManager navigationManager, Bundle navBundle) {
+        NavigationFragment navFragment = popFragment(navigationManager);
         if (navFragment != null) {
             navFragment.setNavBundle(navBundle);
         }
         return navFragment;
     }
 
-    public Navigation popFragment(NavigationManager navigationManager) {
-        Navigation navFragment = null;
+    public NavigationFragment popFragment(NavigationManager navigationManager) {
+        NavigationFragment navFragment = null;
 
         State state = navigationManager.getState();
         Config config = navigationManager.getConfig();
@@ -79,8 +80,8 @@ public class StackManager implements Stack {
             childFragTrans.remove(childFragManager.findFragmentByTag(state.getStack().pop()));
 
             if (state.getStack().size() > 0) {
-                navFragment = (Navigation)childFragManager.findFragmentByTag(state.getStack().peek());
-                childFragTrans.attach((Fragment)navFragment);
+                navFragment = (NavigationFragment)childFragManager.findFragmentByTag(state.getStack().peek());
+                childFragTrans.attach(navFragment);
             }
 
             childFragTrans.commit();
@@ -118,13 +119,13 @@ public class StackManager implements Stack {
      * @param
      *      navigationManager -> The current {@link NavigationManagerFragment} managing the state of the Navigation.
      * @param
-     *      index -> The index of the {@link Navigation} you would like to get.
+     *      index -> The index of the {@link NavigationFragment} you would like to get.
      * @return
-     *      {@link Navigation} that is at the given index.
+     *      {@link NavigationFragment} that is at the given index.
      */
-    public Navigation getFragmentAtIndex(NavigationManager navigationManager, int index) {
+    public NavigationFragment getFragmentAtIndex(NavigationManager navigationManager, int index) {
         String navFragTag = navigationManager.getState().getStack().get(index);
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
-        return (Navigation)childFragManager.findFragmentByTag(navFragTag);
+        return (NavigationFragment)childFragManager.findFragmentByTag(navFragTag);
     }
 }

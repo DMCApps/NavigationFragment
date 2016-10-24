@@ -11,7 +11,6 @@ import android.widget.ListView;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.v17.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.DrawerExample.NavigationDrawerExampleActivity;
-import com.dmcapps.navigationfragmentexample.v17.ListExample.ListExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.SingleStackExample.SingleStackNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.ViewPagerExample.ViewPagerNavigationExampleActivity;
@@ -35,7 +34,6 @@ public class NonSupportExamplesActivity extends ActionBarActivity implements Ada
         ArrayList<String> items = new ArrayList<>();
         items.add("Single Stack Example");
         items.add("Tab Example");
-        items.add("List Example");
         items.add("Navigation Drawer Example (uses replace and remove as well as non-Navigation Fragments)");
         items.add("Override Default Animations Example");
         items.add("Navigation Fragment clears stack before presenting");
@@ -53,12 +51,10 @@ public class NonSupportExamplesActivity extends ActionBarActivity implements Ada
         } else if (position == 1) {
             intent = new Intent(this, ViewPagerNavigationExampleActivity.class);
         } else if (position == 2) {
-            intent = new Intent(this, ListExampleActivity.class);
-        } else if (position == 3) {
             intent = new Intent(this, NavigationDrawerExampleActivity.class);
-        } else if (position == 4) {
+        } else if (position == 3) {
             intent = new Intent(this, OverrideDefaultAnimationsExampleActivity.class);
-        } else if (position == 5) {
+        } else if (position == 4) {
             intent = new Intent(this, NavigationDrawerClearStackExampleActivity.class);
         }
 

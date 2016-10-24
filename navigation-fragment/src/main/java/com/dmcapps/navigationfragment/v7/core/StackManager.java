@@ -16,7 +16,7 @@ import com.dmcapps.navigationfragment.common.interfaces.State;
 /**
  * Created by dcarmo on 2016-02-25.
  */
-public class StackManager implements Stack {
+public class StackManager implements Stack<Navigation> {
 
     public Navigation pushFragment(NavigationManager manager, Navigation navFragment, Bundle navBundle) {
         navFragment.setNavBundle(navBundle);

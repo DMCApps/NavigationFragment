@@ -19,9 +19,10 @@ import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-public abstract class NavigationManagerFragment extends Fragment implements NavigationManager {
+public class NavigationManagerFragment extends Fragment implements NavigationManager<NavigationFragment> {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
@@ -35,7 +36,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     private Lifecycle mLifecycle;
     private Config mConfig;
     private State mState;
-    private Stack mStack;
+    private Stack<NavigationFragment> mStack;
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
@@ -166,7 +167,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
-    public void pushFragment(Navigation navFragment) {
+    public void pushFragment(NavigationFragment navFragment) {
         mStack.pushFragment(this, navFragment);
 
         if (mListener != null) {
@@ -175,7 +176,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
-    public void pushFragment(Navigation navFragment, Bundle navBundle) {
+    public void pushFragment(NavigationFragment navFragment, Bundle navBundle) {
         mStack.pushFragment(this, navFragment, navBundle);
 
         if (mListener != null) {
@@ -202,12 +203,12 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
-    public void addToStack(Navigation navFragment) {
+    public void addToStack(NavigationFragment navFragment) {
         mState.getStack().add(navFragment.getNavTag());
     }
 
     @Override
-    public Navigation getTopFragment() {
+    public NavigationFragment getTopFragment() {
         if (mState.getStack().size() > 0) {
             return getFragmentAtIndex(mState.getStack().size() - 1);
         }
@@ -218,12 +219,12 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
-    public Navigation getRootFragment() {
+    public NavigationFragment getRootFragment() {
         return getFragmentAtIndex(0);
     }
 
     @Override
-    public Navigation getFragmentAtIndex(int index) {
+    public NavigationFragment getFragmentAtIndex(int index) {
         if (mState.getStack().size() > index) {
             return mStack.getFragmentAtIndex(this, index);
         }
@@ -244,7 +245,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     @Override
-    public void replaceRootFragment(Navigation navFragment) {
+    public void replaceRootFragment(NavigationFragment navFragment) {
         clearNavigationStackToPosition(mConfig.getMinStackSize() - 1);
         pushFragment(navFragment);
     }

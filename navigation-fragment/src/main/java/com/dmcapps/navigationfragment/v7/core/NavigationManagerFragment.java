@@ -18,7 +18,7 @@ import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
-public abstract class NavigationManagerFragment extends Fragment implements NavigationManager {
+public abstract class NavigationManagerFragment extends Fragment implements NavigationManager<Navigation> {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
@@ -32,14 +32,14 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     private Lifecycle mLifecycle;
     private Config mConfig;
     private State mState;
-    private Stack mStack;
+    private Stack<Navigation> mStack;
 
     public interface NavigationManagerFragmentListener {
         void didPresentFragment();
         void didDismissFragment();
     }
 
-    public NavigationManagerFragment() { }
+    pr NavigationManagerFragment() { }
 
     @Override
     public void onAttach(Context context) {

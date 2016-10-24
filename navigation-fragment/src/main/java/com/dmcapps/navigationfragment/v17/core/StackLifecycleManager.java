@@ -38,6 +38,8 @@ public class StackLifecycleManager implements Lifecycle {
             navigationManager.pushFragment(rootFragment);
         }
         // Fragments are in the stack, resume at the top.
+        // Don't think I need this anymore I think it was just an attempted fix to the activity not updating
+        /*
         else {
             FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
             FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -45,6 +47,7 @@ public class StackLifecycleManager implements Lifecycle {
             childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().peek()));
             childFragTrans.commit();
         }
+        */
 
         config.nullifyInitialFragments();
     }
@@ -74,12 +77,15 @@ public class StackLifecycleManager implements Lifecycle {
 
     @Override
     public void onPause(NavigationManager navigationManager) {
-        State state = navigationManager.getState();
 
+        // Don't think I need this anymore I think it was just an attempted fix to the activity not updating
+        /*
+        State state = navigationManager.getState();
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
         childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
         childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
         childFragTrans.commit();
+        */
     }
 }

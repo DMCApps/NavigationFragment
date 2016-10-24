@@ -7,18 +7,18 @@ import java.io.Serializable;
 /**
  * Created by dcarmo on 2016-02-25.
  */
-public interface Stack extends Serializable {
+public interface Stack<FragmentType> extends Serializable {
 
-    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment);
+    FragmentType pushFragment(NavigationManager navigationManager, FragmentType navFragment);
 
-    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, Bundle navBundle);
+    FragmentType pushFragment(NavigationManager navigationManager, FragmentType navFragment, Bundle navBundle);
 
-    Navigation popFragment(NavigationManager navigationManager);
+    FragmentType popFragment(NavigationManager navigationManager);
 
-    Navigation popFragment(NavigationManager navigationManager, Bundle navBundle);
+    FragmentType popFragment(NavigationManager navigationManager, Bundle navBundle);
 
     void clearNavigationStackToPosition(NavigationManager navigationManager, int stackPosition);
 
-    Navigation getFragmentAtIndex(NavigationManager navigationManager, int index);
+    FragmentType getFragmentAtIndex(NavigationManager navigationManager, int index);
 
 }

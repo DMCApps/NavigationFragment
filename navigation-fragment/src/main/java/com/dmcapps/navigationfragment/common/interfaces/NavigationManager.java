@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by dcarmo on 2016-09-29.
  */
-public interface NavigationManager {
+public interface NavigationManager<FragmentType> {
 
     void setStack(Stack stack);
 
@@ -47,18 +47,18 @@ public interface NavigationManager {
      * Uses default animation of slide in from right and slide out to left.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link FragmentType}
      */
-    void pushFragment(Navigation navFragment);
+    void pushFragment(FragmentType navFragment);
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
      * Uses default animation of slide in from right and slide out to left.
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link FragmentType}
      */
-    void pushFragment(Navigation navFragment, Bundle navBundle);
+    void pushFragment(FragmentType navFragment, Bundle navBundle);
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
@@ -81,49 +81,49 @@ public interface NavigationManager {
      * @param
      *      navFragment -> The navigation fragment to be added to the stack.
      */
-    void addToStack(Navigation navFragment);
+    void addToStack(FragmentType navFragment);
 
     /**
      * Access the fragment that is on the top of the navigation stack.
      *
      * @return
-     *      {@link Navigation} that is on the top of the stack.
+     *      {@link FragmentType} that is on the top of the stack.
      */
-    Navigation getTopFragment();
+    FragmentType getTopFragment();
 
     /**
      * Returns the fragment at the 0 index.
      *
      * @return
-     *      {@link Navigation} at the 0 index if available.
+     *      {@link FragmentType} at the 0 index if available.
      */
-    Navigation getRootFragment();
+    FragmentType getRootFragment();
 
     /**
      * Access the fragment at the given index of the navigation stack.
      *
      * @return
-     *      {@link Navigation} that is on the top of the stack.
+     *      {@link FragmentType} that is on the top of the stack.
      */
-    Navigation getFragmentAtIndex(int index);
+    FragmentType getFragmentAtIndex(int index);
 
     /**
-     * Remove the {@link Navigation} that is on the top of the stack.
+     * Remove the {@link FragmentType} that is on the top of the stack.
      *
      * @return
-     *      true -> A {@link Navigation} has been removed
+     *      true -> A {@link FragmentType} has been removed
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     boolean onBackPressed();
 
     /**
-     * Remove all fragments from the stack including the Root. The add the given {@link Navigation}
+     * Remove all fragments from the stack including the Root. The add the given {@link FragmentType}
      * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
      *
      * @param
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
-    void replaceRootFragment(Navigation navFragment);
+    void replaceRootFragment(FragmentType navFragment);
 
     /**
      * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
