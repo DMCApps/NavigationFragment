@@ -39,7 +39,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         void didDismissFragment();
     }
 
-    pr NavigationManagerFragment() { }
+    public NavigationManagerFragment() { }
 
     @Override
     public void onAttach(Context context) {
