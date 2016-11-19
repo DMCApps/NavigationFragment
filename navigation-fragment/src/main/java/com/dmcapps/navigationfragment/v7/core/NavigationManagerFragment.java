@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
+import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;

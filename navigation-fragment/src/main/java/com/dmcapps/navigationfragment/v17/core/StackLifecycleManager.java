@@ -31,7 +31,7 @@ public class StackLifecycleManager implements Lifecycle {
         // No Fragments have been added. Attach the root.
         if (state.getStack().size() == 0) {
             if (config.getInitialNavigation().size() < 1) {
-                throw new RuntimeException("StackNavigationManagerFragment requires an initial Navigation components. On your config please call addInitialNavigation(Navigation) in order to add your initial navigation components.");
+                throw new RuntimeException("StackNavigationManagerFragment requires an initial Navigation components. On your config please call addInitialNavigation(Navigation) in order to add your initial navigation component(s).");
             }
 
             Navigation rootFragment = config.getInitialNavigation().get(0);
