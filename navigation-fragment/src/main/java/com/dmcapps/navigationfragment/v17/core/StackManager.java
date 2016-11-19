@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
+import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
@@ -18,15 +19,19 @@ import com.dmcapps.navigationfragment.common.interfaces.State;
  */
 public class StackManager implements Stack {
 
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, Bundle navBundle) {
-        navFragment.setNavBundle(navBundle);
-        pushFragment(navigationManager, navFragment);
-        return navFragment;
+    @Override
+    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment) {
+        return pushFragment(navigationManager, navFragment, null);
     }
 
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment) {
+    @Override
+    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationSettings settings) {
         State state = navigationManager.getState();
         Config config = navigationManager.getConfig();
+
+        if (settings != null) {
+            navFragment.setNavBundle(settings.getNavBundle());
+        }
 
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);
         FragmentTransaction childFragTrans = childFragManager.beginTransaction();
@@ -52,15 +57,8 @@ public class StackManager implements Stack {
         return navFragment;
     }
 
-    public Navigation popFragment(NavigationManager navigationManager, Bundle navBundle) {
-        Navigation navFragment = popFragment(navigationManager);
-        if (navFragment != null) {
-            navFragment.setNavBundle(navBundle);
-        }
-        return navFragment;
-    }
-
-    public Navigation popFragment(NavigationManager navigationManager) {
+    @Override
+    public Navigation popFragment(NavigationManager navigationManager, NavigationSettings settings) {
         Navigation navFragment = null;
 
         State state = navigationManager.getState();
@@ -89,7 +87,15 @@ public class StackManager implements Stack {
             navigationManager.getActivity().onBackPressed();
         }
 
+        if (navFragment != null && settings != null) {
+            navFragment.setNavBundle(settings.getNavBundle());
+        }
         return navFragment;
+    }
+
+    @Override
+    public Navigation popFragment(NavigationManager navigationManager) {
+        return popFragment(navigationManager, null);
     }
 
     @Override
@@ -122,6 +128,7 @@ public class StackManager implements Stack {
      * @return
      *      {@link Navigation} that is at the given index.
      */
+    @Override
     public Navigation getFragmentAtIndex(NavigationManager navigationManager, int index) {
         String navFragTag = navigationManager.getState().getStack().get(index);
         FragmentManager childFragManager = NavigationManagerUtils.getFragmentManager(navigationManager);

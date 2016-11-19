@@ -35,7 +35,7 @@ public class NavigationSettings {
         return mNavBundle;
     }
 
-    public class Builder {
+    public static class Builder {
         private String mTitle = null;
         private Integer mInAnimation = null;
         private Integer mOutAnimation = null;

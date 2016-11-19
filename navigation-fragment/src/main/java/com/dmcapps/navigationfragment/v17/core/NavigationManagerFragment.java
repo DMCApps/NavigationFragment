@@ -209,11 +209,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void pushFragment(Navigation navFragment) {
-        mStack.pushFragment(this, navFragment);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
+        pushFragment(navFragment, new NavigationSettings.Builder().build());
     }
 
     /**
@@ -233,11 +229,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Deprecated
     @Override
     public void pushFragment(Navigation navFragment, Bundle navBundle) {
-        mStack.pushFragment(this, navFragment, navBundle);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
+        pushFragment(navFragment, new NavigationSettings.Builder().setNavBundle(navBundle).build());
     }
 
     /**
@@ -247,11 +239,15 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      * @param
-     *      settings -> The settings to be applied to the transaction
+     *      settings -> The {@link NavigationSettings} to be applied to the transaction
      */
     @Override
     public void pushFragment(Navigation navFragment, NavigationSettings settings) {
+        mStack.pushFragment(this, navFragment, settings);
 
+        if (mListener != null) {
+            mListener.didPresentFragment();
+        }
     }
 
     /**
@@ -260,11 +256,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void popFragment() {
-        mStack.popFragment(this);
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
+        popFragment(new NavigationSettings.Builder().build());
     }
 
     /**
@@ -282,11 +274,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Deprecated
     @Override
     public void popFragment(Bundle navBundle) {
-        mStack.popFragment(this, navBundle);
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
+        popFragment(new NavigationSettings.Builder().setNavBundle(navBundle).build());
     }
 
     /**
@@ -294,11 +282,15 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      * Uses default animation of slide in from left and slide out to right animation.
      *
      * @param
-     *      settings -> The navigation settings to be performed on the popping of the fragment
+     *      settings -> The {@link NavigationSettings} to be performed on the popping of the fragment
      */
     @Override
     public void popFragment(NavigationSettings settings) {
+        mStack.popFragment(this, settings);
 
+        if (mListener != null) {
+            mListener.didDismissFragment();
+        }
     }
 
     /**

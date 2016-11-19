@@ -61,10 +61,10 @@ public interface NavigationManager {
      *      animIn -> The resource of the new in animation.
      * @param
      *      animOut -> The resource of the new in animation.
-     * @deprecated
-     *      This call is being replaced with {@link NavigationSettings} being passed in with the push and pop functions.
-     *      To be removed in 1.2.0.
-     */
+    * @deprecated
+    *      This call is being replaced with {@link NavigationSettings} being passed in with the push and pop functions.
+    *      To be removed in 1.2.0.
+            */
     @Deprecated
     void overrideNextAnimation(int animIn, int animOut);
 
@@ -101,7 +101,7 @@ public interface NavigationManager {
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      * @param
-     *      settings -> The settings to be applied to the transaction
+     *      settings -> The {@link NavigationSettings} to be applied to the transaction
      */
     void pushFragment(Navigation navFragment, NavigationSettings settings);
 
@@ -131,7 +131,7 @@ public interface NavigationManager {
      * Uses default animation of slide in from left and slide out to right animation.
      *
      * @param
-     *      settings -> The navigation settings to be performed on the popping of the fragment
+     *      settings -> The {@link NavigationSettings} to be performed on the popping of the fragment
      */
     void popFragment(NavigationSettings settings);
 
@@ -214,6 +214,8 @@ public interface NavigationManager {
      *      The current stack size.
      */
     int getCurrentStackSize();
+
+    Activity getActivity();
 
     // ===============================
     // START DEVICE STATE METHODS

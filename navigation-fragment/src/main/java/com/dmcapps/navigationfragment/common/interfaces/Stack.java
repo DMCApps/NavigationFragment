@@ -2,6 +2,8 @@ package com.dmcapps.navigationfragment.common.interfaces;
 
 import android.os.Bundle;
 
+import com.dmcapps.navigationfragment.common.core.NavigationSettings;
+
 import java.io.Serializable;
 
 /**
@@ -11,11 +13,11 @@ public interface Stack extends Serializable {
 
     Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment);
 
-    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, Bundle navBundle);
+    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationSettings settings);
 
     Navigation popFragment(NavigationManager navigationManager);
 
-    Navigation popFragment(NavigationManager navigationManager, Bundle navBundle);
+    Navigation popFragment(NavigationManager navigationManager, NavigationSettings settings);
 
     void clearNavigationStackToPosition(NavigationManager navigationManager, int stackPosition);
 

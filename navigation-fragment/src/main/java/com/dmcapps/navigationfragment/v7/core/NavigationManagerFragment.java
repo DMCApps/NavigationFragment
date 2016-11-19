@@ -206,11 +206,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void pushFragment(Navigation navFragment) {
-        mStack.pushFragment(this, navFragment);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
+        pushFragment(navFragment, new NavigationSettings.Builder().build());
     }
 
     /**
@@ -230,11 +226,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Deprecated
     @Override
     public void pushFragment(Navigation navFragment, Bundle navBundle) {
-        mStack.pushFragment(this, navFragment, navBundle);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
+        pushFragment(navFragment, new NavigationSettings.Builder().setNavBundle(navBundle).build());
     }
 
     /**
@@ -248,7 +240,11 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void pushFragment(Navigation navFragment, NavigationSettings settings) {
+        mStack.pushFragment(this, navFragment, settings);
 
+        if (mListener != null) {
+            mListener.didPresentFragment();
+        }
     }
 
     /**
@@ -257,11 +253,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void popFragment() {
-        mStack.popFragment(this);
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
+        popFragment(new NavigationSettings.Builder().build());
     }
 
     /**
@@ -279,11 +271,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Deprecated
     @Override
     public void popFragment(Bundle navBundle) {
-        mStack.popFragment(this, navBundle);
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
+        popFragment(new NavigationSettings.Builder().setNavBundle(navBundle).build());
     }
 
     /**
@@ -294,7 +282,11 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      *      settings -> The navigation settings to be performed on the popping of the fragment
      */
     public void popFragment(NavigationSettings settings) {
+        mStack.popFragment(this, settings);
 
+        if (mListener != null) {
+            mListener.didDismissFragment();
+        }
     }
 
     /**
