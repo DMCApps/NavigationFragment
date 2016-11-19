@@ -1,6 +1,6 @@
-package com.dmcapps.navigationfragment.common.core.fragmentmanagerwrapper;
+package com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper;
 
-import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.FragmentTransactionWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 
 /**
  * Created by dcarmo on 2016-11-19.

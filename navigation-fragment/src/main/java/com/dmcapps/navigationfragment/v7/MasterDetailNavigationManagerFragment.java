@@ -16,7 +16,7 @@ import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.v7.core.ConfigManager;
 import com.dmcapps.navigationfragment.v7.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.v7.core.lifecycle.MasterDetailLifecycleManager;
+import com.dmcapps.navigationfragment.v7.core.MasterDetailLifecycleManager;
 
 /**
  * @deprecated -> Depreciated. You can use two {@link StackNavigationManagerFragment} to perform this the same.

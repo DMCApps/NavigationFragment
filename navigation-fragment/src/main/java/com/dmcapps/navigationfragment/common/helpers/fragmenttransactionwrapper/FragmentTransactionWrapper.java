@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper;
+package com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper;
 
 /**
  * Created by dcarmo on 2016-11-19.

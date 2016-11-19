@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper;
+package com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper;
 
 import android.support.annotation.NonNull;
 

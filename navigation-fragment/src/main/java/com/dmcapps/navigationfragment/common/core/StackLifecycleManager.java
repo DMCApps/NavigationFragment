@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.common.core.fragmentmanagerwrapper.FragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.core.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.FragmentTransactionWrapper;
-import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.NavigationFragmentTransactionWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;

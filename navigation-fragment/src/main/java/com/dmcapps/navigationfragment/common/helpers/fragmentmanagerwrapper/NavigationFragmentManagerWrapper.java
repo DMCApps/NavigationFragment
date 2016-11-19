@@ -1,10 +1,10 @@
-package com.dmcapps.navigationfragment.common.core.fragmentmanagerwrapper;
+package com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
-import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.FragmentTransactionWrapper;
-import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.NavigationFragmentTransactionWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.NavigationFragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 
 /**

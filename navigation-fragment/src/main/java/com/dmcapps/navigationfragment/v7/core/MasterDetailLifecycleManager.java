@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.v7.core.lifecycle;
+package com.dmcapps.navigationfragment.v7.core;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
+import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
+import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
+import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.common.interfaces.Config;
-import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
 /**
@@ -29,8 +32,8 @@ public class MasterDetailLifecycleManager implements Lifecycle {
         Config config = navigationManager.getConfig();
         State state = navigationManager.getState();
 
-        FragmentManager childFragManager = NavigationManagerUtils.getSupportFragmentManager(navigationManager);
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
         // No Fragments have been added. Attach the master and detail.
         if (state.getStack().size() == 0) {
             if (config.getInitialNavigation().size() < 2) {
@@ -41,13 +44,13 @@ public class MasterDetailLifecycleManager implements Lifecycle {
 
             if (state.isTablet()) {
                 // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-                childFragTrans.add(R.id.navigation_manager_container_master, (Fragment) masterFragment, masterFragment.getNavTag());
+                fragmentTransaction.add(R.id.navigation_manager_container_master, (Fragment) masterFragment, masterFragment.getNavTag());
                 navigationManager.addToStack(masterFragment);
             }
             else {
                 navigationManager.pushFragment(masterFragment);
             }
-            childFragTrans.commit();
+            fragmentTransaction.commit();
 
             if (state.isTablet()) {
                 navigationManager.pushFragment(detailFragment);
@@ -57,12 +60,12 @@ public class MasterDetailLifecycleManager implements Lifecycle {
         }
         // Fragments are in the stack, resume at the top.
         else {
-            childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
+            fragmentTransaction.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
             if (state.isTablet()) {
-                childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().firstElement()));
+                fragmentTransaction.attach(fragmentManager.findFragmentByTag(state.getStack().firstElement()));
             }
-            childFragTrans.attach(childFragManager.findFragmentByTag(state.getStack().peek()));
-            childFragTrans.commit();
+            fragmentTransaction.attach(fragmentManager.findFragmentByTag(state.getStack().peek()));
+            fragmentTransaction.commit();
         }
 
         if (navigationManager.getActivity() != null) {
@@ -93,14 +96,14 @@ public class MasterDetailLifecycleManager implements Lifecycle {
     public void onPause(NavigationManager navigationManager) {
         State state = navigationManager.getState();
 
-        FragmentManager childFragManager = NavigationManagerUtils.getSupportFragmentManager(navigationManager);
-        FragmentTransaction childFragTrans = childFragManager.beginTransaction();
-        childFragTrans.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
+        fragmentTransaction.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
         if (state.isTablet()) {
-            childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().firstElement()));
+            fragmentTransaction.detach(fragmentManager.findFragmentByTag(state.getStack().firstElement()));
         }
-        childFragTrans.detach(childFragManager.findFragmentByTag(state.getStack().peek()));
-        childFragTrans.commit();
+        fragmentTransaction.detach(fragmentManager.findFragmentByTag(state.getStack().peek()));
+        fragmentTransaction.commit();
 
     }
 
