@@ -12,11 +12,11 @@ import java.io.Serializable;
  */
 public interface Lifecycle extends Serializable {
 
-    void onResume(NavigationManager navigationManager);
-
     View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     void onViewCreated(View view, NavigationManager navigationManager);
+
+    void onResume(NavigationManager navigationManager);
 
     void onPause(NavigationManager navigationManager);
 

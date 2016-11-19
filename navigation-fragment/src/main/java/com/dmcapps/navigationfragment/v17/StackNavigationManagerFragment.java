@@ -1,12 +1,12 @@
 package com.dmcapps.navigationfragment.v17;
 
+import com.dmcapps.navigationfragment.common.core.StackLifecycleManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.v17.core.ConfigManager;
 import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.core.StackLifecycleManager;
 
 /**
  * Created by dcarmo on 2016-09-29.

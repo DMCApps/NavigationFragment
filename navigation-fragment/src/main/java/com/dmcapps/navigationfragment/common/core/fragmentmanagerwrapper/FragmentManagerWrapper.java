@@ -8,7 +8,7 @@ import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.Fra
 
 public interface FragmentManagerWrapper {
 
-    FragmentTransactionWrapper beginTransaction();
+    FragmentTransactionWrapper beginTransactionWrapped();
 
     Object findFragmentByTag(String tag);
 

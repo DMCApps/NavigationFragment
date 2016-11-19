@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.common.core.fragmentmanagerwrapper;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
 import com.dmcapps.navigationfragment.common.core.fragmenttransactionwrapper.FragmentTransactionWrapper;
@@ -23,7 +24,8 @@ public class NavigationFragmentManagerWrapper implements FragmentManagerWrapper 
     }
 
     @Override
-    public FragmentTransactionWrapper beginTransaction() {
+    @SuppressLint("CommitTransaction")
+    public FragmentTransactionWrapper beginTransactionWrapped() {
         if (fragmentManager != null) {
             return new NavigationFragmentTransactionWrapper(fragmentManager.beginTransaction());
         }
