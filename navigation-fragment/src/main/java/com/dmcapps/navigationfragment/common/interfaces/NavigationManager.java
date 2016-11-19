@@ -3,6 +3,8 @@ package com.dmcapps.navigationfragment.common.interfaces;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.dmcapps.navigationfragment.common.core.NavigationSettings;
+
 /**
  * Created by dcarmo on 2016-09-29.
  */
@@ -24,12 +26,32 @@ public interface NavigationManager {
 
     Lifecycle getLifecycle();
 
+    /**
+     * Get the current Fragment Manager from the {@link NavigationManager}
+     *
+     * @return
+     *      Returns the Child Fragment Manager of the current fragment
+     */
     Object getNavigationFragmentManager();
 
-    Activity getActivity();
-
+    /**
+     * Overrides the default present animations for all present actions on the fragment manager.
+     *
+     * @param
+     *      animIn -> Present animation in
+     * @param
+     *      animOut -> Present animation out
+     */
     void setDefaultPresentAnimations(int animIn, int animOut);
 
+    /**
+     * Overrides the default dismiss animations for all dismiss actions on the fragment manager.
+     *
+     * @param
+     *      animIn -> Dismiss animation in
+     * @param
+     *      animOut -> Dismiss animation out
+     */
     void setDefaultDismissAnimations(int animIn, int animOut);
 
     /**
@@ -39,7 +61,11 @@ public interface NavigationManager {
      *      animIn -> The resource of the new in animation.
      * @param
      *      animOut -> The resource of the new in animation.
+     * @deprecated
+     *      This call is being replaced with {@link NavigationSettings} being passed in with the push and pop functions.
+     *      To be removed in 1.2.0.
      */
+    @Deprecated
     void overrideNextAnimation(int animIn, int animOut);
 
     /**
@@ -57,8 +83,27 @@ public interface NavigationManager {
      *
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     * @param
+     *      navBundle -> The navigation bundle to add to the fragment being pushed
+     *
+     * @deprecated
+     *      This function is being replaced with the {@link NavigationManager#pushFragment(Navigation, NavigationSettings)} method call.
+     *      Allowing for more parameters to be passed in with the call.
+     *      To be removed in 1.2.0.
      */
+    @Deprecated
     void pushFragment(Navigation navFragment, Bundle navBundle);
+
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     * @param
+     *      settings -> The settings to be applied to the transaction
+     */
+    void pushFragment(Navigation navFragment, NavigationSettings settings);
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
@@ -72,11 +117,26 @@ public interface NavigationManager {
      *
      * @param
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
+     *
+     * @deprecated
+     *      This function is being replaced with the {@link NavigationManager#popFragment(NavigationSettings)} method call.
+     *      Allowing for more parameters to be passed in with the call.
+     *      To be removed in 1.2.0.
      */
+    @Deprecated
     void popFragment(Bundle navBundle);
 
     /**
-     * Adds the fragment to the given stack.
+     * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right animation.
+     *
+     * @param
+     *      settings -> The navigation settings to be performed on the popping of the fragment
+     */
+    void popFragment(NavigationSettings settings);
+
+    /**
+     * Adds the fragment to the current stack.
      *
      * @param
      *      navFragment -> The navigation fragment to be added to the stack.
@@ -148,7 +208,7 @@ public interface NavigationManager {
     boolean isOnRootFragment();
 
     /**
-     * Returns the {@link NavigationManagerFragment} stack size. A stack size of 0 represents empty.
+     * Returns the {@link NavigationManager} stack size. A stack size of 0 represents empty.
      *
      * @return
      *      The current stack size.

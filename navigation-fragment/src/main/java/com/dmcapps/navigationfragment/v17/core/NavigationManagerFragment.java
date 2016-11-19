@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
+import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
@@ -145,26 +146,67 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         return mLifecycle;
     }
 
+    /**
+     * Get the current {@link FragmentManager} from the {@link NavigationManager}
+     *
+     * @return
+     *      Returns the Child Fragment Manager of the current fragment
+     */
     @Override
     public FragmentManager getNavigationFragmentManager() {
         return getChildFragmentManager();
     }
 
+    /**
+     * Overrides the default present animations for all present actions on the fragment manager.
+     *
+     * @param
+     *      animIn -> Present animation in
+     * @param
+     *      animOut -> Present animation out
+     */
     @Override
     public void setDefaultPresentAnimations(int animIn, int animOut) {
         mConfig.setDefaultPresetAnim(animIn, animOut);
     }
 
+    /**
+     * Overrides the default dismiss animations for all dismiss actions on the fragment manager.
+     *
+     * @param
+     *      animIn -> Dismiss animation in
+     * @param
+     *      animOut -> Dismiss animation out
+     */
     @Override
     public void setDefaultDismissAnimations(int animIn, int animOut) {
         mConfig.setDefaultDismissAnim(animIn, animOut);
     }
 
+    /**
+     * Override the animation in and out of the next present, dismiss or clear stack call.
+     *
+     * @param
+     *      animIn -> The resource of the new in animation.
+     * @param
+     *      animOut -> The resource of the new in animation.
+     * @deprecated
+     *      This call is being replaced with {@link NavigationSettings} being passed in with the push and pop functions.
+     *      To be removed in 1.2.0.
+     */
+    @Deprecated
     @Override
     public void overrideNextAnimation(int animIn, int animOut) {
         mConfig.setNextAnim(animIn, animOut);
     }
 
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     */
     @Override
     public void pushFragment(Navigation navFragment) {
         mStack.pushFragment(this, navFragment);
@@ -174,6 +216,21 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     * @param
+     *      navBundle -> The navigation bundle to add to the fragment being pushed
+     *
+     * @deprecated
+     *      This function is being replaced with the {@link NavigationManager#pushFragment(Navigation, NavigationSettings)} method call.
+     *      Allowing for more parameters to be passed in with the call.
+     *      To be removed in 1.2.0.
+     */
+    @Deprecated
     @Override
     public void pushFragment(Navigation navFragment, Bundle navBundle) {
         mStack.pushFragment(this, navFragment, navBundle);
@@ -183,6 +240,24 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Push a new Fragment onto the stack and presenting it to the screen
+     * Uses default animation of slide in from right and slide out to left.
+     *
+     * @param
+     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     * @param
+     *      settings -> The settings to be applied to the transaction
+     */
+    @Override
+    public void pushFragment(Navigation navFragment, NavigationSettings settings) {
+
+    }
+
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right animation.
+     */
     @Override
     public void popFragment() {
         mStack.popFragment(this);
@@ -192,6 +267,19 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right animation.
+     *
+     * @param
+     *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
+     *
+     * @deprecated
+     *      This function is being replaced with the {@link NavigationManager#popFragment(NavigationSettings)} method call.
+     *      Allowing for more parameters to be passed in with the call.
+     *      To be removed in 1.2.0.
+     */
+    @Deprecated
     @Override
     public void popFragment(Bundle navBundle) {
         mStack.popFragment(this, navBundle);
@@ -201,11 +289,35 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Pop the current fragment off the top of the stack and dismiss it.
+     * Uses default animation of slide in from left and slide out to right animation.
+     *
+     * @param
+     *      settings -> The navigation settings to be performed on the popping of the fragment
+     */
+    @Override
+    public void popFragment(NavigationSettings settings) {
+
+    }
+
+    /**
+     * Adds the fragment to the current stack.
+     *
+     * @param
+     *      navFragment -> The navigation fragment to be added to the stack.
+     */
     @Override
     public void addToStack(Navigation navFragment) {
         mState.getStack().add(navFragment.getNavTag());
     }
 
+    /**
+     * Access the fragment that is on the top of the navigation stack.
+     *
+     * @return
+     *      {@link Navigation} that is on the top of the stack.
+     */
     @Override
     public Navigation getTopFragment() {
         if (mState.getStack().size() > 0) {
@@ -217,11 +329,23 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Returns the fragment at the 0 index.
+     *
+     * @return
+     *      {@link Navigation} at the 0 index if available.
+     */
     @Override
     public Navigation getRootFragment() {
         return getFragmentAtIndex(0);
     }
 
+    /**
+     * Access the fragment at the given index of the navigation stack.
+     *
+     * @return
+     *      {@link Navigation} that is on the top of the stack.
+     */
     @Override
     public Navigation getFragmentAtIndex(int index) {
         if (mState.getStack().size() > index) {
@@ -233,6 +357,13 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         }
     }
 
+    /**
+     * Remove the {@link Navigation} that is on the top of the stack.
+     *
+     * @return
+     *      true -> A {@link Navigation} has been removed
+     *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
+     */
     @Override
     public boolean onBackPressed() {
         if (mState.getStack().size() > mConfig.getMinStackSize()) {
@@ -243,27 +374,56 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         return false;
     }
 
+    /**
+     * Remove all fragments from the stack including the Root. The add the given {@link Navigation}
+     * as the new root fragment. The definition of the Root Fragment is the Fragment at the min stack size position.
+     *
+     * @param
+     *      navFragment -> The fragment that you would like as the new Root of the stack.
+     */
     @Override
     public void replaceRootFragment(Navigation navFragment) {
         clearNavigationStackToPosition(mConfig.getMinStackSize() - 1);
         pushFragment(navFragment);
     }
 
+    /**
+     * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
+     */
     @Override
     public void clearNavigationStackToRoot() {
         clearNavigationStackToPosition(mConfig.getMinStackSize());
     }
 
+    /**
+     * Remove all fragments up until the given position.
+     *
+     * @param
+     *      stackPosition -> The position (0 indexed) that you would like to pop to.
+     */
     @Override
     public void clearNavigationStackToPosition(int stackPosition) {
         mStack.clearNavigationStackToPosition(this, stackPosition);
     }
 
+    /**
+     * Check if the current top fragment is the root fragment
+     *
+     * @return
+     *      true -> Stack is currently at the root fragment
+     *      false -> Stack is not at the root fragment
+     */
     @Override
     public boolean isOnRootFragment() {
         return mState.getStack().size() == mConfig.getMinStackSize();
     }
 
+    /**
+     * Returns the {@link NavigationManager} stack size. A stack size of 0 represents empty.
+     *
+     * @return
+     *      The current stack size.
+     */
     @Override
     public int getCurrentStackSize() {
         return mState.getStack().size();
