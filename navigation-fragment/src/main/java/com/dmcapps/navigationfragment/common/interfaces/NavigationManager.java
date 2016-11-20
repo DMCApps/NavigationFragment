@@ -32,7 +32,7 @@ public interface NavigationManager {
      * @return
      *      Returns the Child Fragment Manager of the current fragment
      */
-    Object getNavigationFragmentManager();
+    Object getNavChildFragmentManager();
 
     /**
      * Overrides the default present animations for all present actions on the fragment manager.

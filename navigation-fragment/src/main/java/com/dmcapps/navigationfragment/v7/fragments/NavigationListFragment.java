@@ -19,7 +19,10 @@ import java.util.UUID;
  * and dismissing of existing {@link Fragment} in the stack. The class will also generate
  * and maintain a constant TAG for the class allowing the navigation manager to
  * effectively store and present the Fragments as needed.
+ *
+ * @deprecated In favor of using the RecyclerView
  */
+@Deprecated
 public class NavigationListFragment extends ListFragment implements Navigation {
 
     private final String TAG = UUID.randomUUID().toString();

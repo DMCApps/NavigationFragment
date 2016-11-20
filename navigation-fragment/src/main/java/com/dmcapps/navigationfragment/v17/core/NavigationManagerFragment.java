@@ -23,7 +23,7 @@ import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-public abstract class NavigationManagerFragment extends Fragment implements NavigationManager {
+public class NavigationManagerFragment extends Fragment implements NavigationManager {
     // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
     private static final String TAG = NavigationManagerFragment.class.getSimpleName();
 
@@ -154,7 +154,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      *      Returns the Child Fragment Manager of the current fragment
      */
     @Override
-    public FragmentManager getNavigationFragmentManager() {
+    public FragmentManager getNavChildFragmentManager() {
         return getChildFragmentManager();
     }
 

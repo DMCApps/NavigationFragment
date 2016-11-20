@@ -151,7 +151,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      *      Returns the Child Fragment Manager of the current fragment
      */
     @Override
-    public FragmentManager getNavigationFragmentManager() {
+    public FragmentManager getNavChildFragmentManager() {
         return getChildFragmentManager();
     }
 

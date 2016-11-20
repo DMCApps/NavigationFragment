@@ -2,8 +2,6 @@ package com.dmcapps.navigationfragment.v7.core;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
-import com.dmcapps.navigationfragment.common.helpers.utils.NavigationManagerUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
@@ -32,7 +29,7 @@ public class MasterDetailLifecycleManager implements Lifecycle {
         Config config = navigationManager.getConfig();
         State state = navigationManager.getState();
 
-        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
         // No Fragments have been added. Attach the master and detail.
         if (state.getStack().size() == 0) {
@@ -96,7 +93,7 @@ public class MasterDetailLifecycleManager implements Lifecycle {
     public void onPause(NavigationManager navigationManager) {
         State state = navigationManager.getState();
 
-        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
         fragmentTransaction.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);
         if (state.isTablet()) {

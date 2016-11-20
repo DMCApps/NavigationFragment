@@ -25,7 +25,7 @@ public class StackManager implements Stack {
         State state = navigationManager.getState();
         Config config = navigationManager.getConfig();
 
-        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
 
         if (settings != null) {
             navFragment.setNavBundle(settings.getNavBundle());
@@ -67,7 +67,7 @@ public class StackManager implements Stack {
         Config config = navigationManager.getConfig();
 
         if (state.getStack().size() > config.getMinStackSize()) {
-            FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+            FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
 
             Integer dismissAnimIn = config.getDismissAnimIn();
@@ -99,7 +99,7 @@ public class StackManager implements Stack {
     public void clearNavigationStackToPosition(NavigationManager navigationManager, int stackPosition) {
         State state = navigationManager.getState();
 
-        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavigationFragmentManager());
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
 
         fragmentTransaction.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);

@@ -23,7 +23,7 @@ public class NavigationFragment extends Fragment implements Navigation {
 
     private final String TAG = UUID.randomUUID().toString();
     private String mTitle;
-    // Need to store the bundle myself as you can't change the bundle after the fragment has been presented.
+    // Need to store the bundle myself as you can't change the fragment.setArguments() bundle after the fragment has been presented.
     private Bundle mNavBundle;
 
     public NavigationFragment() { }
