@@ -3,12 +3,12 @@ package com.dmcapps.navigationfragment.v17;
 import android.annotation.TargetApi;
 import android.os.Build;
 
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.core.StackLifecycleManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.core.StackManager;
-import com.dmcapps.navigationfragment.v17.core.ConfigManager;
 import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
 
 /**
@@ -22,6 +22,8 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
 
         Config config = new ConfigManager();
         config.addInitialNavigation(fragment);
+        config.setDefaultPresetAnim(null, null);
+        config.setDefaultDismissAnim(null, null);
 
         navigationManagerFragment.setConfig(config);
         navigationManagerFragment.setLifecycle(new StackLifecycleManager());

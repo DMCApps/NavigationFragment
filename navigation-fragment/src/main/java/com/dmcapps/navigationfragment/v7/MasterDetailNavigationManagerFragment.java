@@ -9,12 +9,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dmcapps.navigationfragment.R;
+import com.dmcapps.navigationfragment.common.core.ConfigManager;
 import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.helpers.AnimationEndListener;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.v7.core.ConfigManager;
 import com.dmcapps.navigationfragment.v7.core.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.v7.core.MasterDetailLifecycleManager;
 
@@ -43,6 +43,8 @@ public class MasterDetailNavigationManagerFragment extends NavigationManagerFrag
         Config config = new ConfigManager();
         config.addInitialNavigation(masterFragment);
         config.addInitialNavigation(detailFragment);
+        config.setDefaultPresetAnim(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
+        config.setDefaultDismissAnim(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 
         navigationManagerFragment.setConfig(config);
         navigationManagerFragment.setLifecycle(new MasterDetailLifecycleManager());
