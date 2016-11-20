@@ -39,10 +39,15 @@ public class StackManager implements Stack {
         }
 
         if (state.getStack().size() >= config.getMinStackSize()) {
-            Integer presentAnimIn = config.getPresentAnimIn();
-            Integer presentAnimOut = config.getPresentAnimOut();
-            if (presentAnimIn != null && presentAnimOut != null) {
-                fragmentTransactionWrapper.setCustomAnimations(presentAnimIn, presentAnimOut);
+            Integer enter = config.getPresentAnimIn();
+            Integer exit = config.getPresentAnimOut();
+            Integer popEnter = config.getDismissAnimIn();
+            Integer popExit = config.getDismissAnimOut();
+            if (enter != null && exit != null && popEnter != null && popExit != null) {
+                fragmentTransactionWrapper.setCustomAnimations(enter, exit, popEnter, popExit);
+            }
+            else if (enter != null && exit != null) {
+                fragmentTransactionWrapper.setCustomAnimations(enter, exit);
             }
 
             Object topFrag = fragmentManagerWrapper.findFragmentByTag(state.getStack().peek());

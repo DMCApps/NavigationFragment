@@ -1,6 +1,5 @@
 package com.dmcapps.navigationfragment.common.core;
 
-import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 

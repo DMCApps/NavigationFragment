@@ -25,12 +25,22 @@ public class NavigationFragmentTransactionWrapper implements FragmentTransaction
     }
 
     @Override
-    public void setCustomAnimations(int inAnim, int outAnim) {
+    public void setCustomAnimations(int enter, int exit) {
         if (fragmentTransaction != null) {
-            fragmentTransaction.setCustomAnimations(inAnim, outAnim);
+            fragmentTransaction.setCustomAnimations(enter, exit);
         }
         else {
-            supportFragmentTransaction.setCustomAnimations(inAnim, outAnim);
+            supportFragmentTransaction.setCustomAnimations(enter, exit);
+        }
+    }
+
+    @Override
+    public void setCustomAnimations(int enter, int exit, int popEnter, int popExit) {
+        if (fragmentTransaction != null) {
+            fragmentTransaction.setCustomAnimations(enter, exit, popEnter, popExit);
+        }
+        else {
+            supportFragmentTransaction.setCustomAnimations(enter, exit, popEnter, popExit);
         }
     }
 

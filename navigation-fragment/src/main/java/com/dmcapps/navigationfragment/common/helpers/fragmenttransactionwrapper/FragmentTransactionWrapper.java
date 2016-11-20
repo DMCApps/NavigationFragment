@@ -10,7 +10,9 @@ import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedEleme
 
 public interface FragmentTransactionWrapper {
 
-    void setCustomAnimations(int inAnim, int outAnim);
+    void setCustomAnimations(int enter, int exit);
+
+    void setCustomAnimations(int enter, int exit, int popEnter, int popExit);
 
     void add(int containerId, Object object, String tag);
 
