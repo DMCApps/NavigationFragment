@@ -30,8 +30,8 @@ Every Fragment in the Navigation Stack must extend NavigationFragment in order t
 
 Use the Stack Fragment Manager just like a normal fragment. Add it to the manager with an initial fragment and you are ready to use the Navigation Manager.
 
-java
-```
+
+```java
 public class SingleStackNavigationExampleActivity extends AppCompatActivity {
 
     private static final String STATE_NAV_TAG = "NAV_TAG";
@@ -101,16 +101,14 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
 
 Now from within your Fragments you can easily present and dismiss fragments using. All fragments that you would like to manager using the NavigationManager must extend `NavigationFragment`.
 
-java
-```
+```java
 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 presentFragment(fragmentToPresent);
 ```
 
 Here is an example of the SampleFragment
 
-java
-```
+```java
 public class SampleFragment extends NavigationFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FRAG_TEXT = "ARG_FRAG_TEXT";
