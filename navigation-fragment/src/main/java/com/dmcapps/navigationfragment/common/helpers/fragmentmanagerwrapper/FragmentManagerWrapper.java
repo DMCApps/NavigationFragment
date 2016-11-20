@@ -12,6 +12,12 @@ public interface FragmentManagerWrapper {
 
     Object findFragmentByTag(String tag);
 
+    void popBackStack();
+
+    void popBackStack(String name, int flags);
+
+    void popBackStack(int id, int flags);
+
     boolean executePendingTransactions();
 
 }

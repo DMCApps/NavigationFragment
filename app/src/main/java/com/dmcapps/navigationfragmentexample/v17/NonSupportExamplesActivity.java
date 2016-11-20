@@ -13,6 +13,7 @@ import com.dmcapps.navigationfragmentexample.v17.DrawerClearStackExample.Navigat
 import com.dmcapps.navigationfragmentexample.v17.DrawerExample.NavigationDrawerExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.SingleStackExample.SingleStackNavigationExampleActivity;
+import com.dmcapps.navigationfragmentexample.v17.TransitionExample.TransitionExampleActivity;
 import com.dmcapps.navigationfragmentexample.v17.ViewPagerExample.ViewPagerNavigationExampleActivity;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class NonSupportExamplesActivity extends ActionBarActivity implements Ada
         items.add("Navigation Drawer Example (uses replace and remove as well as non-Navigation Fragments)");
         items.add("Override Default Animations Example");
         items.add("Navigation Fragment clears stack before presenting");
+        items.add("Transition Example");
 
         mList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
         mList.setOnItemClickListener(this);
@@ -56,6 +58,8 @@ public class NonSupportExamplesActivity extends ActionBarActivity implements Ada
             intent = new Intent(this, OverrideDefaultAnimationsExampleActivity.class);
         } else if (position == 4) {
             intent = new Intent(this, NavigationDrawerClearStackExampleActivity.class);
+        } else if (position == 5) {
+            intent = new Intent(this, TransitionExampleActivity.class);
         }
 
         startActivity(intent);

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dmcapps.navigationfragmentexample" >
+    package="com.dmcapps.navigationfragmentexample">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +19,7 @@
         <!-- SUPPORT ACTIVITIES -->
         <activity
             android:name=".v7.SupportExamplesActivity"
-            android:label="@string/title_activity_navigation_drawer_clear_stack_example" >
-        </activity>
+            android:label="@string/title_activity_navigation_drawer_clear_stack_example"></activity>
         <activity android:name=".v7.SingleStackExample.SingleStackNavigationExampleActivity" />
         <activity android:name=".v7.MasterDetailExample.MasterDetailNavigationExampleActivity" />
         <activity
@@ -42,14 +41,12 @@
         <activity
             android:name=".v7.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity"
             android:label="@string/title_activity_navigation_drawer_clear_stack_example"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <!-- NON-SUPPORT ACTIVITIES -->
         <activity
             android:name=".v17.NonSupportExamplesActivity"
-            android:label="@string/title_activity_navigation_drawer_clear_stack_example" >
-        </activity>
+            android:label="@string/title_activity_navigation_drawer_clear_stack_example"></activity>
         <activity android:name=".v17.SingleStackExample.SingleStackNavigationExampleActivity" />
         <activity
             android:name=".v17.ViewPagerExample.ViewPagerNavigationExampleActivity"
@@ -64,8 +61,8 @@
         <activity
             android:name=".v17.DrawerClearStackExample.NavigationDrawerClearStackExampleActivity"
             android:label="@string/title_activity_navigation_drawer_clear_stack_example"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".v17.TransitionExample.TransitionExampleActivity"></activity>
     </application>
 
 </manifest>

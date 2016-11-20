@@ -1,5 +1,9 @@
 package com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper;
 
+import android.view.View;
+
+import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
+
 /**
  * Created by dcarmo on 2016-11-19.
  */
@@ -9,6 +13,12 @@ public interface FragmentTransactionWrapper {
     void setCustomAnimations(int inAnim, int outAnim);
 
     void add(int containerId, Object object, String tag);
+
+    void addSharedElement(SharedElement sharedElement);
+
+    void addSharedElement(View view, String name);
+
+    void addToBackStack(String name);
 
     void remove(Object object);
 

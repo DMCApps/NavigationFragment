@@ -112,6 +112,14 @@ public interface Navigation {
      */
     void replaceRootFragment(Navigation navFragment);
 
+    /**
+     * Gets the fragment that is in the stack before the current one. This is to help with setting the Transitions
+     *
+     * @return
+     *      {@link Navigation} object that is before this one.
+     */
+    //Navigation getPreviousFragment();
+
     void setTitle(String title);
     void setTitle(int resId);
     String getTitle();

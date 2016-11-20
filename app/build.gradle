@@ -25,7 +25,6 @@ tasks.findByPath(":navigation-fragment:javadoc").enabled = false
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile project(':navigation-fragment')
 
     compile supportDependencies.v4
@@ -35,4 +34,6 @@ dependencies {
     compile supportDependencies.smartTabLayoutUtilsV4
 
     compile 'com.hkm.slidingmenulib:libmenu:0.4.61'
+    compile 'com.android.support:support-v4:24.2.1'
+    testCompile 'junit:junit:4.12'
 }

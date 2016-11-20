@@ -14,7 +14,7 @@ compile 'com.dmcapps:navigation-fragment:1.0.0'
 
 ##Current Version
 
-1.0.0
+1.1.0
 
 ##Introduction
 
@@ -342,6 +342,11 @@ public class SampleFragment extends NavigationFragment {
 ```
 
 ##Change Log
+
+###1.1.0
+- Added in Transition support
+- Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call `[NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L45) and `[NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)]`(https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L55)
+- Major code refactoring to reduce duplicate implementations across support and non-support versions
 
 ###1.0.0
 - Added in non support fragment manager [Git issue 1](https://github.com/DMCApps/NavigationFragment/issues/1)

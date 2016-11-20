@@ -1,5 +1,6 @@
 package com.dmcapps.navigationfragment.common.core;
 
+import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
@@ -26,12 +27,16 @@ public class StackManager implements Stack {
         Config config = navigationManager.getConfig();
 
         FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
+        FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
 
         if (settings != null) {
             navFragment.setNavBundle(settings.getNavBundle());
+            if (settings.getSharedElements() != null) {
+                for (SharedElement sharedElement : settings.getSharedElements()) {
+                    fragmentTransactionWrapper.addSharedElement(sharedElement);
+                }
+            }
         }
-
-        FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
 
         if (state.getStack().size() >= config.getMinStackSize()) {
             Integer presentAnimIn = config.getPresentAnimIn();
@@ -42,11 +47,12 @@ public class StackManager implements Stack {
 
             Object topFrag = fragmentManagerWrapper.findFragmentByTag(state.getStack().peek());
             // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
-            fragmentTransactionWrapper.detach(topFrag);
+            // fragmentTransactionWrapper.detach(topFrag);
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
         fragmentTransactionWrapper.add(config.getPushContainerId(), navFragment, navFragment.getNavTag());
+        fragmentTransactionWrapper.addToBackStack(null);
         fragmentTransactionWrapper.commit();
 
         navigationManager.addToStack(navFragment);
@@ -68,22 +74,12 @@ public class StackManager implements Stack {
 
         if (state.getStack().size() > config.getMinStackSize()) {
             FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
-            FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
-
-            Integer dismissAnimIn = config.getDismissAnimIn();
-            Integer dismissAnimOut = config.getDismissAnimOut();
-            if (dismissAnimIn != null && dismissAnimOut != null) {
-                fragmentTransactionWrapper.setCustomAnimations(dismissAnimIn, dismissAnimOut);
-            }
-
-            fragmentTransactionWrapper.remove(fragmentManagerWrapper.findFragmentByTag(state.getStack().pop()));
+            fragmentManagerWrapper.popBackStack();
+            state.getStack().pop();
 
             if (state.getStack().size() > 0) {
                 navFragment = (Navigation) fragmentManagerWrapper.findFragmentByTag(state.getStack().peek());
-                fragmentTransactionWrapper.attach(navFragment);
             }
-
-            fragmentTransactionWrapper.commit();
         }
         else {
             navigationManager.getActivity().onBackPressed();
@@ -107,12 +103,6 @@ public class StackManager implements Stack {
         while (state.getStack().size() > stackPosition) {
             fragmentTransaction.remove(fragmentManager.findFragmentByTag(state.getStack().pop()));
         }
-
-        if (state.getStack().size() > 0) {
-            fragmentTransaction.attach(fragmentManager.findFragmentByTag(state.getStack().peek()));
-        }
-
-        fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
     }
 

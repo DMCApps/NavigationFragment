@@ -1,7 +1,11 @@
 package com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.view.View;
 
+import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 
 /**
@@ -9,6 +13,7 @@ import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
  */
 
 public class NavigationFragmentTransactionWrapper implements FragmentTransactionWrapper {
+    private static final String TAG = NavigationFragmentTransactionWrapper.class.getSimpleName();
 
     private android.app.FragmentTransaction fragmentTransaction;
     private android.support.v4.app.FragmentTransaction supportFragmentTransaction;
@@ -36,6 +41,31 @@ public class NavigationFragmentTransactionWrapper implements FragmentTransaction
         }
         else {
             supportFragmentTransaction.add(containerId, (android.support.v4.app.Fragment)object, tag);
+        }
+    }
+
+    @Override
+    public void addSharedElement(SharedElement sharedElement) {
+        addSharedElement(sharedElement.view, sharedElement.name);
+    }
+
+    @Override
+    public void addSharedElement(View view, String name) {
+        if (fragmentTransaction != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            fragmentTransaction.addSharedElement(view, name);
+        }
+        else {
+            Log.i(TAG, "Cannot perform shared element transactions on a support fragment transaction or below API 21!");
+        }
+    }
+
+    @Override
+    public void addToBackStack(String name) {
+        if (fragmentTransaction != null) {
+            fragmentTransaction.addToBackStack(name);
+        }
+        else {
+            supportFragmentTransaction.addToBackStack(name);
         }
     }
 
