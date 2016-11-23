@@ -194,9 +194,20 @@ public interface NavigationManager {
      * Remove all fragments up until the given position.
      *
      * @param
-     *      stackPosition -> The position (0 indexed) that you would like to pop to.
+     *      index -> The index (0 based) that you would like to pop to.
      */
-    void clearNavigationStackToPosition(int stackPosition);
+    void clearNavigationStackToIndex(int index);
+
+
+    /**
+     * Remove all fragments up until the given position.
+     *
+     * @param
+     *      index -> The index (0 based) that you would like to pop to.
+     * @param
+     *      inclusive -> Include removing the given index.
+     */
+    void clearNavigationStackToIndex(int index, boolean inclusive);
 
     /**
      * Check if the current top fragment is the root fragment

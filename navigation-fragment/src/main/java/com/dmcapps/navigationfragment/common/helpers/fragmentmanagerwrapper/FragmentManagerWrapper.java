@@ -18,6 +18,12 @@ public interface FragmentManagerWrapper {
 
     void popBackStack(int id, int flags);
 
+    void popBackStackImmediate();
+
+    void popBackStackImmediate(String name, int flags);
+
+    void popBackStackImmediate(int id, int flags);
+
     boolean executePendingTransactions();
 
 }

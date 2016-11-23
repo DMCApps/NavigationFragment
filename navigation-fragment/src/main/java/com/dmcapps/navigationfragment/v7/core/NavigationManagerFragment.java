@@ -372,7 +372,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void replaceRootFragment(Navigation navFragment) {
-        clearNavigationStackToPosition(mConfig.getMinStackSize() - 1);
+        clearNavigationStackToIndex(mConfig.getMinStackSize() - 1, true);
         pushFragment(navFragment);
     }
 
@@ -381,18 +381,29 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
      */
     @Override
     public void clearNavigationStackToRoot() {
-        clearNavigationStackToPosition(mConfig.getMinStackSize());
+        clearNavigationStackToIndex(mConfig.getMinStackSize());
     }
 
     /**
      * Remove all fragments up until the given position.
      *
      * @param
-     *      stackPosition -> The position (0 indexed) that you would like to pop to.
+     *      index -> The index (0 based) that you would like to pop to.
      */
     @Override
-    public void clearNavigationStackToPosition(int stackPosition) {
-        mStack.clearNavigationStackToPosition(this, stackPosition);
+    public void clearNavigationStackToIndex(int index) {
+        clearNavigationStackToIndex(index, false);
+    }
+
+    /**
+     * Remove all fragments up until the given position.
+     *
+     * @param
+     *      index -> The index (0 based) that you would like to pop to.
+     */
+    @Override
+    public void clearNavigationStackToIndex(int index, boolean inclusive) {
+        mStack.clearNavigationStackToIndex(this, index, inclusive);
     }
 
     /**

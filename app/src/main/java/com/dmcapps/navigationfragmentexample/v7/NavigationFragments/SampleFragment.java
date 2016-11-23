@@ -39,6 +39,8 @@ public class SampleFragment extends NavigationFragment {
     private EditText edit2;
     private EditText edit3;
 
+    private EditText fragIndex;
+
     private int mFragCount;
 
     /**
@@ -68,34 +70,6 @@ public class SampleFragment extends NavigationFragment {
         if (getArguments() != null) {
             mFragText = getArguments().getString(ARG_FRAG_TEXT);
             mFragCount = getArguments().getInt(ARG_FRAG_COUNT);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (getNavBundle() != null) {
-            model = (SampleModel)getNavBundle().getSerializable(ARG_MODEL_FROM_NAV_BUNDLE);
-
-            if (edit1 != null) {
-                edit1.setText(model.text1);
-                edit2.setText(model.text2);
-                edit3.setText(model.text3);
-            }
-        }
-
-        setTitle("Sample Fragment " + mFragCount);
-
-        if (getNavigationManager() instanceof MasterDetailNavigationManagerFragment) {
-            setMasterToggleTitle("Master");
-        }
-
-        // Using this to test if the memory space of the activity changes on rotation in the child
-        Activity activity = getActivity();
-        if (activity != null) {
-            // Debug into this to check mHost is changed.
-            setHasOptionsMenu(false);
         }
     }
 
@@ -160,6 +134,15 @@ public class SampleFragment extends NavigationFragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        fragIndex = (EditText)view.findViewById(R.id.frag_index_edit_text);
+
+        view.findViewById(R.id.btn_pop_to_index).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissToIndex(Integer.valueOf(fragIndex.getText().toString()));
             }
         });
 
@@ -231,6 +214,34 @@ public class SampleFragment extends NavigationFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getNavBundle() != null) {
+            model = (SampleModel)getNavBundle().getSerializable(ARG_MODEL_FROM_NAV_BUNDLE);
+
+            if (edit1 != null) {
+                edit1.setText(model.text1);
+                edit2.setText(model.text2);
+                edit3.setText(model.text3);
+            }
+        }
+
+        setTitle("Sample Fragment " + mFragCount);
+
+        if (getNavigationManager() instanceof MasterDetailNavigationManagerFragment) {
+            setMasterToggleTitle("Master");
+        }
+
+        // Using this to test if the memory space of the activity changes on rotation in the child
+        Activity activity = getActivity();
+        if (activity != null) {
+            // Debug into this to check mHost is changed.
+            setHasOptionsMenu(false);
+        }
     }
 
     public int getFragCount() {

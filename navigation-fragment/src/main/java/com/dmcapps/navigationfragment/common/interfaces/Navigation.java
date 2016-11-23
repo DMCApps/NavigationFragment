@@ -69,11 +69,6 @@ public interface Navigation {
     void presentFragment(Navigation navFragment, NavigationSettings settings);
 
     /**
-     * Dismiss all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
-     */
-    void dismissToRoot();
-
-    /**
      * Dimiss the current fragment off the top of the stack and dismiss it.
      * Uses default animation of slide in from left and slide out to right animation.
      */
@@ -102,6 +97,16 @@ public interface Navigation {
      *      settings -> The {@link NavigationSettings} to be performed on the popping of the fragment
      */
     void dismissFragment(NavigationSettings settings);
+
+    /**
+     * Dismiss all fragments to the given index in the stack
+     */
+    void dismissToIndex(int index);
+
+    /**
+     * Dismiss all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
+     */
+    void dismissToRoot();
 
     /**
      * Remove all fragments from the stack including the Root. The add the given {@link Navigation}

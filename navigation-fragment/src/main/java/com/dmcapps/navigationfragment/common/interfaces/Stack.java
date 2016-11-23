@@ -19,7 +19,9 @@ public interface Stack extends Serializable {
 
     Navigation popFragment(NavigationManager navigationManager, NavigationSettings settings);
 
-    void clearNavigationStackToPosition(NavigationManager navigationManager, int stackPosition);
+    void clearNavigationStackToIndex(NavigationManager navigationManager, int index);
+
+    void clearNavigationStackToIndex(NavigationManager navigationManager, int index, boolean inclusive);
 
     Navigation getFragmentAtIndex(NavigationManager navigationManager, int index);
 

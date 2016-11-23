@@ -132,15 +132,6 @@ public class NavigationFragment extends Fragment implements Navigation {
     }
 
     /**
-     * Dismiss all the fragments on the Navigation Manager stack until the root fragment using the default slide in and out.
-     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
-     */
-    @Override
-    public void dismissToRoot() {
-        getNavigationManager().clearNavigationStackToRoot();
-    }
-
-    /**
      * Dimiss the current fragment off the top of the stack and dismiss it.
      * Uses default animation of slide in from left and slide out to right animation.
      */
@@ -177,6 +168,23 @@ public class NavigationFragment extends Fragment implements Navigation {
     @Override
     public void dismissFragment(NavigationSettings settings) {
         getNavigationManager().popFragment(settings);
+    }
+
+    /**
+     * Dismiss all fragments to the given index in the stack (With 0 being the root fragment)
+     */
+    @Override
+    public void dismissToIndex(int index) {
+        getNavigationManager().clearNavigationStackToIndex(index);
+    }
+
+    /**
+     * Dismiss all the fragments on the Navigation Manager stack until the root fragment using the default slide in and out.
+     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
+     */
+    @Override
+    public void dismissToRoot() {
+        getNavigationManager().clearNavigationStackToRoot();
     }
 
     /**

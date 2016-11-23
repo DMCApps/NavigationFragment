@@ -75,6 +75,36 @@ public class NavigationFragmentManagerWrapper implements FragmentManagerWrapper 
     }
 
     @Override
+    public void popBackStackImmediate() {
+        if (fragmentManager != null) {
+            fragmentManager.popBackStackImmediate();
+        }
+        else {
+            supportFragmentManager.popBackStackImmediate();
+        }
+    }
+
+    @Override
+    public void popBackStackImmediate(String name, int flags) {
+        if (fragmentManager != null) {
+            fragmentManager.popBackStackImmediate(name, flags);
+        }
+        else {
+            supportFragmentManager.popBackStackImmediate(name, flags);
+        }
+    }
+
+    @Override
+    public void popBackStackImmediate(int id, int flags) {
+        if (fragmentManager != null) {
+            fragmentManager.popBackStackImmediate(id, flags);
+        }
+        else {
+            supportFragmentManager.popBackStackImmediate(id, flags);
+        }
+    }
+
+    @Override
     public boolean executePendingTransactions() {
         if (fragmentManager != null) {
             return fragmentManager.executePendingTransactions();
