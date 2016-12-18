@@ -72,6 +72,9 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
         else if (mLifecycle == null || mConfig == null || mStack == null || mState == null) {
             throw new RuntimeException("Your NavigationManagerFragment must call setLifecycle, setConfig, setStack, setState before onCreate()");
         }
+        
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     @Override
@@ -169,6 +172,8 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
     @Override
     public void setDefaultPresentAnimations(int animIn, int animOut) {
         mConfig.setDefaultPresetAnim(animIn, animOut);
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     /**
@@ -182,6 +187,8 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
     @Override
     public void setDefaultDismissAnimations(int animIn, int animOut) {
         mConfig.setDefaultDismissAnim(animIn, animOut);
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     /**
@@ -192,7 +199,7 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
      * @param
      *      animOut -> The resource of the new in animation.
      * @deprecated
-     *      This call is being replaced with {@link NavigationSettings} being passed in with the push and pop functions.
+     *      This call is being replaced with {@link NavigationSettings} being passed in with the push function.
      *      To be removed in 1.2.0.
      */
     @Deprecated

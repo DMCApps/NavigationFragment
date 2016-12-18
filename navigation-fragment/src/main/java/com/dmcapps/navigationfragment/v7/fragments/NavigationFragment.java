@@ -75,8 +75,7 @@ public class NavigationFragment extends Fragment implements Navigation {
      * @param
      *      animOut -> The resource of the new in animation.
      * @deprecated
-     *      This call is being replaced with {@link NavigationSettings} being passed in with the present and dismiss functions.
-     *      To be removed in 1.2.0.
+     *      This call is replaced with {@link NavigationSettings}. PLEASE UPDATE TO {@link Navigation#presentFragment(Navigation, NavigationSettings)}
      */
     @Deprecated
     public void overrideNextAnimation(int animIn, int animOut) {

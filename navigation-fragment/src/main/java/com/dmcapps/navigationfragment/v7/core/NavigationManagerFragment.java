@@ -69,6 +69,9 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
         else if (mLifecycle == null || mConfig == null || mStack == null || mState == null) {
             throw new RuntimeException("Your NavigationManagerFragment must call setLifecycle, setConfig, setStack, setState before onCreate()");
         }
+
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     @Override
@@ -166,6 +169,8 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Override
     public void setDefaultPresentAnimations(int animIn, int animOut) {
         mConfig.setDefaultPresetAnim(animIn, animOut);
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     /**
@@ -179,6 +184,8 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Override
     public void setDefaultDismissAnimations(int animIn, int animOut) {
         mConfig.setDefaultDismissAnim(animIn, animOut);
+        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
+        NavigationSettings.setDefaultConfig(mConfig);
     }
 
     /**
@@ -195,7 +202,7 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Deprecated
     @Override
     public void overrideNextAnimation(int animIn, int animOut) {
-        mConfig.setNextAnim(animIn, animOut);
+        // mConfig.setNextAnim(animIn, animOut);
     }
 
     /**
