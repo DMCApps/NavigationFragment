@@ -1,20 +1,10 @@
-package com.dmcapps.navigationfragment.v17.core;
+package com.dmcapps.navigationfragment.common.core;
 
-import android.annotation.TargetApi;
-import android.app.Fragment;
+import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.common.core.ConfigManager;
-import com.dmcapps.navigationfragment.common.core.NavigationSettings;
-import com.dmcapps.navigationfragment.common.core.StackManager;
-import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
@@ -22,10 +12,12 @@ import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class NavigationManagerFragment extends Fragment implements NavigationManager {
-    // TODO: Animation making child disappear http://stackoverflow.com/a/23276145/845038
-    private static final String TAG = NavigationManagerFragment.class.getSimpleName();
+/**
+ * Created by dcarmo on 2016-12-18.
+ */
+
+public class NavigationManagerCore implements NavigationManager {
+    private static final String TAG = NavigationManagerCore.class.getSimpleName();
 
     private static final String KEY_MANAGER_CONFIG = "KEY_MANAGER_CONFIG";
     private static final String KEY_MANAGER_STATE = "KEY_MANAGER_STATE";
@@ -44,11 +36,11 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
         void didDismissFragment();
     }
 
-    public NavigationManagerFragment() { }
+    public NavigationManagerCore() { }
 
+    /*
     @Override
     public void onAttach(Context context) {
-        super.onAttach(context);
 
         try {
             // This is not mandatory. Only if the user wants to listen for push and pop events.
@@ -109,6 +101,7 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
         outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStack);
         outState.putSerializable(KEY_MANAGER_STATE, mState);
     }
+    */
 
     @Override
     public void setStack(Stack stack) {
@@ -157,8 +150,9 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
      *      Returns the Child Fragment Manager of the current fragment
      */
     @Override
-    public FragmentManager getNavChildFragmentManager() {
-        return getChildFragmentManager();
+    public Object getNavChildFragmentManager() {
+        // return getChildFragmentManager();
+        return null;
     }
 
     /**
@@ -426,6 +420,11 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
         return mState.getStack().size();
     }
 
+    @Override
+    public Activity getActivity() {
+        return null;
+    }
+
     // ===============================
     // START DEVICE STATE METHODS
     // ===============================
@@ -443,4 +442,5 @@ public class NavigationManagerFragment extends Fragment implements NavigationMan
     // ===============================
     // END DEVICE STATE METHODS
     // ===============================
+
 }
