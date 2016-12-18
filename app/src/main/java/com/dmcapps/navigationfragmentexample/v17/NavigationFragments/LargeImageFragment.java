@@ -40,15 +40,7 @@ public class LargeImageFragment extends NavigationFragment {
         largeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigationSettings navigationSettings = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    setExitTransition(new Slide(Gravity.END));
-
-                    navigationSettings = new NavigationSettings.Builder()
-                            .addSharedElement(largeImageView, "trans_smallImageView")
-                            .build();
-                }
-                dismissFragment(navigationSettings);
+                dismissFragment();
             }
         });
     }

@@ -56,10 +56,6 @@ public class StackManager implements Stack {
             else if (enter != null && exit != null) {
                 fragmentTransactionWrapper.setCustomAnimations(enter, exit);
             }
-
-            // Object topFrag = fragmentManagerWrapper.findFragmentByTag(state.getStack().peek());
-            // Detach the top fragment such that it is kept in the stack and can be shown again without lose of state.
-            // fragmentTransactionWrapper.detach(topFrag);
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.

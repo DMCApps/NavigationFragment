@@ -12,8 +12,10 @@ import java.util.List;
 
 public class NavigationSettings {
     private String mTitle = null;
-    private Integer mInAnimation = null;
-    private Integer mOutAnimation = null;
+    private Integer mPresentInAnimation = null;
+    private Integer mPresentOutAnimation = null;
+    private Integer mDismissInAnimation = null;
+    private Integer mDismissOutAnimation = null;
     private Bundle mNavBundle = null;
     private List<SharedElement> mSharedElements = null;
 
@@ -27,11 +29,18 @@ public class NavigationSettings {
         }
     }
 
-    public NavigationSettings(String title, Integer inAnimation, Integer outAnimation, Bundle navBundle, List<SharedElement> sharedElements) {
+    private NavigationSettings(String title,
+                               Bundle navBundle,
+                               Integer presentInAnimation, Integer presentOutAnimation,
+                               Integer dismissInAnimation, Integer mDismissOutAnimation,
+                               List<SharedElement> sharedElements) {
+
         this.mTitle = title;
-        this.mInAnimation = inAnimation;
-        this.mOutAnimation = outAnimation;
         this.mNavBundle = navBundle;
+        this.mPresentInAnimation = presentInAnimation;
+        this.mPresentOutAnimation = presentOutAnimation;
+        this.mDismissInAnimation = dismissInAnimation;
+        this.mDismissOutAnimation = mDismissOutAnimation;
         this.mSharedElements = sharedElements;
     }
 
@@ -39,16 +48,24 @@ public class NavigationSettings {
         return mTitle;
     }
 
-    public Integer getInAnimation() {
-        return mInAnimation;
-    }
-
-    public Integer getOutAnimation() {
-        return mOutAnimation;
-    }
-
     public Bundle getNavBundle() {
         return mNavBundle;
+    }
+
+    public Integer getPresentInAnimation() {
+        return mPresentInAnimation;
+    }
+
+    public Integer getPresentOutAnimation() {
+        return mPresentOutAnimation;
+    }
+
+    public Integer getDismissInAnimation() {
+        return mDismissInAnimation;
+    }
+
+    public Integer getDismissOutAnimation() {
+        return mDismissOutAnimation;
     }
 
     public List<SharedElement> getSharedElements() {
@@ -57,8 +74,10 @@ public class NavigationSettings {
 
     public static class Builder {
         private String mTitle = null;
-        private Integer mInAnimation = null;
-        private Integer mOutAnimation = null;
+        private Integer mPresentInAnimation = null;
+        private Integer mPresentOutAnimation = null;
+        private Integer mDismissInAnimation = null;
+        private Integer mDismissOutAnimation = null;
         private Bundle mNavBundle = null;
         private List<SharedElement> mSharedElements = null;
 
@@ -69,13 +88,35 @@ public class NavigationSettings {
             return this;
         }
 
-        public Builder setInAnimation(Integer inAnimation) {
-            mInAnimation = inAnimation;
+        public Builder setAnimations(Integer inAnimation, Integer outAnimation) {
+            return setPresentInAnimation(inAnimation)
+                    .setPresentOutAnimation(outAnimation);
+        }
+
+        public Builder setAnimations(Integer presentInAnimation, Integer presentOutAnimation, Integer dismissInAnimation, Integer dismissOutAnimation) {
+            return setPresentInAnimation(presentInAnimation)
+                    .setPresentOutAnimation(presentOutAnimation)
+                    .setDismissInAnimation(dismissInAnimation)
+                    .setDismissOutAnimation(dismissOutAnimation);
+        }
+
+        public Builder setPresentInAnimation(Integer inAnimation) {
+            mPresentInAnimation = inAnimation;
             return this;
         }
 
-        public Builder setOutAnimation(Integer outAnimation) {
-            mOutAnimation = outAnimation;
+        public Builder setPresentOutAnimation(Integer outAnimation) {
+            mPresentOutAnimation = outAnimation;
+            return this;
+        }
+
+        public Builder setDismissInAnimation(Integer inAnimation) {
+            mDismissInAnimation = inAnimation;
+            return this;
+        }
+
+        public Builder setDismissOutAnimation(Integer outAnimation) {
+            mDismissOutAnimation = outAnimation;
             return this;
         }
 
@@ -93,7 +134,13 @@ public class NavigationSettings {
         }
 
         public NavigationSettings build() {
-            return new NavigationSettings(mTitle, mInAnimation, mOutAnimation, mNavBundle, mSharedElements);
+            return new NavigationSettings(mTitle,
+                    mNavBundle,
+                    mPresentInAnimation,
+                    mPresentOutAnimation,
+                    mDismissInAnimation,
+                    mDismissOutAnimation,
+                    mSharedElements);
         }
     }
 }

@@ -117,23 +117,8 @@ public interface NavigationManager {
      *
      * @param
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
-     *
-     * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#popFragment(NavigationSettings)} method call.
-     *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 1.2.0.
      */
-    @Deprecated
     void popFragment(Bundle navBundle);
-
-    /**
-     * Pop the current fragment off the top of the stack and dismiss it.
-     * Uses default animation of slide in from left and slide out to right animation.
-     *
-     * @param
-     *      settings -> The {@link NavigationSettings} to be performed on the popping of the fragment
-     */
-    void popFragment(NavigationSettings settings);
 
     /**
      * Adds the fragment to the current stack.
