@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.v17.StackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.v17.NavigationFragments.SampleFragment;
 
@@ -49,7 +49,7 @@ public class NavigationDrawerExampleActivity extends AppCompatActivity
         }
         else {
             if(mVisibleFragment instanceof NavigationManagerFragment) {
-                if (!((NavigationManagerFragment)mVisibleFragment).onBackPressed()) {
+                if (!((NavigationManagerFragment)mVisibleFragment).getNavigationManager().onBackPressed()) {
                     super.onBackPressed();
                 }
             }

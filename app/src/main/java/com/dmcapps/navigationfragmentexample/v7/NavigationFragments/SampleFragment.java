@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.v7.MasterDetailNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragment.v7.fragments.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
@@ -231,10 +230,6 @@ public class SampleFragment extends NavigationFragment {
         }
 
         setTitle("Sample Fragment " + mFragCount);
-
-        if (getNavigationManager() instanceof MasterDetailNavigationManagerFragment) {
-            setMasterToggleTitle("Master");
-        }
 
         // Using this to test if the memory space of the activity changes on rotation in the child
         Activity activity = getActivity();

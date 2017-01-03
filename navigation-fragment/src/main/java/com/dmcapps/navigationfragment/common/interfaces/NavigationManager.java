@@ -5,10 +5,18 @@ import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 
+import java.io.Serializable;
+
 /**
  * Created by dcarmo on 2016-09-29.
  */
-public interface NavigationManager {
+public interface NavigationManager extends Serializable {
+
+    void setNavigationListener(NavigationManagerListener listener);
+
+    void setContainer(NavigationManagerContainer container);
+
+    NavigationManagerContainer getContainer();
 
     void setStack(Stack stack);
 
@@ -25,14 +33,6 @@ public interface NavigationManager {
     void setLifecycle(Lifecycle lifecycle);
 
     Lifecycle getLifecycle();
-
-    /**
-     * Get the current Fragment Manager from the {@link NavigationManager}
-     *
-     * @return
-     *      Returns the Child Fragment Manager of the current fragment
-     */
-    Object getNavChildFragmentManager();
 
     /**
      * Overrides the default present animations for all present actions on the fragment manager.

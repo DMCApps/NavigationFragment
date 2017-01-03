@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.v7.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.v7.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.v7.NavigationFragments.SampleFragment;
 import com.dmcapps.navigationfragmentexample.R;
@@ -34,8 +34,8 @@ public class OverrideDefaultAnimationsExampleActivity extends AppCompatActivity 
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
             StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
-            navManager.setDefaultPresentAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
-            navManager.setDefaultDismissAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_bottom);
+            navManager.getNavigationManager().setDefaultPresentAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+            navManager.getNavigationManager().setDefaultDismissAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_bottom);
             addFragment(navManager);
         }
         else {
@@ -82,7 +82,7 @@ public class OverrideDefaultAnimationsExampleActivity extends AppCompatActivity 
     @Override
     public void onBackPressed() {
         NavigationManagerFragment fragment = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
-        if (!fragment.onBackPressed()) {
+        if (!fragment.getNavigationManager().onBackPressed()) {
             super.onBackPressed();
         }
     }

@@ -13,8 +13,6 @@ import com.dmcapps.navigationfragmentexample.v7.DrawerClearStackExample.Navigati
 import com.dmcapps.navigationfragmentexample.v7.DrawerExample.NavigationDrawerExampleActivity;
 import com.dmcapps.navigationfragmentexample.v7.GitIssue5Example.GitIssue10ExampleActivity;
 import com.dmcapps.navigationfragmentexample.v7.GitIssue5Example.GitIssue5ExampleActivity;
-import com.dmcapps.navigationfragmentexample.v7.ListExample.ListExampleActivity;
-import com.dmcapps.navigationfragmentexample.v7.MasterDetailExample.MasterDetailNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.v7.OverrideDefaultAnimationsExample.OverrideDefaultAnimationsExampleActivity;
 import com.dmcapps.navigationfragmentexample.v7.SingleStackExample.SingleStackNavigationExampleActivity;
 import com.dmcapps.navigationfragmentexample.v7.ViewPagerExample.ViewPagerNavigationExampleActivity;
@@ -37,9 +35,7 @@ public class SupportExamplesActivity extends ActionBarActivity implements Adapte
 
         ArrayList<String> items = new ArrayList<>();
         items.add("Single Stack Example");
-        items.add("Master Detail Example");
         items.add("Tab Example");
-        items.add("List Example");
         items.add("Navigation Drawer Example (uses replace and remove as well as non-Navigation Fragments)");
         items.add("Override Default Animations Example");
         items.add("Navigation Fragment with View Pager. Navigating on view pager tab and view pager itself (git issue 5)");
@@ -57,20 +53,16 @@ public class SupportExamplesActivity extends ActionBarActivity implements Adapte
         if (position == 0) {
             intent = new Intent(this, SingleStackNavigationExampleActivity.class);
         } else if (position == 1) {
-            intent = new Intent(this, MasterDetailNavigationExampleActivity.class);
-        } else if (position == 2) {
             intent = new Intent(this, ViewPagerNavigationExampleActivity.class);
-        } else if (position == 3) {
-            intent = new Intent(this, ListExampleActivity.class);
-        } else if (position == 4) {
+        } else if (position == 2) {
             intent = new Intent(this, NavigationDrawerExampleActivity.class);
-        } else if (position == 5) {
+        } else if (position == 3) {
             intent = new Intent(this, OverrideDefaultAnimationsExampleActivity.class);
-        } else if (position == 6) {
+        } else if (position == 4) {
             intent = new Intent(this, GitIssue5ExampleActivity.class);
-        } else if (position == 7) {
+        } else if (position == 5) {
             intent = new Intent(this, GitIssue10ExampleActivity.class);
-        } else if (position == 8) {
+        } else if (position == 6) {
             intent = new Intent(this, NavigationDrawerClearStackExampleActivity.class);
         }
 

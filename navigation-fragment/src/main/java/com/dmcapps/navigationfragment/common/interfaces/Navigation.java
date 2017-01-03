@@ -114,9 +114,6 @@ public interface Navigation {
     void setTitle(int resId);
     String getTitle();
 
-    void setMasterToggleTitle(String title);
-    void setMasterToggleTitle(int resId);
-
     boolean isPortrait();
     boolean isTablet();
 }

@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.dmcapps.navigationfragment.v17.StackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.v17.NavigationFragments.SampleFragment;
 
@@ -69,7 +69,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         NavigationManagerFragment page = (NavigationManagerFragment)getFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
-        if (!page.onBackPressed()) {
+        if (!page.getNavigationManager().onBackPressed()) {
             super.onBackPressed();
         }
     }

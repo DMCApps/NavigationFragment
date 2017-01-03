@@ -33,7 +33,7 @@ public class StackManager implements Stack {
         State state = navigationManager.getState();
         Config config = navigationManager.getConfig();
 
-        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
+        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
 
         if (settings != null) {
@@ -81,7 +81,7 @@ public class StackManager implements Stack {
         Config config = navigationManager.getConfig();
 
         if (state.getStack().size() > config.getMinStackSize()) {
-            FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
+            FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             fragmentManagerWrapper.popBackStack();
             state.getStack().pop();
 
@@ -125,14 +125,14 @@ public class StackManager implements Stack {
             stack.pop();
         }
 
-        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
+        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
         fragmentManager.popBackStackImmediate(tag, inclusive ? FragmentManager.POP_BACK_STACK_INCLUSIVE : 0);
     }
 
     @Override
     public Navigation getFragmentAtIndex(NavigationManager navigationManager, int index) {
         State state = navigationManager.getState();
-        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getNavChildFragmentManager());
+        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
 
         return (Navigation) fragmentManagerWrapper.findFragmentByTag(state.getStack().get(index));
     }

@@ -10,7 +10,7 @@ import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
 
 import java.util.UUID;
 
@@ -61,9 +61,9 @@ public class NavigationFragment extends Fragment implements Navigation {
         do {
             parent = parent.getParentFragment();
 
-            NavigationManager navFragment = ObjectUtils.as(NavigationManagerFragment.class, parent);
-            if (navFragment != null) {
-                return navFragment;
+            NavigationManagerContainer container = ObjectUtils.as(NavigationManagerFragment.class, parent);
+            if (container != null) {
+                return container.getNavigationManager();
             }
         } while(parent != null);
 
@@ -213,16 +213,6 @@ public class NavigationFragment extends Fragment implements Navigation {
     @Override
     public String getTitle() {
         return mTitle;
-    }
-
-    @Override
-    public void setMasterToggleTitle(String title) {
-        ActionBarManager.setMasterToggleTitle(getNavigationManager(), title);
-    }
-
-    @Override
-    public void setMasterToggleTitle(int resId) {
-        ActionBarManager.setMasterToggleTitle(getNavigationManager(), resId);
     }
 
     @Override

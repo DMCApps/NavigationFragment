@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
 import com.dmcapps.navigationfragment.v17.StackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
 
 import java.util.UUID;
 
@@ -65,7 +65,7 @@ public abstract class SingleStackSuperActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         NavigationManagerFragment fragment = getSingleStackNavigationFragmentManager();
-        if (!fragment.onBackPressed()) {
+        if (!fragment.getNavigationManager().onBackPressed()) {
             super.onBackPressed();
         }
     }

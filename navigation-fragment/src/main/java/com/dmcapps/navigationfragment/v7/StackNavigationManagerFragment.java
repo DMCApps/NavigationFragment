@@ -2,12 +2,13 @@ package com.dmcapps.navigationfragment.v7;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
+import com.dmcapps.navigationfragment.common.core.NavigationManagerCore;
 import com.dmcapps.navigationfragment.common.core.StackLifecycleManager;
 import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.v7.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
 
 /**
  * This Fragment manages the stack of single navigation on fragments.
@@ -20,19 +21,20 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
     private static final String TAG = StackNavigationManagerFragment.class.getSimpleName();
 
     public static StackNavigationManagerFragment newInstance(Navigation fragment) {
-        StackNavigationManagerFragment navigationManagerFragment = new StackNavigationManagerFragment();
+        StackNavigationManagerFragment container = new StackNavigationManagerFragment();
 
         Config config = new ConfigManager();
         config.addInitialNavigation(fragment);
         config.setDefaultPresetAnim(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         config.setDefaultDismissAnim(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 
-        navigationManagerFragment.setConfig(config);
-        navigationManagerFragment.setLifecycle(new StackLifecycleManager());
-        navigationManagerFragment.setStack(new StackManager());
-        navigationManagerFragment.setState(new StateManager());
+        container.setNavigationManager(new NavigationManagerCore());
+        container.getNavigationManager().setConfig(config);
+        container.getNavigationManager().setLifecycle(new StackLifecycleManager());
+        container.getNavigationManager().setStack(new StackManager());
+        container.getNavigationManager().setState(new StateManager());
 
-        return navigationManagerFragment;
+        return container;
     }
 
     public StackNavigationManagerFragment() { }

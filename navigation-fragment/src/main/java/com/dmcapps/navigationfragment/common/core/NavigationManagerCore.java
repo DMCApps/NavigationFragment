@@ -1,7 +1,6 @@
 package com.dmcapps.navigationfragment.common.core;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -9,8 +8,12 @@ import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
+import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerListener;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by dcarmo on 2016-12-18.
@@ -19,89 +22,33 @@ import com.dmcapps.navigationfragment.common.interfaces.State;
 public class NavigationManagerCore implements NavigationManager {
     private static final String TAG = NavigationManagerCore.class.getSimpleName();
 
-    private static final String KEY_MANAGER_CONFIG = "KEY_MANAGER_CONFIG";
-    private static final String KEY_MANAGER_STATE = "KEY_MANAGER_STATE";
-    private static final String KEY_MANAGER_STACK_MANAGER = "KEY_MANAGER_STACK_MANAGER";
-    private static final String KEY_LIFECYCLE_MANAGER = "KEY_LIFECYCLE_MANAGER";
-
-    private NavigationManagerFragmentListener mListener;
+    private transient NavigationManagerListener mListener;
+    private transient WeakReference<NavigationManagerContainer> mContainer;
 
     private Lifecycle mLifecycle;
     private Config mConfig;
     private State mState;
     private Stack mStack;
 
-    public interface NavigationManagerFragmentListener {
-        void didPresentFragment();
-        void didDismissFragment();
-    }
-
     public NavigationManagerCore() { }
 
-    /*
     @Override
-    public void onAttach(Context context) {
+    public void setNavigationListener(NavigationManagerListener listener) {
+        mListener = listener;
+    }
 
-        try {
-            // This is not mandatory. Only if the user wants to listen for push and pop events.
-            mListener = (NavigationManagerFragmentListener)context;
+    @Override
+    public void setContainer(NavigationManagerContainer container) {
+        mContainer = new WeakReference<>(container);
+    }
+
+    @Override
+    public NavigationManagerContainer getContainer() {
+        if (mContainer == null || mContainer.get() == null) {
+            return null;
         }
-        catch (ClassCastException classCastException) {
-            Log.i(TAG, "Activity does not implement NavigationManagerFragmentListener. It is not required but may be helpful for listening to present and dismiss events.");
-        }
+        return mContainer.get();
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            mLifecycle = (Lifecycle)savedInstanceState.getSerializable(KEY_LIFECYCLE_MANAGER);
-            mConfig = (ConfigManager)savedInstanceState.getSerializable(KEY_MANAGER_CONFIG);
-            mStack = (StackManager)savedInstanceState.getSerializable(KEY_MANAGER_STACK_MANAGER);
-            mState = (StateManager)savedInstanceState.getSerializable(KEY_MANAGER_STATE);
-        }
-        else if (mLifecycle == null || mConfig == null || mStack == null || mState == null) {
-            throw new RuntimeException("Your NavigationManagerFragment must call setLifecycle, setConfig, setStack, setState before onCreate()");
-        }
-
-        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
-        NavigationSettings.setDefaultConfig(mConfig);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return mLifecycle.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mLifecycle.onViewCreated(view, this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mLifecycle.onResume(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mLifecycle.onPause(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putSerializable(KEY_LIFECYCLE_MANAGER, mLifecycle);
-        outState.putSerializable(KEY_MANAGER_CONFIG, mConfig);
-        outState.putSerializable(KEY_MANAGER_STACK_MANAGER, mStack);
-        outState.putSerializable(KEY_MANAGER_STATE, mState);
-    }
-    */
 
     @Override
     public void setStack(Stack stack) {
@@ -116,6 +63,7 @@ public class NavigationManagerCore implements NavigationManager {
     @Override
     public void setConfig(Config config) {
         mConfig = config;
+        NavigationSettings.setDefaultConfig(config);
     }
 
     @Override
@@ -141,18 +89,6 @@ public class NavigationManagerCore implements NavigationManager {
     @Override
     public Lifecycle getLifecycle() {
         return mLifecycle;
-    }
-
-    /**
-     * Get the current {@link FragmentManager} from the {@link NavigationManager}
-     *
-     * @return
-     *      Returns the Child Fragment Manager of the current fragment
-     */
-    @Override
-    public Object getNavChildFragmentManager() {
-        // return getChildFragmentManager();
-        return null;
     }
 
     /**

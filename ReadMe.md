@@ -9,12 +9,28 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:1.0.0'
+compile 'com.dmcapps:navigation-fragment:2.0.0'
 ```
 
 ##Current Version
 
-1.1.0
+2.0.0
+
+##Migration
+
+###From 1.0.0 to 2.0.0
+
+In order to ease future development. The update to version 2.0.0 has been a major refactor to remove code duplication between the support and non-support version. This will make future implementations and maintanence much easier.
+
+All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call getNavigationManager() first and string together the builder patter items to perform the required tasks.
+
+// TODO: Additional notes when final implementation details have been decided on
+
+###Items Removed:
+MasterDetail implementation (this was created as something that I needed for a project. I've removed it so remove excess coding when adding to the interface declaration)
+ListFragment implementation (this is not needed with the recycler view being widely accepted and used and it's been around so long)
+
+
 
 ##Introduction
 
@@ -341,7 +357,7 @@ public class SampleFragment extends NavigationFragment {
 
 ##Change Log
 
-###1.1.0
+###2.0.0
 - Added in Transition support
 - Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call `[NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L45) and `[NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)]`(https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L55)
 - Major code refactoring to reduce duplicate implementations across support and non-support versions

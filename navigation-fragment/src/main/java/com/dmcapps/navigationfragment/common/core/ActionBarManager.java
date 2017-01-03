@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.v7.MasterDetailNavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-02-25.
@@ -56,34 +55,12 @@ public class ActionBarManager {
         }
     }
 
-    public static void setMasterToggleTitle(NavigationManager manager, String title) {
-        if (isMasterDetailManager(manager)) {
-            ((MasterDetailNavigationManagerFragment)manager).setMasterToggleTitle(title);
-        }
-    }
-
-    public static void setMasterToggleTitle(NavigationManager manager, int resId) {
-        if (isMasterDetailManager(manager)) {
-            ((MasterDetailNavigationManagerFragment) manager).setMasterToggleTitle(resId);
-        }
-    }
-
     private static boolean isAppCompatActivity(Activity activity) {
         if (activity != null && activity instanceof AppCompatActivity) {
             return true;
         }
         else {
             Log.e(TAG, "Unable to set title, Activity is null or is not an ActionBarActivity or AppCompatActivity");
-            return false;
-        }
-    }
-
-    private static boolean isMasterDetailManager(NavigationManager manager) {
-        if (manager instanceof MasterDetailNavigationManagerFragment) {
-            return true;
-        }
-        else {
-            Log.e(TAG, "setMasterToggleTitle(int) - Navigation Manager must be a MasterDetailNavigationManagerFragment");
             return false;
         }
     }

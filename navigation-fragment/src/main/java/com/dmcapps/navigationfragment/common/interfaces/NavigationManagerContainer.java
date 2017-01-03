@@ -9,16 +9,17 @@ import android.app.FragmentManager;
 
 public interface NavigationManagerContainer {
 
-    NavigationManager getNavigationCore();
+    NavigationManager getNavigationManager();
 
     /**
      * Get the current {@link FragmentManager} from the {@link NavigationManager}
      *
      * @return
-     *      Returns the Child Fragment Manager of the current fragment
+     *      Returns the Child Fragment Manager of the current fragment as an object to maintain a generic instance between
+     *      support and non support fragments
      */
     Object getNavChildFragmentManager();
 
-    Activity getActivity();
+    Activity getFragmentActivity();
 
 }

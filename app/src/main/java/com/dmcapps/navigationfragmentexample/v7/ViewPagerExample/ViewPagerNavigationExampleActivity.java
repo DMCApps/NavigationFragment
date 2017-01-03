@@ -11,8 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.dmcapps.navigationfragment.v7.MasterDetailNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v7.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.v7.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.v7.NavigationFragments.MasterFragment;
 import com.dmcapps.navigationfragmentexample.R;
@@ -72,7 +71,7 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         NavigationManagerFragment page = (NavigationManagerFragment)getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
-        if (!page.onBackPressed()) {
+        if (!page.getNavigationManager().onBackPressed()) {
             super.onBackPressed();
         }
     }
@@ -95,13 +94,9 @@ public class ViewPagerNavigationExampleActivity extends AppCompatActivity {
                 case 0:
                     return StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 1", 0));
                 case 1:
-                    MasterFragment masterFrag = MasterFragment.newInstance();
-                    SampleFragment detailFrag = SampleFragment.newInstance("Detail Fragment in the Stack", 0);
-                    MasterDetailNavigationManagerFragment managerFragment = MasterDetailNavigationManagerFragment.newInstance(masterFrag, detailFrag);
-                    managerFragment.setManageMasterActionBarToggle(true);
-                    return managerFragment;
-                case 2:
                     return StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 2", 0));
+                case 2:
+                    return StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Start Frag 3", 0));
             }
             return null;
         }

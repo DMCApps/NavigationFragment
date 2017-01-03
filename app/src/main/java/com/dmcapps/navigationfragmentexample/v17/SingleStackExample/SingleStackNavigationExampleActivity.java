@@ -7,7 +7,7 @@ import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dmcapps.navigationfragment.v17.StackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.core.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.v17.NavigationFragments.SampleFragment;
 
 import java.util.UUID;
@@ -72,7 +72,7 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         NavigationManagerFragment fragment = (NavigationManagerFragment)getFragmentManager().findFragmentByTag(mSingleStackNavigationManagerFragmentTag);
-        if (!fragment.onBackPressed()) {
+        if (!fragment.getNavigationManager().onBackPressed()) {
             super.onBackPressed();
         }
     }
