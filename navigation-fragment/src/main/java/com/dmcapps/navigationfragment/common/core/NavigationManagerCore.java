@@ -356,11 +356,6 @@ public class NavigationManagerCore implements NavigationManager {
         return mState.getStack().size();
     }
 
-    @Override
-    public Activity getActivity() {
-        return null;
-    }
-
     // ===============================
     // START DEVICE STATE METHODS
     // ===============================

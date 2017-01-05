@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.v7.fragments;
+package com.dmcapps.navigationfragment.v7;
 
 import android.app.Activity;
 import android.os.Bundle;

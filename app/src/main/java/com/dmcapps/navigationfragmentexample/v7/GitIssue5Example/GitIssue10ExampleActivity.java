@@ -1,6 +1,6 @@
 package com.dmcapps.navigationfragmentexample.v7.GitIssue5Example;
 
-import com.dmcapps.navigationfragment.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v7.NavigationFragment;
 
 /**
  * Created by hesk on 29/2/16.

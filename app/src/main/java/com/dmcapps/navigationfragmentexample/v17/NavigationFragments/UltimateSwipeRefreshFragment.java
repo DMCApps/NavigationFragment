@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v17.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 import com.marshalchen.ultimaterecyclerview.ItemTouchListenerAdapter;

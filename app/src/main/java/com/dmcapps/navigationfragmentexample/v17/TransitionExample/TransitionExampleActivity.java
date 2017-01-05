@@ -2,7 +2,7 @@ package com.dmcapps.navigationfragmentexample.v17.TransitionExample;
 
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v17.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragmentexample.v17.NavigationFragments.SmallImageFragment;
 import com.dmcapps.navigationfragmentexample.v17.SingleStackSuperActivity;

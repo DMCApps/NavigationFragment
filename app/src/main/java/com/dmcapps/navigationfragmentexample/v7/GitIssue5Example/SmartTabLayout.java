@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
-import com.dmcapps.navigationfragment.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v7.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.v7.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;

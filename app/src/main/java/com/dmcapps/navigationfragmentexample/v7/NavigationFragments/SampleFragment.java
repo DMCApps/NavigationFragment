@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.v7.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v7.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.TestIntentLaunchingActivity;
 
 import java.io.Serializable;

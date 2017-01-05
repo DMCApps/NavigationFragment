@@ -8,7 +8,6 @@ import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
 
 /**
  * This Fragment manages the stack of single navigation on fragments.

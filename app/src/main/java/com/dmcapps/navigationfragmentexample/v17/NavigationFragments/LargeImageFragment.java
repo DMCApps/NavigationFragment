@@ -1,18 +1,14 @@
 package com.dmcapps.navigationfragmentexample.v17.NavigationFragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v17.NavigationFragment;
 
 /**
  * A simple {@link Fragment} subclass.

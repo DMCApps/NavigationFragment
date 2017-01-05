@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragmentexample.R;
-import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v17.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.v17.TransitionExample.DetailTransition;
 
 /**

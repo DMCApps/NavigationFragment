@@ -14,7 +14,7 @@ import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.State;
-import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v7.NavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-11-19.

@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.v17.fragments;
+package com.dmcapps.navigationfragment.v17;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

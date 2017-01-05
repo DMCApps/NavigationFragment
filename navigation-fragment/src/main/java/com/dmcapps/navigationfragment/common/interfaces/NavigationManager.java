@@ -1,6 +1,5 @@
 package com.dmcapps.navigationfragment.common.interfaces;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
@@ -210,8 +209,6 @@ public interface NavigationManager extends Serializable {
      *      The current stack size.
      */
     int getCurrentStackSize();
-
-    Activity getActivity();
 
     // ===============================
     // START DEVICE STATE METHODS

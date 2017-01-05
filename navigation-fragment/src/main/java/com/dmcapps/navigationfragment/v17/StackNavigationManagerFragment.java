@@ -10,7 +10,6 @@ import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.core.StackManager;
-import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
 
 /**
  * Created by dcarmo on 2016-09-29.

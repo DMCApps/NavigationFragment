@@ -6,9 +6,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.dmcapps.navigationfragment.v17.fragments.NavigationFragment;
+import com.dmcapps.navigationfragment.v17.NavigationFragment;
 import com.dmcapps.navigationfragment.v17.StackNavigationManagerFragment;
-import com.dmcapps.navigationfragment.v17.fragments.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v17.NavigationManagerFragment;
 
 import java.util.UUID;
 

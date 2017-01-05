@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.dmcapps.navigationfragment.v7.fragments.NavigationManagerFragment;
+import com.dmcapps.navigationfragment.v7.NavigationManagerFragment;
 import com.dmcapps.navigationfragment.v7.StackNavigationManagerFragment;
 import com.dmcapps.navigationfragmentexample.v7.NavigationFragments.SampleFragment;
 

@@ -89,8 +89,8 @@ public class StackManager implements Stack {
                 navFragment = (Navigation) fragmentManagerWrapper.findFragmentByTag(state.getStack().peek());
             }
         }
-        else {
-            navigationManager.getActivity().onBackPressed();
+        else if (navigationManager.getContainer() != null){
+            navigationManager.getContainer().getFragmentActivity().onBackPressed();
         }
 
         if (navFragment != null && settings != null) {
