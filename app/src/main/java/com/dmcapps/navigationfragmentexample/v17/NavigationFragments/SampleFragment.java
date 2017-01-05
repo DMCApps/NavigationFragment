@@ -171,7 +171,7 @@ public class SampleFragment extends NavigationFragment {
             public void onClick(View v) {
                 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 
-                overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+                //overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
                 presentFragment(fragmentToPresent);
             }
         });
@@ -196,7 +196,7 @@ public class SampleFragment extends NavigationFragment {
         view.findViewById(R.id.sample_btn_dismiss_override_animation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
+                //overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
                 dismissFragment();
             }
         });

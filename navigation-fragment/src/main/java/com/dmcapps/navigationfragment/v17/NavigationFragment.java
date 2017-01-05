@@ -71,21 +71,6 @@ public class NavigationFragment extends Fragment implements Navigation {
     }
 
     /**
-     * Override the animation in and out of the next present, dismiss or clear stack call.
-     *
-     * @param
-     *      animIn -> The resource of the new in animation.
-     * @param
-     *      animOut -> The resource of the new in animation.
-     * @deprecated
-     *      This call is replaced with {@link NavigationSettings}. PLEASE UPDATE TO {@link Navigation#presentFragment(Navigation, NavigationSettings)}
-     */
-    @Deprecated
-    public void overrideNextAnimation(int animIn, int animOut) {
-        getNavigationManager().overrideNextAnimation(animIn, animOut);
-    }
-
-    /**
      * Present a fragment on the Navigation Manager using the default slide in and out.
      *
      * @param

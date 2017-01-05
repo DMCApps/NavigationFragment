@@ -18,19 +18,6 @@ public interface Navigation {
     NavigationManager getNavigationManager();
 
     /**
-     * Override the animation in and out of the next present, dismiss or clear stack call.
-     *
-     * @param
-     *      animIn -> The resource of the new in animation.
-     * @param
-     *      animOut -> The resource of the new in animation.
-     * @deprecated
-     *      This call is being replaced with {@link NavigationSettings}. PLEASE UPDATE TO {@link Navigation#presentFragment(Navigation, NavigationSettings)}
-     */
-    @Deprecated
-    void overrideNextAnimation(int animIn, int animOut);
-
-    /**
      * Push a new Fragment onto the stack and presenting it to the screen
      * Uses default animation of slide in from right and slide out to left.
      *

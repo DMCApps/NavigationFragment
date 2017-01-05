@@ -7,7 +7,6 @@ import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedEleme
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
-import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
@@ -29,7 +28,7 @@ public class StackManager implements Stack {
     @Override
     public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationSettings settings) {
         State state = navigationManager.getState();
-        Config config = navigationManager.getConfig();
+        NavigationConfig config = navigationManager.getConfig();
 
         FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
@@ -44,10 +43,10 @@ public class StackManager implements Stack {
         }
 
         if (state.getStack().size() >= config.getMinStackSize()) {
-            Integer enter = config.getPresentAnimIn();
-            Integer exit = config.getPresentAnimOut();
-            Integer popEnter = config.getDismissAnimIn();
-            Integer popExit = config.getDismissAnimOut();
+            Integer enter = config.getPresentInAnim();
+            Integer exit = config.getPresentOutAnim();
+            Integer popEnter = config.getDismissInAnim();
+            Integer popExit = config.getDismissOutAnim();
             if (enter != null && exit != null && popEnter != null && popExit != null) {
                 fragmentTransactionWrapper.setCustomAnimations(enter, exit, popEnter, popExit);
             }
@@ -76,7 +75,7 @@ public class StackManager implements Stack {
         Navigation navFragment = null;
 
         State state = navigationManager.getState();
-        Config config = navigationManager.getConfig();
+        NavigationConfig config = navigationManager.getConfig();
 
         if (state.getStack().size() > config.getMinStackSize()) {
             FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());

@@ -3,7 +3,6 @@ package com.dmcapps.navigationfragment.common.core;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
@@ -13,6 +12,8 @@ import com.dmcapps.navigationfragment.common.interfaces.State;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dcarmo on 2016-12-18.
@@ -23,10 +24,12 @@ public class NavigationManager implements Serializable {
 
     private transient NavigationManagerListener mListener;
     private transient WeakReference<NavigationManagerContainer> mContainer;
+    // I don't like this ... but I'm having trouble thinking of a way to get rid of it ...
+    private transient List<Navigation> mInitialNavigation;
+
+    private NavigationConfig mNavigationConfig;
 
     private Lifecycle mLifecycle;
-    private NavigationConfig mNavigationConfig;
-    private Config mConfig;
     private State mState;
     private Stack mStack;
 
@@ -34,6 +37,24 @@ public class NavigationManager implements Serializable {
 
     public void setNavigationListener(NavigationManagerListener listener) {
         mListener = listener;
+    }
+
+    public void addInitialNavigation(Navigation navigation) {
+        if (mInitialNavigation == null) {
+            mInitialNavigation = new ArrayList<>();
+        }
+        mInitialNavigation.add(navigation);
+    }
+
+    public List<Navigation> getInitialNavigation() {
+        if (mInitialNavigation == null) {
+            mInitialNavigation = new ArrayList<>();
+        }
+        return mInitialNavigation;
+    }
+
+    public void nullifyInitialNavigation() {
+        mInitialNavigation = null;
     }
 
     public void setContainer(NavigationManagerContainer container) {
@@ -55,13 +76,12 @@ public class NavigationManager implements Serializable {
         return mStack;
     }
 
-    public void setConfig(Config config) {
-        mConfig = config;
-        NavigationSettings.setDefaultConfig(config);
+    public void setNavigationConfig(NavigationConfig config) {
+        mNavigationConfig = config;
     }
 
-    public Config getConfig() {
-        return mConfig;
+    public NavigationConfig getConfig() {
+        return mNavigationConfig;
     }
 
     public void setState(State state) {
@@ -89,9 +109,7 @@ public class NavigationManager implements Serializable {
      *      animOut -> Present animation out
      */
     public void setDefaultPresentAnimations(int animIn, int animOut) {
-        mConfig.setDefaultPresetAnim(animIn, animOut);
-        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
-        NavigationSettings.setDefaultConfig(mConfig);
+        mNavigationConfig = mNavigationConfig.withPresentAnimations(animIn, animOut);
     }
 
     /**
@@ -103,25 +121,7 @@ public class NavigationManager implements Serializable {
      *      animOut -> Dismiss animation out
      */
     public void setDefaultDismissAnimations(int animIn, int animOut) {
-        mConfig.setDefaultDismissAnim(animIn, animOut);
-        // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
-        NavigationSettings.setDefaultConfig(mConfig);
-    }
-
-    /**
-     * Override the animation in and out of the next present, dismiss or clear stack call.
-     *
-     * @param
-     *      animIn -> The resource of the new in animation.
-     * @param
-     *      animOut -> The resource of the new in animation.
-     * @deprecated
-     *      This call is being replaced with {@link NavigationSettings} being passed in with the push function.
-     *      To be removed in 1.2.0.
-     */
-    @Deprecated
-    public void overrideNextAnimation(int animIn, int animOut) {
-        mConfig.setNextAnim(animIn, animOut);
+        mNavigationConfig = mNavigationConfig.withDismissAnimations(animIn, animOut);
     }
 
     /**
@@ -258,7 +258,7 @@ public class NavigationManager implements Serializable {
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
     public boolean onBackPressed() {
-        if (mState.getStack().size() > mConfig.getMinStackSize()) {
+        if (mState.getStack().size() > mNavigationConfig.getMinStackSize()) {
             popFragment();
             return true;
         }
@@ -274,7 +274,7 @@ public class NavigationManager implements Serializable {
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
     public void replaceRootFragment(Navigation navFragment) {
-        clearNavigationStackToIndex(mConfig.getMinStackSize() - 1, true);
+        clearNavigationStackToIndex(mNavigationConfig.getMinStackSize() - 1, true);
         pushFragment(navFragment);
     }
 
@@ -282,7 +282,7 @@ public class NavigationManager implements Serializable {
      * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
      */
     public void clearNavigationStackToRoot() {
-        clearNavigationStackToIndex(mConfig.getMinStackSize());
+        clearNavigationStackToIndex(mNavigationConfig.getMinStackSize());
     }
 
     /**
@@ -313,7 +313,7 @@ public class NavigationManager implements Serializable {
      *      false -> Stack is not at the root fragment
      */
     public boolean isOnRootFragment() {
-        return mState.getStack().size() == mConfig.getMinStackSize();
+        return mState.getStack().size() == mNavigationConfig.getMinStackSize();
     }
 
     /**

@@ -5,8 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.dmcapps.navigationfragment.common.interfaces.Config;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +23,6 @@ public class NavigationSettings {
 
     // TODO: I need a way such that when the builder is made the default in and out present and dismiss animation are used
     // This is just a quick fix to it before I make a design decision.
-
-    // Few Ideas:
-    // - Make a method in the Navigation for defaultSettingsBuilder() which return the NavigationSettings.Builder() with the default settings in it
-    // - Change the Navigation to use a builder pattern, BUT still have the helper present/dismiss methods for when the more complete navigation is not needed
-    // - Check the settings that come in and add the default if not provided (e.g. if the values are null).
-    private static Config mDefaultConfig;
 
     public static class SharedElement {
         public View view;
@@ -55,10 +47,6 @@ public class NavigationSettings {
         this.mDismissInAnimation = dismissInAnimation;
         this.mDismissOutAnimation = mDismissOutAnimation;
         this.mSharedElements = sharedElements;
-    }
-
-    public static void setDefaultConfig(Config config) {
-        mDefaultConfig = config;
     }
 
     public String getTitle() {
@@ -99,11 +87,6 @@ public class NavigationSettings {
         private List<SharedElement> mSharedElements = null;
 
         public Builder() {
-            // See notes above this is pretty ugly ...
-            mPresentInAnimation = mDefaultConfig.getPresentAnimIn();
-            mPresentOutAnimation = mDefaultConfig.getPresentAnimOut();
-            mDismissInAnimation = mDefaultConfig.getDismissAnimIn();
-            mDismissOutAnimation = mDefaultConfig.getDismissAnimOut();
         }
 
         public Builder setTitle(String title) {
