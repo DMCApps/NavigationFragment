@@ -18,6 +18,12 @@ compile 'com.dmcapps:navigation-fragment:2.0.0'
 
 ##Migration
 
+Things to do:
+- Add in settings that are generated for each present
+    - Thoughts when getNavigationManager() is called, create new NavigationSettings which propegate until calling present
+- Update all Examples as they have gotten too bloated and disorganized to be helpful
+- Update ReadMe for new implementation with how to migrate.
+
 ###From 1.0.0 to 2.0.0
 
 In order to ease future development. The update to version 2.0.0 has been a major refactor to remove code duplication between the support and non-support version. This will make future implementations and maintanence much easier.
@@ -33,8 +39,6 @@ MasterDetail implementation (this was created as something that I needed for a p
 ListFragment implementation (this is not needed with the recycler view being widely accepted and used and it's been around so long)
 
 ##Introduction
-
-This project uses the android support libraries for implementation.
 
 The purpose of this manager is to handle a single stack flow of fragments on the screen so that the developer can easily create flows without having to worry about using the FragmentManager and ChildFragmentManager. The single instance of the NavigationManagerFragment will easily handle the presenting and dismissing of Fragments as they are created and added or removed from the stack.
 
@@ -361,6 +365,7 @@ public class SampleFragment extends NavigationFragment {
 - Added in Transition support
 - Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call `[NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L45) and `[NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)]`(https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L55)
 - Major code refactoring to reduce duplicate implementations across support and non-support versions
+- Refactored code for future expandability for adding other paramters to each presentation
 
 ###1.0.0
 - Added in non support fragment manager [Git issue 1](https://github.com/DMCApps/NavigationFragment/issues/1)
