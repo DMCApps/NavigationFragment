@@ -1,6 +1,5 @@
 package com.dmcapps.navigationfragment.common.core;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.util.Log;
 
@@ -10,7 +9,6 @@ import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.Navi
 import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 

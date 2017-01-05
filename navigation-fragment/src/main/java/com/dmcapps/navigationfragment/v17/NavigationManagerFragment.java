@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerListener;
 

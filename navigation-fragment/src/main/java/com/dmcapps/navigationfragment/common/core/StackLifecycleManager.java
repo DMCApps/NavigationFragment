@@ -12,7 +12,6 @@ import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 import com.dmcapps.navigationfragment.v7.NavigationManagerFragment;
 
@@ -62,7 +61,7 @@ public class StackLifecycleManager implements Lifecycle {
             navigationManager.pushFragment(rootFragment);
         }
         // Fragments are in the stack, resume at the top.
-        else if (navigationManager instanceof NavigationManagerFragment) {
+        else if (navigationManager instanceof NavigationManager) {
             if (navigationManager.getContainer() != null) {
                 FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
                 FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
@@ -80,7 +79,7 @@ public class StackLifecycleManager implements Lifecycle {
     public void onPause(NavigationManager navigationManager) {
         State state = navigationManager.getState();
 
-        if (navigationManager instanceof NavigationManagerFragment) {
+        if (navigationManager instanceof NavigationManager) {
             FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
             fragmentTransaction.setCustomAnimations(ConfigManager.NO_ANIMATION, ConfigManager.NO_ANIMATION);

@@ -2,7 +2,7 @@ package com.dmcapps.navigationfragment.v7;
 
 import com.dmcapps.navigationfragment.R;
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
-import com.dmcapps.navigationfragment.common.core.NavigationManagerCore;
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.StackLifecycleManager;
 import com.dmcapps.navigationfragment.common.core.StackManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
@@ -27,7 +27,7 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
         config.setDefaultPresetAnim(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
         config.setDefaultDismissAnim(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
 
-        container.setNavigationManager(new NavigationManagerCore());
+        container.setNavigationManager(new NavigationManager());
         container.getNavigationManager().setConfig(config);
         container.getNavigationManager().setLifecycle(new StackLifecycleManager());
         container.getNavigationManager().setStack(new StackManager());

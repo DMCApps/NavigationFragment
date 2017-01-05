@@ -2,6 +2,7 @@ package com.dmcapps.navigationfragment.common.interfaces;
 
 import android.os.Bundle;
 
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 
 import java.io.Serializable;

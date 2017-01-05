@@ -1,48 +1,45 @@
 package com.dmcapps.navigationfragment.common.core;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.common.interfaces.Config;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerListener;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 
 /**
  * Created by dcarmo on 2016-12-18.
  */
 
-public class NavigationManagerCore implements NavigationManager {
-    private static final String TAG = NavigationManagerCore.class.getSimpleName();
+public class NavigationManager implements Serializable {
+    private static final String TAG = NavigationManager.class.getSimpleName();
 
     private transient NavigationManagerListener mListener;
     private transient WeakReference<NavigationManagerContainer> mContainer;
 
     private Lifecycle mLifecycle;
+    private NavigationConfig mNavigationConfig;
     private Config mConfig;
     private State mState;
     private Stack mStack;
 
-    public NavigationManagerCore() { }
+    public NavigationManager() { }
 
-    @Override
     public void setNavigationListener(NavigationManagerListener listener) {
         mListener = listener;
     }
 
-    @Override
     public void setContainer(NavigationManagerContainer container) {
         mContainer = new WeakReference<>(container);
     }
 
-    @Override
     public NavigationManagerContainer getContainer() {
         if (mContainer == null || mContainer.get() == null) {
             return null;
@@ -50,43 +47,35 @@ public class NavigationManagerCore implements NavigationManager {
         return mContainer.get();
     }
 
-    @Override
     public void setStack(Stack stack) {
         mStack = stack;
     }
 
-    @Override
     public Stack getStack() {
         return mStack;
     }
 
-    @Override
     public void setConfig(Config config) {
         mConfig = config;
         NavigationSettings.setDefaultConfig(config);
     }
 
-    @Override
     public Config getConfig() {
         return mConfig;
     }
 
-    @Override
     public void setState(State state) {
         mState = state;
     }
 
-    @Override
     public State getState() {
         return mState;
     }
 
-    @Override
     public void setLifecycle(Lifecycle lifecycle) {
         mLifecycle = lifecycle;
     }
 
-    @Override
     public Lifecycle getLifecycle() {
         return mLifecycle;
     }
@@ -99,7 +88,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      animOut -> Present animation out
      */
-    @Override
     public void setDefaultPresentAnimations(int animIn, int animOut) {
         mConfig.setDefaultPresetAnim(animIn, animOut);
         // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
@@ -114,7 +102,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      animOut -> Dismiss animation out
      */
-    @Override
     public void setDefaultDismissAnimations(int animIn, int animOut) {
         mConfig.setDefaultDismissAnim(animIn, animOut);
         // TODO: Remove this it's ugly. See notes in NavigationSettings for ideas
@@ -133,7 +120,6 @@ public class NavigationManagerCore implements NavigationManager {
      *      To be removed in 1.2.0.
      */
     @Deprecated
-    @Override
     public void overrideNextAnimation(int animIn, int animOut) {
         mConfig.setNextAnim(animIn, animOut);
     }
@@ -145,7 +131,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      */
-    @Override
     public void pushFragment(Navigation navFragment) {
         pushFragment(navFragment, new NavigationSettings.Builder().build());
     }
@@ -165,7 +150,6 @@ public class NavigationManagerCore implements NavigationManager {
      *      To be removed in 1.2.0.
      */
     @Deprecated
-    @Override
     public void pushFragment(Navigation navFragment, Bundle navBundle) {
         pushFragment(navFragment, new NavigationSettings.Builder().setNavBundle(navBundle).build());
     }
@@ -179,7 +163,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      settings -> The {@link NavigationSettings} to be applied to the transaction
      */
-    @Override
     public void pushFragment(Navigation navFragment, NavigationSettings settings) {
         mStack.pushFragment(this, navFragment, settings);
 
@@ -192,7 +175,6 @@ public class NavigationManagerCore implements NavigationManager {
      * Pop the current fragment off the top of the stack and dismiss it.
      * Uses default animation of slide in from left and slide out to right animation.
      */
-    @Override
     public void popFragment() {
         mStack.popFragment(this, null);
 
@@ -208,7 +190,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
-    @Override
     public void popFragment(Bundle navBundle) {
         mStack.popFragment(this, new NavigationSettings.Builder().setNavBundle(navBundle).build());
 
@@ -223,7 +204,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      navFragment -> The navigation fragment to be added to the stack.
      */
-    @Override
     public void addToStack(Navigation navFragment) {
         mState.getStack().add(navFragment.getNavTag());
     }
@@ -234,7 +214,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @return
      *      {@link Navigation} that is on the top of the stack.
      */
-    @Override
     public Navigation getTopFragment() {
         if (mState.getStack().size() > 0) {
             return getFragmentAtIndex(mState.getStack().size() - 1);
@@ -251,7 +230,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @return
      *      {@link Navigation} at the 0 index if available.
      */
-    @Override
     public Navigation getRootFragment() {
         return getFragmentAtIndex(0);
     }
@@ -262,7 +240,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @return
      *      {@link Navigation} that is on the top of the stack.
      */
-    @Override
     public Navigation getFragmentAtIndex(int index) {
         if (mState.getStack().size() > index) {
             return mStack.getFragmentAtIndex(this, index);
@@ -280,7 +257,6 @@ public class NavigationManagerCore implements NavigationManager {
      *      true -> A {@link Navigation} has been removed
      *      false -> No fragment has been removed because we are at the bottom of the stack for that stack.
      */
-    @Override
     public boolean onBackPressed() {
         if (mState.getStack().size() > mConfig.getMinStackSize()) {
             popFragment();
@@ -297,7 +273,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
-    @Override
     public void replaceRootFragment(Navigation navFragment) {
         clearNavigationStackToIndex(mConfig.getMinStackSize() - 1, true);
         pushFragment(navFragment);
@@ -306,7 +281,6 @@ public class NavigationManagerCore implements NavigationManager {
     /**
      * Remove all fragments from the stack until we reach the Root Fragment (the fragment at the min stack size)
      */
-    @Override
     public void clearNavigationStackToRoot() {
         clearNavigationStackToIndex(mConfig.getMinStackSize());
     }
@@ -317,7 +291,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      stackPosition -> The position (0 indexed) that you would like to pop to.
      */
-    @Override
     public void clearNavigationStackToIndex(int stackPosition) {
         clearNavigationStackToIndex(stackPosition, false);
     }
@@ -328,7 +301,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @param
      *      index -> The index (0 based) that you would like to pop to.
      */
-    @Override
     public void clearNavigationStackToIndex(int index, boolean inclusive) {
         mStack.clearNavigationStackToIndex(this, index, inclusive);
     }
@@ -340,7 +312,6 @@ public class NavigationManagerCore implements NavigationManager {
      *      true -> Stack is currently at the root fragment
      *      false -> Stack is not at the root fragment
      */
-    @Override
     public boolean isOnRootFragment() {
         return mState.getStack().size() == mConfig.getMinStackSize();
     }
@@ -351,7 +322,6 @@ public class NavigationManagerCore implements NavigationManager {
      * @return
      *      The current stack size.
      */
-    @Override
     public int getCurrentStackSize() {
         return mState.getStack().size();
     }
@@ -360,12 +330,10 @@ public class NavigationManagerCore implements NavigationManager {
     // START DEVICE STATE METHODS
     // ===============================
 
-    @Override
     public boolean isPortrait() {
         return mState.isPortrait();
     }
 
-    @Override
     public boolean isTablet() {
         return mState.isTablet();
     }

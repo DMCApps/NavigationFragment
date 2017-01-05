@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.v7.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.v7.NavigationFragments.UltimateSwipeRefreshFragment;
 import com.dmcapps.navigationfragmentexample.R;

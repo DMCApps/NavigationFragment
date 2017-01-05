@@ -3,6 +3,8 @@ package com.dmcapps.navigationfragment.common.interfaces;
 import android.app.Activity;
 import android.app.FragmentManager;
 
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
+
 /**
  * Created by dcarmo on 2016-12-18.
  */

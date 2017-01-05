@@ -3,10 +3,10 @@ package com.dmcapps.navigationfragment.v7;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.NavigationSettings;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
-import com.dmcapps.navigationfragment.common.interfaces.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.ActionBarManager;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
 

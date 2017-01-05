@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 
 import com.dmcapps.navigationfragment.common.core.ConfigManager;
-import com.dmcapps.navigationfragment.common.core.NavigationManagerCore;
+import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.StackLifecycleManager;
 import com.dmcapps.navigationfragment.common.core.StateManager;
 import com.dmcapps.navigationfragment.common.interfaces.Config;
@@ -25,7 +25,7 @@ public class StackNavigationManagerFragment extends NavigationManagerFragment {
         config.setDefaultPresetAnim(null, null);
         config.setDefaultDismissAnim(null, null);
 
-        container.setNavigationManager(new NavigationManagerCore());
+        container.setNavigationManager(new NavigationManager());
         container.getNavigationManager().setConfig(config);
         container.getNavigationManager().setLifecycle(new StackLifecycleManager());
         container.getNavigationManager().setStack(new StackManager());
