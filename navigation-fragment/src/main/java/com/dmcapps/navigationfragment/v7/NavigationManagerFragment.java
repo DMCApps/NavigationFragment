@@ -69,7 +69,6 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putSerializable(KEY_NAVIGATION_MANAGER_CORE, mNavigationManager);
     }
 

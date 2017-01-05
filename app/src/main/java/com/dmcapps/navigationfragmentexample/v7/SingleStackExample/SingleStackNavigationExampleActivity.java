@@ -34,6 +34,9 @@ public class SingleStackNavigationExampleActivity extends AppCompatActivity {
         if (mSingleStackNavigationManagerFragmentTag == null) {
             StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
 
+            navManager.getNavigationManager().setDefaultPresentAnimations(com.dmcapps.navigationfragment.R.anim.slide_in_from_right, com.dmcapps.navigationfragment.R.anim.slide_out_to_left);
+            navManager.getNavigationManager().setDefaultDismissAnimations(com.dmcapps.navigationfragment.R.anim.slide_in_from_left, com.dmcapps.navigationfragment.R.anim.slide_out_to_right);
+
             mSingleStackNavigationManagerFragmentTag = UUID.randomUUID().toString();
 
             FragmentManager fm = getSupportFragmentManager();

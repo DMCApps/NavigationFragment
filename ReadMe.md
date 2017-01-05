@@ -26,11 +26,11 @@ All the present and dismiss methods work as is. In order to perform more advance
 
 // TODO: Additional notes when final implementation details have been decided on
 
+###Overriding Animations
+
 ###Items Removed:
 MasterDetail implementation (this was created as something that I needed for a project. I've removed it so remove excess coding when adding to the interface declaration)
 ListFragment implementation (this is not needed with the recycler view being widely accepted and used and it's been around so long)
-
-
 
 ##Introduction
 
