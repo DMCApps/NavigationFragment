@@ -1,5 +1,7 @@
 package com.dmcapps.navigationfragment.common.core;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -113,26 +115,23 @@ public class NavigationManager implements Serializable {
         return this;
     }
 
-    public NavigationManager setPresentInAnim(Integer value) {
-        mNextTransaction.setPresentInAnim(value);
+    public NavigationManager setAnimations(Integer presentIn, Integer presentOut, Integer dismissIn, Integer dismissOut) {
+        return setPresentAnim(presentIn, presentOut).setDismissAnim(dismissIn, dismissOut);
+    }
+
+    public NavigationManager setPresentAnim(Integer in, Integer out) {
+        mNextTransaction.setPresentInAnim(in)
+            .setPresentOutAnim(out);
         return this;
     }
 
-    public NavigationManager setPresentOutAnim(Integer value) {
-        mNextTransaction.setPresentOutAnim(value);
+    public NavigationManager setDismissAnim(Integer in, Integer out) {
+        mNextTransaction.setDismissInAnim(in)
+                .setDismissOutAnim(out);
         return this;
     }
 
-    public NavigationManager setDismissInAnim(Integer value) {
-        mNextTransaction.setDismissInAnim(value);
-        return this;
-    }
-
-    public NavigationManager setDismissOutAnim(Integer value) {
-        mNextTransaction.setDismissOutAnim(value);
-        return this;
-    }
-
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public NavigationManager addSharedElement(View view, String name) {
         mNextTransaction.addSharedElement(view, name);
         return this;

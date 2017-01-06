@@ -48,8 +48,35 @@ navigationManager.getNavigationManager().setDefaultDismissAnimations(int, int);
 ####Presenting a fragment
 
 ```java
+// Basic Presenting has not changed. Just call:
+presentFragment(Fragment);
+// The biggest change is adding additional options to your presentation. In order to present with a bundle or override animations you would do that as follows:
+// 1.0.0 
+overrideNextAnimation(int, int);
+presentFragment(Fragment, Bundle);
 
+// 2.0.0
+// Animations must now be set before presentation. They cannot be overriden at dismiss time.
+// Presenting a fragment now has additional options and is done through a builder style.
+getNavigationManager().setPresentAnim(int, int)
+    .setDismissAnim(int, int)
+    .setNavBundle(Bundle)
+    .presentFragment(Fragment);
 ````
+
+// TODO: Discuss Transition additions.
+
+####Dismissing a Fragment
+
+```java
+// This have not changed. Just call:
+dismissFragment();
+// OR
+dismissFragment(Bundle);
+// From within your fragment
+
+// NOTE: animations must all be set at presentation time now and cannot be overridden before a dismiss.
+```
 
 // TODO: Additional notes when final implementation details have been decided on
 

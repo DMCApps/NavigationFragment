@@ -171,7 +171,11 @@ public class SampleFragment extends NavigationFragment {
             public void onClick(View v) {
                 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 
-                //overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+                /*
+                getNavigationManager().setPresentAnim(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top)
+                        .setDismissAnim(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top)
+                        .presentFragment(fragmentToPresent);
+                        */
                 presentFragment(fragmentToPresent);
             }
         });
@@ -182,7 +186,9 @@ public class SampleFragment extends NavigationFragment {
                 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ARG_MODEL_FROM_NAV_BUNDLE, new SampleModel(model));
-                presentFragment(fragmentToPresent, bundle);
+
+                getNavigationManager().setNavBundle(bundle)
+                        .presentFragment(fragmentToPresent);
             }
         });
 

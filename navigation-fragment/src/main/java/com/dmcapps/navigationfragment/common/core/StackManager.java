@@ -42,11 +42,11 @@ public class StackManager implements Stack {
             }
         }
 
-        if (state.getStack().size() >= config.getMinStackSize()) {
-            Integer enter = config.getPresentInAnim();
-            Integer exit = config.getPresentOutAnim();
-            Integer popEnter = config.getDismissInAnim();
-            Integer popExit = config.getDismissOutAnim();
+        if (state.getStack().size() >= config.getMinStackSize() && transaction != null) {
+            Integer enter = transaction.getPresentInAnim();
+            Integer exit = transaction.getPresentOutAnim();
+            Integer popEnter = transaction.getDismissInAnim();
+            Integer popExit = transaction.getDismissOutAnim();
             if (enter != null && exit != null && popEnter != null && popExit != null) {
                 fragmentTransactionWrapper.setCustomAnimations(enter, exit, popEnter, popExit);
             }
