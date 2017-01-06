@@ -40,16 +40,6 @@ ext {
             design                : "com.android.support:design:${SUPPORT_LIBRARY}",
             cardView              : "com.android.support:cardview-v7:${SUPPORT_LIBRARY}",
 
-            retrofitAdapter       : "com.squareup.retrofit2:retrofit-adapters:${RETROFIT_LIBRARY}",
-            retrofitCore          : "com.squareup.retrofit2:retrofit:${RETROFIT_LIBRARY}",
-            retrofitRXJava        : "com.squareup.retrofit2:adapter-rxjava:${RETROFIT_LIBRARY}",
-            retrofitConverterGson : "com.squareup.retrofit2:converter-gson:${RETROFIT_LIBRARY}",
-            retrofitParent        : "com.squareup.retrofit2:parent:${RETROFIT_LIBRARY}",
-
-            okhttpLogger          : "com.squareup.okhttp3:logging-interceptor:${OKHTTP_LIBRARY}",
-            okhttpWebsocket       : "com.squareup.okhttp3:okhttp-ws:${OKHTTP_LIBRARY}",
-            okhttpCore            : "com.squareup.okhttp3:okhttp:${OKHTTP_LIBRARY}",
-
             icepick               : "frankiesardo:icepick:${FRANKIES_ICEPICK}",
             icepickProcessor      : "frankiesardo:icepick-processor:${FRANKIES_ICEPICK}",
 
