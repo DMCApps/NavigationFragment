@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.common.interfaces;
 import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
-import com.dmcapps.navigationfragment.common.core.NavigationSettings;
+import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
 
 /**
  * Created by DCarmo on 16-02-09.
@@ -37,23 +37,18 @@ public interface Navigation {
      *      navBundle -> Bundle to add to the presenting of the Fragment.
      *
      * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#pushFragment(Navigation, NavigationSettings)} method call.
+     *      This function is being replaced with the {@link NavigationManager#setNavBundle(Bundle)} method call.
+     *      In order to add a bundle you should call
+     *      <code>
+     *          getNavigationManager()
+     *              .setNavBundle(navBundle)
+     *              .presentFragment(navFragment);
+     *      </code>
      *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 1.2.0.
+     *      To be removed in 2.1.0.
      */
     @Deprecated
     void presentFragment(Navigation navFragment, Bundle navBundle);
-
-    /**
-     * Push a new Fragment onto the stack and presenting it to the screen
-     * Uses default animation of slide in from right and slide out to left.
-     *
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
-     * @param
-     *      settings -> The {@link NavigationSettings} to be applied to the transaction
-     */
-    void presentFragment(Navigation navFragment, NavigationSettings settings);
 
     /**
      * Dimiss the current fragment off the top of the stack and dismiss it.
@@ -68,7 +63,6 @@ public interface Navigation {
      * @param
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
-    @Deprecated
     void dismissFragment(Bundle navBundle);
 
     /**
@@ -89,14 +83,6 @@ public interface Navigation {
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
     void replaceRootFragment(Navigation navFragment);
-
-    /**
-     * Gets the fragment that is in the stack before the current one. This is to help with setting the Transitions
-     *
-     * @return
-     *      {@link Navigation} object that is before this one.
-     */
-    //Navigation getPreviousFragment();
 
     void setTitle(String title);
     void setTitle(int resId);

@@ -50,7 +50,7 @@ public class StackLifecycleManager implements Lifecycle {
             }
 
             Navigation rootFragment = navigationManager.getInitialNavigation().get(0);
-            navigationManager.pushFragment(rootFragment);
+            navigationManager.presentFragment(rootFragment);
         }
         // Check if using support version
         // Fragments are in the stack, resume at the top.

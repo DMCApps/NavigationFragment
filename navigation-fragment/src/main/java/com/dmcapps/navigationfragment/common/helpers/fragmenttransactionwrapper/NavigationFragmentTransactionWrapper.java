@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
-import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
+import com.dmcapps.navigationfragment.common.core.NavigationTransaction.SharedElement;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 
 /**

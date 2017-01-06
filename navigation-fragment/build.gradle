@@ -16,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/DMCApps/NavigationFragment'
     gitUrl = 'https://github.com/DMCApps/NavigationFragment.git'
 
-    libraryVersion = '1.1.0'
+    libraryVersion = '2.0.0'
 
     developerId = 'dmcapps'
     developerName = 'Daniel Carmo'
@@ -35,7 +35,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 7
-        versionName "1.1.0"
+        versionName "2.0.0"
     }
     buildTypes {
         release {
@@ -53,6 +53,8 @@ dependencies {
 
     provided "com.google.auto.value:auto-value:1.2"
     apt      "com.google.auto.value:auto-value:1.2"
+
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

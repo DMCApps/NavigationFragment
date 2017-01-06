@@ -7,7 +7,7 @@ import android.app.Fragment;
 
 import com.dmcapps.navigationfragment.common.core.ActionBarManager;
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
-import com.dmcapps.navigationfragment.common.core.NavigationSettings;
+import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
 import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
@@ -63,7 +63,9 @@ public class NavigationFragment extends Fragment implements Navigation {
 
             NavigationManagerContainer container = ObjectUtils.as(NavigationManagerFragment.class, parent);
             if (container != null) {
-                return container.getNavigationManager();
+                NavigationManager navigationManager = container.getNavigationManager();
+                navigationManager.beginTransaction();
+                return navigationManager;
             }
         } while(parent != null);
 
@@ -71,48 +73,41 @@ public class NavigationFragment extends Fragment implements Navigation {
     }
 
     /**
-     * Present a fragment on the Navigation Manager using the default slide in and out.
+     * Present a fragment on the {@link NavigationManager}
+     * Uses default animation set on the {@link NavigationManager}
      *
      * @param
-     *      navFragment -> The Fragment to present.
+     *      navFragment -> The {@link Fragment} to present.
      */
     @Override
     public void presentFragment(Navigation navFragment) {
-        getNavigationManager().pushFragment(navFragment);
+        getNavigationManager().presentFragment(navFragment);
     }
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
-     * Uses default animation of slide in from right and slide out to left.
+     * Uses default animation set on the {@link NavigationManager}
      * Sends a Bundle with the Fragment that can be retrieved using {@link Navigation#getNavBundle()}
      *
      * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
+     *      navFragment -> The {@link Fragment} to show. It must be a {@link Fragment} that implements {@link Navigation}
      * @param
-     *      navBundle -> Bundle to add to the presenting of the Fragment.
+     *      navBundle -> Bundle to add to the presenting of the {@link Fragment}.
      *
      * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#pushFragment(Navigation, NavigationSettings)} method call.
+     *      This function is being replaced with the {@link NavigationManager#setNavBundle(Bundle)} method call.
+     *      In order to add a bundle you should call
+     *      <code>
+     *          getNavigationManager()
+     *              .setNavBundle(navBundle)
+     *              .presentFragment(navFragment);
+     *      </code>
      *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 1.2.0.
+     *      To be removed in 2.1.0.
      */
     @Deprecated
     public void presentFragment(Navigation navFragment, Bundle navBundle) {
-        getNavigationManager().pushFragment(navFragment, navBundle);
-    }
-
-    /**
-     * Push a new Fragment onto the stack and presenting it to the screen
-     * Uses default animation of slide in from right and slide out to left.
-     *
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
-     * @param
-     *      settings -> The {@link NavigationSettings} to be applied to the transaction
-     */
-    @Override
-    public void presentFragment(Navigation navFragment, NavigationSettings settings) {
-        getNavigationManager().pushFragment(navFragment, settings);
+        getNavigationManager().presentFragment(navFragment, navBundle);
     }
 
     /**
@@ -121,7 +116,7 @@ public class NavigationFragment extends Fragment implements Navigation {
      */
     @Override
     public void dismissFragment() {
-        getNavigationManager().popFragment();
+        getNavigationManager().dismissFragment();
     }
 
     /**
@@ -133,7 +128,7 @@ public class NavigationFragment extends Fragment implements Navigation {
      */
     @Override
     public void dismissFragment(Bundle navBundle) {
-        getNavigationManager().popFragment(navBundle);
+        getNavigationManager().dismissFragment(navBundle);
     }
 
     /**
@@ -146,7 +141,6 @@ public class NavigationFragment extends Fragment implements Navigation {
 
     /**
      * Dismiss all the fragments on the Navigation Manager stack until the root fragment using the default slide in and out.
-     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
      */
     @Override
     public void dismissToRoot() {
@@ -156,7 +150,6 @@ public class NavigationFragment extends Fragment implements Navigation {
     /**
      * Dismiss all the fragments on the Navigation Manager stack including the root fragment using the default slide in and out.
      * Present a fragment on the Navigation Manager using the default slide in and out.
-     * Override the animation by calling {@link #overrideNextAnimation(int, int)} before calling dismissToRoot.
      *
      * @param
      *      navFragment -> The Fragment to present.

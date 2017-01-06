@@ -2,7 +2,7 @@ package com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper
 
 import android.view.View;
 
-import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
+import com.dmcapps.navigationfragment.common.core.NavigationTransaction.SharedElement;
 
 /**
  * Created by dcarmo on 2016-11-19.

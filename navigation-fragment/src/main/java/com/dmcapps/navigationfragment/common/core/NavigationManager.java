@@ -2,6 +2,7 @@ package com.dmcapps.navigationfragment.common.core;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
@@ -24,8 +25,11 @@ public class NavigationManager implements Serializable {
 
     private transient NavigationManagerListener mListener;
     private transient WeakReference<NavigationManagerContainer> mContainer;
+
     // I don't like this ... but I'm having trouble thinking of a way to get rid of it ...
     private transient List<Navigation> mInitialNavigation;
+
+    private NavigationTransaction.Builder mNextTransaction;
 
     private NavigationConfig mNavigationConfig;
 
@@ -100,6 +104,40 @@ public class NavigationManager implements Serializable {
         return mLifecycle;
     }
 
+    public void beginTransaction() {
+        mNextTransaction = NavigationTransaction.withConfig(mNavigationConfig);
+    }
+
+    public NavigationManager setNavBundle(Bundle bundle) {
+        mNextTransaction.setNavBundle(bundle);
+        return this;
+    }
+
+    public NavigationManager setPresentInAnim(Integer value) {
+        mNextTransaction.setPresentInAnim(value);
+        return this;
+    }
+
+    public NavigationManager setPresentOutAnim(Integer value) {
+        mNextTransaction.setPresentOutAnim(value);
+        return this;
+    }
+
+    public NavigationManager setDismissInAnim(Integer value) {
+        mNextTransaction.setDismissInAnim(value);
+        return this;
+    }
+
+    public NavigationManager setDismissOutAnim(Integer value) {
+        mNextTransaction.setDismissOutAnim(value);
+        return this;
+    }
+
+    public NavigationManager addSharedElement(View view, String name) {
+        mNextTransaction.addSharedElement(view, name);
+        return this;
+    }
+
     /**
      * Overrides the default present animations for all present actions on the fragment manager.
      *
@@ -131,8 +169,11 @@ public class NavigationManager implements Serializable {
      * @param
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      */
-    public void pushFragment(Navigation navFragment) {
-        pushFragment(navFragment, new NavigationSettings.Builder().build());
+    public void presentFragment(Navigation navFragment) {
+        if (mNextTransaction == null) {
+            beginTransaction();
+        }
+        mStack.pushFragment(this, navFragment, mNextTransaction.build());
     }
 
     /**
@@ -145,38 +186,28 @@ public class NavigationManager implements Serializable {
      *      navBundle -> The navigation bundle to add to the fragment being pushed
      *
      * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#pushFragment(Navigation, NavigationSettings)} method call.
+     *      This function is being replaced with the {@link NavigationManager#setNavBundle(Bundle)} method call.
+     *      In order to add a bundle you should call
+     *      <code>
+     *          getNavigationManager()
+     *              .setNavBundle(navBundle)
+     *              .presentFragment(navFragment);
+     *      </code>
      *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 1.2.0.
+     *      To be removed in 2.1.0.
      */
     @Deprecated
-    public void pushFragment(Navigation navFragment, Bundle navBundle) {
-        pushFragment(navFragment, new NavigationSettings.Builder().setNavBundle(navBundle).build());
-    }
-
-    /**
-     * Push a new Fragment onto the stack and presenting it to the screen
-     * Uses default animation of slide in from right and slide out to left.
-     *
-     * @param
-     *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
-     * @param
-     *      settings -> The {@link NavigationSettings} to be applied to the transaction
-     */
-    public void pushFragment(Navigation navFragment, NavigationSettings settings) {
-        mStack.pushFragment(this, navFragment, settings);
-
-        if (mListener != null) {
-            mListener.didPresentFragment();
-        }
+    public void presentFragment(Navigation navFragment, Bundle navBundle) {
+        mNextTransaction.setNavBundle(navBundle);
+        presentFragment(navFragment);
     }
 
     /**
      * Pop the current fragment off the top of the stack and dismiss it.
      * Uses default animation of slide in from left and slide out to right animation.
      */
-    public void popFragment() {
-        mStack.popFragment(this, null);
+    public void dismissFragment() {
+        mStack.popFragment(this, mNextTransaction.build());
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -190,12 +221,9 @@ public class NavigationManager implements Serializable {
      * @param
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
-    public void popFragment(Bundle navBundle) {
-        mStack.popFragment(this, new NavigationSettings.Builder().setNavBundle(navBundle).build());
-
-        if (mListener != null) {
-            mListener.didDismissFragment();
-        }
+    public void dismissFragment(Bundle navBundle) {
+        mNextTransaction.setNavBundle(navBundle);
+        dismissFragment();
     }
 
     /**
@@ -204,7 +232,7 @@ public class NavigationManager implements Serializable {
      * @param
      *      navFragment -> The navigation fragment to be added to the stack.
      */
-    public void addToStack(Navigation navFragment) {
+    void addToStack(Navigation navFragment) {
         mState.getStack().add(navFragment.getNavTag());
     }
 
@@ -259,7 +287,7 @@ public class NavigationManager implements Serializable {
      */
     public boolean onBackPressed() {
         if (mState.getStack().size() > mNavigationConfig.getMinStackSize()) {
-            popFragment();
+            dismissFragment();
             return true;
         }
 
@@ -275,7 +303,7 @@ public class NavigationManager implements Serializable {
      */
     public void replaceRootFragment(Navigation navFragment) {
         clearNavigationStackToIndex(mNavigationConfig.getMinStackSize() - 1, true);
-        pushFragment(navFragment);
+        presentFragment(navFragment);
     }
 
     /**

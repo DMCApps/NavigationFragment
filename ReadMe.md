@@ -30,6 +30,27 @@ In order to ease future development. The update to version 2.0.0 has been a majo
 
 All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call getNavigationManager() first and string together the builder patter items to perform the required tasks.
 
+####Set Default Animations
+
+```java
+// 1.0.0
+StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
+navigationManager.setDefaultPresentAnimations(int, int);
+navigationManager.setDefaultDismissAnimations(int, int);
+
+// In 2.0.0 the navigation manager is no longer a fragment but the logic from the previous fragment extracted into a manager object. Hence we need to get the instance of the manager to update the default animations.
+// 2.0.0
+StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
+navigationManager.getNavigationManager().setDefaultPresentAnimations(int, int);
+navigationManager.getNavigationManager().setDefaultDismissAnimations(int, int);
+```
+
+####Presenting a fragment
+
+```java
+
+````
+
 // TODO: Additional notes when final implementation details have been decided on
 
 ###Overriding Animations

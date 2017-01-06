@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.common.core;
 import android.app.FragmentManager;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.common.core.NavigationSettings.SharedElement;
+import com.dmcapps.navigationfragment.common.core.NavigationTransaction.SharedElement;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
 import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
@@ -26,17 +26,17 @@ public class StackManager implements Stack {
     }
 
     @Override
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationSettings settings) {
+    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationTransaction transaction) {
         State state = navigationManager.getState();
         NavigationConfig config = navigationManager.getConfig();
 
         FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
         FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
 
-        if (settings != null) {
-            navFragment.setNavBundle(settings.getNavBundle());
-            if (settings.getSharedElements() != null) {
-                for (SharedElement sharedElement : settings.getSharedElements()) {
+        if (transaction != null) {
+            navFragment.setNavBundle(transaction.getNavBundle());
+            if (transaction.getSharedElements() != null) {
+                for (SharedElement sharedElement : transaction.getSharedElements()) {
                     fragmentTransactionWrapper.addSharedElement(sharedElement);
                 }
             }
@@ -71,7 +71,7 @@ public class StackManager implements Stack {
     }
 
     @Override
-    public Navigation popFragment(NavigationManager navigationManager, NavigationSettings settings) {
+    public Navigation popFragment(NavigationManager navigationManager, NavigationTransaction transaction) {
         Navigation navFragment = null;
 
         State state = navigationManager.getState();
@@ -90,8 +90,8 @@ public class StackManager implements Stack {
             navigationManager.getContainer().getFragmentActivity().onBackPressed();
         }
 
-        if (navFragment != null && settings != null) {
-            navFragment.setNavBundle(settings.getNavBundle());
+        if (navFragment != null && transaction != null) {
+            navFragment.setNavBundle(transaction.getNavBundle());
         }
         return navFragment;
     }

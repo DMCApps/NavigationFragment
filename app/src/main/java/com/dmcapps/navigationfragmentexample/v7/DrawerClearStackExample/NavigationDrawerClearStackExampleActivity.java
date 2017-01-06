@@ -50,11 +50,11 @@ public class NavigationDrawerClearStackExampleActivity extends SingleStackSuperA
         int id = item.getItemId();
 
         if (id == R.id.nav_camara) {
-            getSingleStackNavigationFragmentManager().getNavigationManager().pushFragment(SampleFragment.newInstance("Fragment B", 1));
+            getSingleStackNavigationFragmentManager().getNavigationManager().presentFragment(SampleFragment.newInstance("Fragment B", 1));
         }
         else if (id == R.id.nav_gallery) {
             getSingleStackNavigationFragmentManager().getNavigationManager().clearNavigationStackToRoot();
-            getSingleStackNavigationFragmentManager().getNavigationManager().pushFragment(SampleFragment.newInstance("Fragment C", 1));
+            getSingleStackNavigationFragmentManager().getNavigationManager().presentFragment(SampleFragment.newInstance("Fragment C", 1));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
