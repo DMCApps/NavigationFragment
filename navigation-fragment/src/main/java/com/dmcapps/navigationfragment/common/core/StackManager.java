@@ -1,6 +1,7 @@
 package com.dmcapps.navigationfragment.common.core;
 
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.dmcapps.navigationfragment.common.core.NavigationTransaction.SharedElement;
@@ -71,7 +72,7 @@ public class StackManager implements Stack {
     }
 
     @Override
-    public Navigation popFragment(NavigationManager navigationManager, NavigationTransaction transaction) {
+    public Navigation popFragment(NavigationManager navigationManager, Bundle navBundle) {
         Navigation navFragment = null;
 
         State state = navigationManager.getState();
@@ -90,8 +91,8 @@ public class StackManager implements Stack {
             navigationManager.getContainer().getFragmentActivity().onBackPressed();
         }
 
-        if (navFragment != null && transaction != null) {
-            navFragment.setNavBundle(transaction.getNavBundle());
+        if (navFragment != null && navBundle != null) {
+            navFragment.setNavBundle(navBundle);
         }
         return navFragment;
     }

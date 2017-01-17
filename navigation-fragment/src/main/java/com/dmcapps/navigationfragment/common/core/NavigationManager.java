@@ -206,7 +206,7 @@ public class NavigationManager implements Serializable {
      * Uses default animation of slide in from left and slide out to right animation.
      */
     public void dismissFragment() {
-        mStack.popFragment(this, mNextTransaction.build());
+        mStack.popFragment(this, null);
 
         if (mListener != null) {
             mListener.didDismissFragment();
@@ -221,8 +221,11 @@ public class NavigationManager implements Serializable {
      *      navBundle -> The navigation bundle to add to the fragment after the pop occurs
      */
     public void dismissFragment(Bundle navBundle) {
-        mNextTransaction.setNavBundle(navBundle);
-        dismissFragment();
+        mStack.popFragment(this, navBundle);
+
+        if (mListener != null) {
+            mListener.didDismissFragment();
+        }
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.dmcapps.navigationfragment.common.interfaces;
 
+import android.os.Bundle;
+
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
 
@@ -16,7 +18,7 @@ public interface Stack extends Serializable {
 
     Navigation popFragment(NavigationManager navigationManager);
 
-    Navigation popFragment(NavigationManager navigationManager, NavigationTransaction transaction);
+    Navigation popFragment(NavigationManager navigationManager, Bundle navBundle);
 
     void clearNavigationStackToIndex(NavigationManager navigationManager, int index);
 
