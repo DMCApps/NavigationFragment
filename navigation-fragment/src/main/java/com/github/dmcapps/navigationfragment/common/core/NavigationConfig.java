@@ -4,12 +4,14 @@ import android.support.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
 
+import java.io.Serializable;
+
 /**
  * Created by dcarmo on 2017-01-04.
  */
 
 @AutoValue
-public abstract class NavigationConfig {
+public abstract class NavigationConfig implements Serializable {
 
     public abstract int getMinStackSize();
     public abstract int getPushContainerId();

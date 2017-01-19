@@ -24,7 +24,7 @@ Things to do:
 
 ###From 1.0.0 to 2.0.0
 
-MAJOR CHANGE:
+###MAJOR CHANGE:
 The package has been changed from 
 com.dmcapps.navigationfragment 
 to

@@ -25,6 +25,11 @@ public class StackManager implements Stack {
             navFragment.setNavBundle(transaction.getNavBundle());
         }
 
+        // Don't animate the initial fragments being added to the stack.
+        if (navigationManager.getCurrentStackSize() < config.getMinStackSize()) {
+            transaction.setCustomAnimations(0, 0, 0, 0);
+        }
+
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
         transaction.add(config.getPushContainerId(), navFragment, navFragment.getNavTag());
         transaction.addToBackStack(navFragment.getNavTag());

@@ -51,13 +51,13 @@ public class StackLifecycleManager implements Lifecycle {
         }
         // Check if using support version
         // Fragments are in the stack, resume at the top.
-        else if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
+        /*else if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
             FragmentManagerWrapper fragmentManager = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
             fragmentTransaction.setCustomAnimations(0, 0);
             fragmentTransaction.attach(fragmentManager.findFragmentByTag(state.getStack().peek()));
             fragmentTransaction.commit();
-        }
+        }*/
 
         navigationManager.nullifyInitialNavigation();
     }
@@ -67,12 +67,12 @@ public class StackLifecycleManager implements Lifecycle {
         State state = navigationManager.getState();
 
         // Check if using support version
-        if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
+        /*if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
             FragmentManagerWrapper fragmentManager = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
             fragmentTransaction.setCustomAnimations(0, 0);
             fragmentTransaction.detach(fragmentManager.findFragmentByTag(state.getStack().peek()));
             fragmentTransaction.commit();
-        }
+        }*/
     }
 }
