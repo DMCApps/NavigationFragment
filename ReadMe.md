@@ -57,7 +57,7 @@ presentFragment(Fragment, Bundle);
 beginPresentation().setCustomAnimations(int, int, int, int)
     .setNavBundle(Bundle)
     .presentFragment(Fragment);
-````
+```
 
 ####Dismissing a Fragment
 
