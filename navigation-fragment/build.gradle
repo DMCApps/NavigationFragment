@@ -16,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/DMCApps/NavigationFragment'
     gitUrl = 'https://github.com/DMCApps/NavigationFragment.git'
 
-    libraryVersion = '2.0.0'
+    libraryVersion = '2.0.0-alpha'
 
     developerId = 'dmcapps'
     developerName = 'Daniel Carmo'

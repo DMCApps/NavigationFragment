@@ -16,6 +16,8 @@ compile 'com.dmcapps:navigation-fragment:2.0.0-alpha'
 
 2.0.0-alpha
 
+This version is an alpha. Please send any feedback on the [Issue Tracker](https://github.com/DMCApps/NavigationFragment/issues)
+
 ##Migration
 
 Things to do:
