@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.github.dmcapps.navigationfragment.v7.NavigationFragment;
 import com.github.dmcapps.navigationfragment.v7.NavigationManagerFragment;
 import com.github.dmcapps.navigationfragment.v7.StackNavigationManagerFragment;
+import com.github.dmcapps.navigationfragmentexample.R;
 
 import java.util.UUID;
 
@@ -39,6 +40,8 @@ public abstract class SingleStackSuperActivity extends AppCompatActivity {
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
             StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(rootFragment());
+            navManager.setDefaultPresentAnimations(R.anim.slide_out_to_left, R.anim.slide_in_from_right);
+            navManager.setDefaultDismissAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
             addFragment(navManager, getContainerId());
         } else {
             showFragment(mSingleStackNavigationManagerFragmentTag);
