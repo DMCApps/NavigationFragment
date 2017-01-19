@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dmcapps.navigationfragmentexample.v17.NavigationFragments.SmallImageFragment">
+    tools:context="com.github.dmcapps.navigationfragmentexample.v17.NavigationFragments.SmallImageFragment">
 
     <TextView
         android:layout_width="match_parent"

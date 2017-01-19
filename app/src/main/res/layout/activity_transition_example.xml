@@ -4,7 +4,7 @@
     android:id="@+id/activity_transition_example"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dmcapps.navigationfragmentexample.v17.TransitionExample.TransitionExampleActivity">
+    tools:context="com.github.dmcapps.navigationfragmentexample.v17.TransitionExample.TransitionExampleActivity">
 
     <FrameLayout
         android:id="@+id/frag_container"

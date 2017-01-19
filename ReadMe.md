@@ -9,12 +9,12 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:2.0.0'
+compile 'com.dmcapps:navigation-fragment:2.0.0-alpha'
 ```
 
 ##Current Version
 
-2.0.0
+2.0.0-alpha
 
 ##Migration
 
@@ -23,6 +23,14 @@ Things to do:
 - Update ReadMe for new implementation with how to migrate.
 
 ###From 1.0.0 to 2.0.0
+
+MAJOR CHANGE:
+The package has been changed from 
+com.dmcapps.navigationfragment 
+to
+com.github.dmcapps.navigationfragment
+
+I appologize for the inconvenience but it was necessary to get this into maven and out to more possible users.
 
 In order to ease future development. The update to version 2.0.0 has been a major refactor to remove code duplication between the support and non-support version. This will make future implementations and maintanence much easier.
 

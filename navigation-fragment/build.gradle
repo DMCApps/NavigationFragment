@@ -5,7 +5,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'navigation-fragment'
 
-    publishedGroupId = 'com.dmcapps'
+    publishedGroupId = 'com.github.dmcapps'
     libraryName = 'NavigationFragment'
     artifact = 'navigation-fragment'
 
@@ -35,7 +35,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 7
-        versionName "2.0.0"
+        versionName "2.0.0-alpha"
     }
     buildTypes {
         release {
