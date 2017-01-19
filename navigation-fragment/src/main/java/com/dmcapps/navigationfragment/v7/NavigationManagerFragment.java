@@ -73,6 +73,18 @@ public abstract class NavigationManagerFragment extends Fragment implements Navi
     }
 
     // =========================================
+    // Public
+    // =========================================
+
+    public void setDefaultPresentAnimations(int animIn, int animOut) {
+        getNavigationManager().setDefaultPresentAnimations(animIn, animOut);
+    }
+
+    public void setDefaultDismissAnimations(int animIn, int animOut) {
+        getNavigationManager().setDefaultDismissAnimations(animIn, animOut);
+    }
+
+    // =========================================
     // NavigationManagerContainer
     // =========================================
 

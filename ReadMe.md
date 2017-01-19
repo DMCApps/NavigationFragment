@@ -19,8 +19,6 @@ compile 'com.dmcapps:navigation-fragment:2.0.0'
 ##Migration
 
 Things to do:
-- Add in settings that are generated for each present
-    - Thoughts when getNavigationManager() is called, create new NavigationSettings which propegate until calling present
 - Update all Examples as they have gotten too bloated and disorganized to be helpful
 - Update ReadMe for new implementation with how to migrate.
 
@@ -30,26 +28,14 @@ In order to ease future development. The update to version 2.0.0 has been a majo
 
 All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call getNavigationManager() first and string together the builder patter items to perform the required tasks.
 
-####Set Default Animations
-
-```java
-// 1.0.0
-StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
-navigationManager.setDefaultPresentAnimations(int, int);
-navigationManager.setDefaultDismissAnimations(int, int);
-
-// In 2.0.0 the navigation manager is no longer a fragment but the logic from the previous fragment extracted into a manager object. Hence we need to get the instance of the manager to update the default animations.
-// 2.0.0
-StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
-navigationManager.getNavigationManager().setDefaultPresentAnimations(int, int);
-navigationManager.getNavigationManager().setDefaultDismissAnimations(int, int);
-```
-
 ####Presenting a fragment
 
 ```java
 // Basic Presenting has not changed. Just call:
 presentFragment(Fragment);
+// as well as 
+presentFramgent(Fragment, Bundle);
+
 // The biggest change is adding additional options to your presentation. In order to present with a bundle or override animations you would do that as follows:
 // 1.0.0 
 overrideNextAnimation(int, int);
@@ -58,13 +44,10 @@ presentFragment(Fragment, Bundle);
 // 2.0.0
 // Animations must now be set before presentation. They cannot be overriden at dismiss time.
 // Presenting a fragment now has additional options and is done through a builder style.
-getNavigationManager().setPresentAnim(int, int)
-    .setDismissAnim(int, int)
+beginPresentation().setCustomAnimations(int, int, int, int)
     .setNavBundle(Bundle)
     .presentFragment(Fragment);
 ````
-
-// TODO: Discuss Transition additions.
 
 ####Dismissing a Fragment
 
@@ -78,9 +61,26 @@ dismissFragment(Bundle);
 // NOTE: animations must all be set at presentation time now and cannot be overridden before a dismiss.
 ```
 
-// TODO: Additional notes when final implementation details have been decided on
+####Trasitions
+This implementation of the NavigationManager include support for transitions (API 21 and above). See the Transtions example in the v17 project. At this point I have only added the shared element portion as that is all that is required in the transaction. The rest can be set up in the fragments themselves. (FUTURE implementation will do this all in the transaction once set up as well as allow for default implementations much like the )
 
-###Overriding Animations
+```java
+NavigationFragment fragment = LargeImageFragment.newInstance();
+PresentationTransaction transaction = beginPresentation();
+
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    setExitTransition(new Slide(Gravity.START));
+    setEnterTransition(new Slide(Gravity.START));
+
+    fragment.setSharedElementEnterTransition(new DetailTransition());
+    fragment.setSharedElementReturnTransition(new DetailTransition());
+
+    fragment.setEnterTransition(new Slide(Gravity.END));
+
+    transaction.addSharedElement(smallImageView, "trans_largeImageView");
+}
+transaction.presentFragment(fragment);
+```
 
 ###Items Removed:
 MasterDetail implementation (this was created as something that I needed for a project. I've removed it so remove excess coding when adding to the interface declaration)
@@ -328,7 +328,7 @@ public class SampleFragment extends NavigationFragment {
             public void onClick(View v) {
                 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 
-                overrideNextAnimation(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+                beginPresentation().setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top, R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
                 presentFragment(fragmentToPresent);
             }
         });
@@ -346,14 +346,6 @@ public class SampleFragment extends NavigationFragment {
         view.findViewById(R.id.sample_btn_dismiss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismissFragment();
-            }
-        });
-
-        view.findViewById(R.id.sample_btn_dismiss_override_animation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
                 dismissFragment();
             }
         });
@@ -410,8 +402,10 @@ public class SampleFragment extends NavigationFragment {
 ##Change Log
 
 ###2.0.0
+- Package updated from com.dmcapps.navigationfragment to com.github.dmcapps.navigationfragment this is to prepare for the release to maven.
 - Added in Transition support
 - Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call `[NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L45) and `[NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)]`(https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L55)
+NOTE: If you would like to add them back in just call NavigationManager.setDefaultPresentAnim(int, int) and setDefaultDismissAnim(int, int) with your animations. The animations are still available under the dmcapp R file as well.
 - Major code refactoring to reduce duplicate implementations across support and non-support versions
 - Refactored code for future expandability for adding other paramters to each presentation
 

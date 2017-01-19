@@ -34,8 +34,8 @@ public class OverrideDefaultAnimationsExampleActivity extends AppCompatActivity 
 
         if (mSingleStackNavigationManagerFragmentTag == null) {
             StackNavigationManagerFragment navManager = StackNavigationManagerFragment.newInstance(SampleFragment.newInstance("Root Fragment in the Stack", 0));
-            navManager.getNavigationManager().setDefaultPresentAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
-            navManager.getNavigationManager().setDefaultDismissAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_bottom);
+            navManager.setDefaultPresentAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top);
+            navManager.setDefaultDismissAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_bottom);
             addFragment(navManager);
         }
         else {

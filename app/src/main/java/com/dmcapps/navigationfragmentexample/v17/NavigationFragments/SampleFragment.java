@@ -171,11 +171,6 @@ public class SampleFragment extends NavigationFragment {
             public void onClick(View v) {
                 Navigation fragmentToPresent = SampleFragment.newInstance("Fragment added to Stack.", (mFragCount + 1));
 
-                /*
-                getNavigationManager().setPresentAnim(R.anim.slide_in_from_bottom, R.anim.slide_out_to_top)
-                        .setDismissAnim(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top)
-                        .presentFragment(fragmentToPresent);
-                        */
                 presentFragment(fragmentToPresent);
             }
         });
