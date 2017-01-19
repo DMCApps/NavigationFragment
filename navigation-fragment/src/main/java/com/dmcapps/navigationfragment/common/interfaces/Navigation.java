@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.common.interfaces;
 import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
-import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
+import com.dmcapps.navigationfragment.common.core.PresentationTransaction;
 
 /**
  * Created by DCarmo on 16-02-09.
@@ -16,6 +16,14 @@ public interface Navigation {
     Bundle getNavBundle();
 
     NavigationManager getNavigationManager();
+
+    /**
+     * Begins a Transaction for presenting the next fragment allowing for overriding of animations, bundles, etc.
+     *
+     * @return
+     *      returns an instance of {@link PresentationTransaction} for the programmer to describe the next presentation
+     */
+    PresentationTransaction beginPresentation();
 
     /**
      * Push a new Fragment onto the stack and presenting it to the screen
@@ -35,19 +43,7 @@ public interface Navigation {
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      * @param
      *      navBundle -> Bundle to add to the presenting of the Fragment.
-     *
-     * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#setNavBundle(Bundle)} method call.
-     *      In order to add a bundle you should call
-     *      <code>
-     *          getNavigationManager()
-     *              .setNavBundle(navBundle)
-     *              .presentFragment(navFragment);
-     *      </code>
-     *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 2.1.0.
      */
-    @Deprecated
     void presentFragment(Navigation navFragment, Bundle navBundle);
 
     /**
@@ -83,6 +79,9 @@ public interface Navigation {
      *      navFragment -> The fragment that you would like as the new Root of the stack.
      */
     void replaceRootFragment(Navigation navFragment);
+
+    void setSharedElementEnterTransition(Object transition);
+    void setSharedElementReturnTransition(Object transition);
 
     void setTitle(String title);
     void setTitle(int resId);

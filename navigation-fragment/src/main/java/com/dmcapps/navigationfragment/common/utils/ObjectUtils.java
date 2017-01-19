@@ -1,4 +1,4 @@
-package com.dmcapps.navigationfragment.common.helpers.utils;
+package com.dmcapps.navigationfragment.common.utils;
 
 /**
  * Created by DCarmo on 16-03-07.

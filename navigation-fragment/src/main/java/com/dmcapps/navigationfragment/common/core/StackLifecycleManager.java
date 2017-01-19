@@ -6,9 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dmcapps.navigationfragment.R;
-import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.interfaces.Lifecycle;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.State;
@@ -55,7 +52,7 @@ public class StackLifecycleManager implements Lifecycle {
         // Check if using support version
         // Fragments are in the stack, resume at the top.
         else if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
-            FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
+            FragmentManagerWrapper fragmentManager = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
             fragmentTransaction.setCustomAnimations(0, 0);
             fragmentTransaction.attach(fragmentManager.findFragmentByTag(state.getStack().peek()));
@@ -71,7 +68,7 @@ public class StackLifecycleManager implements Lifecycle {
 
         // Check if using support version
         if (navigationManager.getContainer() != null && navigationManager.getContainer() instanceof NavigationManagerFragment) {
-            FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
+            FragmentManagerWrapper fragmentManager = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
             FragmentTransactionWrapper fragmentTransaction = fragmentManager.beginTransactionWrapped();
             fragmentTransaction.setCustomAnimations(0, 0);
             fragmentTransaction.detach(fragmentManager.findFragmentByTag(state.getStack().peek()));

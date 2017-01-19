@@ -187,7 +187,7 @@ public class SampleFragment extends NavigationFragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(ARG_MODEL_FROM_NAV_BUNDLE, new SampleModel(model));
 
-                getNavigationManager().setNavBundle(bundle)
+                beginPresentation().setNavBundle(bundle)
                         .presentFragment(fragmentToPresent);
             }
         });
@@ -195,14 +195,6 @@ public class SampleFragment extends NavigationFragment {
         view.findViewById(R.id.sample_btn_dismiss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismissFragment();
-            }
-        });
-
-        view.findViewById(R.id.sample_btn_dismiss_override_animation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //overrideNextAnimation(R.anim.slide_out_to_bottom, R.anim.slide_in_from_top);
                 dismissFragment();
             }
         });

@@ -3,7 +3,7 @@ package com.dmcapps.navigationfragment.common.interfaces;
 import android.os.Bundle;
 
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
-import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
+import com.dmcapps.navigationfragment.common.core.PresentationTransaction;
 
 import java.io.Serializable;
 
@@ -12,11 +12,7 @@ import java.io.Serializable;
  */
 public interface Stack extends Serializable {
 
-    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment);
-
-    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationTransaction transaction);
-
-    Navigation popFragment(NavigationManager navigationManager);
+    Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, PresentationTransaction transaction);
 
     Navigation popFragment(NavigationManager navigationManager, Bundle navBundle);
 

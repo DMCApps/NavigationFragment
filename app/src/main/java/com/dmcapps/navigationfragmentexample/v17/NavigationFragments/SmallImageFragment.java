@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dmcapps.navigationfragment.common.core.PresentationTransaction;
 import com.dmcapps.navigationfragmentexample.R;
 import com.dmcapps.navigationfragment.v17.NavigationFragment;
 import com.dmcapps.navigationfragmentexample.v17.TransitionExample.DetailTransition;
@@ -41,22 +42,20 @@ public class SmallImageFragment extends NavigationFragment {
             @Override
             public void onClick(View v) {
                 NavigationFragment fragment = LargeImageFragment.newInstance();
-//                NavigationSettings navigationSettings = null;
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    setExitTransition(new Slide(Gravity.START));
-//                    setEnterTransition(new Slide(Gravity.START));
-//
-//                    fragment.setSharedElementEnterTransition(new DetailTransition());
-//                    fragment.setSharedElementReturnTransition(new DetailTransition());
-//
-//                    fragment.setEnterTransition(new Slide(Gravity.END));
-//
-//                    navigationSettings = new NavigationSettings.Builder()
-//                            .addSharedElement(smallImageView, "trans_largeImageView")
-//                            .build();
-//                }
-                //presentFragment(fragment, navigationSettings);
-                presentFragment(fragment);
+                PresentationTransaction transaction = beginPresentation();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    setExitTransition(new Slide(Gravity.START));
+                    setEnterTransition(new Slide(Gravity.START));
+
+                    fragment.setSharedElementEnterTransition(new DetailTransition());
+                    fragment.setSharedElementReturnTransition(new DetailTransition());
+
+                    fragment.setEnterTransition(new Slide(Gravity.END));
+
+                    transaction.addSharedElement(smallImageView, "trans_largeImageView");
+                }
+                transaction.presentFragment(fragment);
             }
         });
     }

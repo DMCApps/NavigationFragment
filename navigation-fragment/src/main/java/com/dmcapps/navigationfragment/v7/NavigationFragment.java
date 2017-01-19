@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.dmcapps.navigationfragment.common.core.NavigationManager;
-import com.dmcapps.navigationfragment.common.core.NavigationTransaction;
+import com.dmcapps.navigationfragment.common.core.PresentationTransaction;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
-import com.dmcapps.navigationfragment.common.helpers.utils.ObjectUtils;
+import com.dmcapps.navigationfragment.common.utils.ObjectUtils;
 import com.dmcapps.navigationfragment.common.core.ActionBarManager;
 import com.dmcapps.navigationfragment.common.interfaces.NavigationManagerContainer;
 
@@ -60,13 +60,22 @@ public class NavigationFragment extends Fragment implements Navigation {
 
             NavigationManagerContainer container = ObjectUtils.as(NavigationManagerFragment.class, parent);
             if (container != null) {
-                NavigationManager navigationManager = container.getNavigationManager();
-                navigationManager.beginTransaction();
-                return navigationManager;
+                return container.getNavigationManager();
             }
         } while(parent != null);
 
         throw new RuntimeException("No parent NavigationManagerFragment found. In order to use the Navigation Manager Fragment you must have a parent in your Fragment Manager.");
+    }
+
+    /**
+     * Begins a Transaction for presenting the next fragment allowing for overriding of animations, bundles, etc.
+     *
+     * @return
+     *      returns an instance of {@link PresentationTransaction} for the programmer to describe the next presentation
+     */
+    @Override
+    public PresentationTransaction beginPresentation() {
+        return getNavigationManager().beginPresentation();
     }
 
     /**
@@ -77,7 +86,7 @@ public class NavigationFragment extends Fragment implements Navigation {
      */
     @Override
     public void presentFragment(Navigation navFragment) {
-        getNavigationManager().presentFragment(navFragment);
+        beginPresentation().presentFragment(navFragment);
     }
 
     /**
@@ -89,21 +98,9 @@ public class NavigationFragment extends Fragment implements Navigation {
      *      navFragment -> The Fragment to show. It must be a Fragment that implements {@link Navigation}
      * @param
      *      navBundle -> Bundle to add to the presenting of the Fragment.
-     *
-     * @deprecated
-     *      This function is being replaced with the {@link NavigationManager#setNavBundle(Bundle)} method call.
-     *      In order to add a bundle you should call
-     *      <code>
-     *          getNavigationManager()
-     *              .setNavBundle(navBundle)
-     *              .presentFragment(navFragment);
-     *      </code>
-     *      Allowing for more parameters to be passed in with the call.
-     *      To be removed in 2.1.0.
      */
-    @Deprecated
     public void presentFragment(Navigation navFragment, Bundle navBundle) {
-        getNavigationManager().presentFragment(navFragment, navBundle);
+        beginPresentation().setNavBundle(navBundle).presentFragment(navFragment);
     }
 
     /**

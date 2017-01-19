@@ -4,10 +4,6 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.dmcapps.navigationfragment.common.core.NavigationTransaction.SharedElement;
-import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.FragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.helpers.fragmentmanagerwrapper.NavigationFragmentManagerWrapper;
-import com.dmcapps.navigationfragment.common.helpers.fragmenttransactionwrapper.FragmentTransactionWrapper;
 import com.dmcapps.navigationfragment.common.interfaces.Navigation;
 import com.dmcapps.navigationfragment.common.interfaces.Stack;
 import com.dmcapps.navigationfragment.common.interfaces.State;
@@ -22,53 +18,21 @@ public class StackManager implements Stack {
     private static final String TAG = StackManager.class.getSimpleName();
 
     @Override
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment) {
-        return pushFragment(navigationManager, navFragment, null);
-    }
-
-    @Override
-    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, NavigationTransaction transaction) {
-        State state = navigationManager.getState();
+    public Navigation pushFragment(NavigationManager navigationManager, Navigation navFragment, PresentationTransaction transaction) {
         NavigationConfig config = navigationManager.getConfig();
 
-        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
-        FragmentTransactionWrapper fragmentTransactionWrapper = fragmentManagerWrapper.beginTransactionWrapped();
-
-        if (transaction != null) {
+        if (transaction.getNavBundle() != null) {
             navFragment.setNavBundle(transaction.getNavBundle());
-            if (transaction.getSharedElements() != null) {
-                for (SharedElement sharedElement : transaction.getSharedElements()) {
-                    fragmentTransactionWrapper.addSharedElement(sharedElement);
-                }
-            }
-        }
-
-        if (state.getStack().size() >= config.getMinStackSize() && transaction != null) {
-            Integer enter = transaction.getPresentInAnim();
-            Integer exit = transaction.getPresentOutAnim();
-            Integer popEnter = transaction.getDismissInAnim();
-            Integer popExit = transaction.getDismissOutAnim();
-            if (enter != null && exit != null && popEnter != null && popExit != null) {
-                fragmentTransactionWrapper.setCustomAnimations(enter, exit, popEnter, popExit);
-            }
-            else if (enter != null && exit != null) {
-                fragmentTransactionWrapper.setCustomAnimations(enter, exit);
-            }
         }
 
         // Add in the new fragment that we are presenting and add it's navigation tag to the stack.
-        fragmentTransactionWrapper.add(config.getPushContainerId(), navFragment, navFragment.getNavTag());
-        fragmentTransactionWrapper.addToBackStack(navFragment.getNavTag());
-        fragmentTransactionWrapper.commit();
+        transaction.add(config.getPushContainerId(), navFragment, navFragment.getNavTag());
+        transaction.addToBackStack(navFragment.getNavTag());
+        transaction.commit();
 
         navigationManager.addToStack(navFragment);
 
         return navFragment;
-    }
-
-    @Override
-    public Navigation popFragment(NavigationManager navigationManager) {
-        return popFragment(navigationManager, null);
     }
 
     @Override
@@ -79,7 +43,8 @@ public class StackManager implements Stack {
         NavigationConfig config = navigationManager.getConfig();
 
         if (state.getStack().size() > config.getMinStackSize()) {
-            FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
+            Object childFragmentManager = navigationManager.getContainer().getNavChildFragmentManager();
+            FragmentManagerWrapper fragmentManagerWrapper = new FragmentManagerWrapper(childFragmentManager);
             fragmentManagerWrapper.popBackStack();
             state.getStack().pop();
 
@@ -123,14 +88,14 @@ public class StackManager implements Stack {
             stack.pop();
         }
 
-        FragmentManagerWrapper fragmentManager = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
+        FragmentManagerWrapper fragmentManager = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
         fragmentManager.popBackStackImmediate(tag, inclusive ? FragmentManager.POP_BACK_STACK_INCLUSIVE : 0);
     }
 
     @Override
     public Navigation getFragmentAtIndex(NavigationManager navigationManager, int index) {
         State state = navigationManager.getState();
-        FragmentManagerWrapper fragmentManagerWrapper = new NavigationFragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
+        FragmentManagerWrapper fragmentManagerWrapper = new FragmentManagerWrapper(navigationManager.getContainer().getNavChildFragmentManager());
 
         return (Navigation) fragmentManagerWrapper.findFragmentByTag(state.getStack().get(index));
     }
