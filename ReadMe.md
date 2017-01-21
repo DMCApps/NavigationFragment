@@ -30,10 +30,15 @@ Things to do:
 ###From 1.0.0 to 2.0.0
 
 ###MAJOR CHANGE:
-The package has been changed from 
+The package has been changed from
+
+```groovy 
 com.dmcapps.navigationfragment 
+```
 to
+```groovy
 com.github.dmcapps.navigationfragment
+```
 
 I appologize for the inconvenience but it was necessary to get this into maven and out to more possible users.
 

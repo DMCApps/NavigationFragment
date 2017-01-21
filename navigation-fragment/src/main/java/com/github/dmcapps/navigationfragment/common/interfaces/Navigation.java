@@ -6,6 +6,10 @@ import com.github.dmcapps.navigationfragment.common.core.NavigationManager;
 import com.github.dmcapps.navigationfragment.common.core.PresentationTransaction;
 
 /**
+ * TODO: Once android supports Default Methods across more platforms I can easily add in default implementations
+ * for almost all these methods to reduce the duplication in the support and non-support fragments.
+ * Reference: https://developer.android.com/guide/platform/j8-jack.html
+ *
  * Created by DCarmo on 16-02-09.
  */
 public interface Navigation {
