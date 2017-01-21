@@ -12,12 +12,12 @@ In your app build.gradle file add the following to your dependencies. Project on
 compile 'com.dmcapps:navigation-fragment:1.0.0'
 
 // Warning: Please continue using com.dmcapps:navigation-fragment:1.0.0 I am working with jcenter to get my package updated.
-compile 'com.github.dmcapps:navigation-fragment:2.0.0-alpha'
+compile 'com.github.dmcapps:navigation-fragment:2.0.1-alpha'
 ```
 
 ##Current Version
 
-2.0.0-alpha
+2.0.1-alpha
 
 This version is an alpha. Please send any feedback on the [Issue Tracker](https://github.com/DMCApps/NavigationFragment/issues)
 
@@ -172,10 +172,13 @@ public class SampleFragment extends NavigationFragment {
 
 ##Change Log
 
+###2.0.1
+- Added in missed default animation override in the non-support navigation manager
+
 ###2.0.0
 - Package updated from com.dmcapps.navigationfragment to com.github.dmcapps.navigationfragment this is to prepare for the release to maven.
 - Added in Transition support
-- Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call `[NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L45) and `[NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)]`(https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/dmcapps/navigationfragment/common/interfaces/NavigationManager.java#L55)
+- Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call [`NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/github/dmcapps/navigationfragment/v7/NavigationManagerFragment.java#L79) and [`NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/github/dmcapps/navigationfragment/v7/NavigationManagerFragment.java#L83)
 NOTE: If you would like to add them back in just call NavigationManager.setDefaultPresentAnim(int, int) and setDefaultDismissAnim(int, int) with your animations. The animations are still available under the dmcapp R file as well.
 - Major code refactoring to reduce duplicate implementations across support and non-support versions
 - Refactored code for future expandability for adding other paramters to each presentation
