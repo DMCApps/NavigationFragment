@@ -12,12 +12,12 @@ In your app build.gradle file add the following to your dependencies. Project on
 compile 'com.dmcapps:navigation-fragment:1.0.0'
 
 // Warning: Please continue using com.dmcapps:navigation-fragment:1.0.0 I am working with jcenter to get my package updated.
-compile 'com.github.dmcapps:navigation-fragment:2.0.1-alpha'
+compile 'com.github.dmcapps:navigation-fragment:2.0.2-alpha'
 ```
 
 ##Current Version
 
-2.0.1-alpha
+2.0.2-alpha
 
 This version is an alpha. Please send any feedback on the [Issue Tracker](https://github.com/DMCApps/NavigationFragment/issues)
 
@@ -171,6 +171,9 @@ public class SampleFragment extends NavigationFragment {
 ```
 
 ##Change Log
+
+###2.0.2
+- Updated version for uploading to bintray
 
 ###2.0.1
 - Added in missed default animation override in the non-support navigation manager

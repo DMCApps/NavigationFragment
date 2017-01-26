@@ -3,7 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'navigation-fragment'
+    bintrayName = 'github-navigation-fragment'
 
     publishedGroupId = 'com.github.dmcapps'
     libraryName = 'NavigationFragment'
@@ -16,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/DMCApps/NavigationFragment'
     gitUrl = 'https://github.com/DMCApps/NavigationFragment.git'
 
-    libraryVersion = '2.0.1-alpha'
+    libraryVersion = '2.0.2-alpha'
 
     developerId = 'dmcapps'
     developerName = 'Daniel Carmo'
@@ -35,7 +35,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 7
-        versionName "2.0.1-alpha"
+        versionName "2.0.2-alpha"
     }
     buildTypes {
         release {
