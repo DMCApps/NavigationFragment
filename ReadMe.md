@@ -9,9 +9,6 @@ Daniel Carmo, dcarmo@alumni.uoguelph.ca
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
 ```groovy
-compile 'com.dmcapps:navigation-fragment:1.0.0'
-
-// Warning: Please continue using com.dmcapps:navigation-fragment:1.0.0 I am working with jcenter to get my package updated.
 compile 'com.github.dmcapps:navigation-fragment:2.0.2-alpha'
 ```
 
@@ -25,7 +22,6 @@ This version is an alpha. Please send any feedback on the [Issue Tracker](https:
 
 Things to do:
 - Update all Examples as they have gotten too bloated and disorganized to be helpful
-- Update ReadMe for new implementation with how to migrate.
 
 ###From 1.0.0 to 2.0.0
 
