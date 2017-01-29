@@ -1,5 +1,7 @@
 #Navigation Manager Fragment
 
+[Slack](https://dmcapps.slack.com/messages/navigationfragment/)
+
 ## Author
 
 Daniel Carmo, dcarmo@alumni.uoguelph.ca
