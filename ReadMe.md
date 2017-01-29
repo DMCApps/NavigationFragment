@@ -20,9 +20,6 @@ This version is an alpha. Please send any feedback on the [Issue Tracker](https:
 
 ##Migration
 
-Things to do:
-- Update all Examples as they have gotten too bloated and disorganized to be helpful
-
 ###From 1.0.0 to 2.0.0
 
 ###MAJOR CHANGE:
@@ -165,6 +162,9 @@ public class SampleFragment extends NavigationFragment {
     // ... Rest of class
 }
 ```
+
+##Upcoming Plans
+See [TODO](TODO.md)
 
 ##Change Log
 
