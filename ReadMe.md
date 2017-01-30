@@ -39,7 +39,7 @@ I appologize for the inconvenience but it was necessary to get this into maven a
 
 In order to ease future development. The update to version 2.0.0 has been a major refactor to remove code duplication between the support and non-support version. This will make future implementations and maintanence much easier.
 
-All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call getNavigationManager() first and string together the builder patter items to perform the required tasks.
+All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call beginPresentation() first and string together the builder patter items to perform the required tasks.
 
 ####Presenting a fragment
 
