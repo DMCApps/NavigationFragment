@@ -1,4 +1,4 @@
-#Navigation Manager Fragment
+# Navigation Manager Fragment
 
 [Slack](https://dmcapps.slack.com/messages/navigationfragment/)
 
@@ -6,7 +6,7 @@
 
 Daniel Carmo, dcarmo@alumni.uoguelph.ca
 
-##Adding the library to your android studio project
+## Adding the library to your android studio project
 
 In your app build.gradle file add the following to your dependencies. Project only available on jCenter repository.
 
@@ -14,17 +14,17 @@ In your app build.gradle file add the following to your dependencies. Project on
 compile 'com.github.dmcapps:navigation-fragment:2.0.2-alpha'
 ```
 
-##Current Version
+## Current Version
 
 2.0.2-alpha
 
 This version is an alpha. Please send any feedback on the [Issue Tracker](https://github.com/DMCApps/NavigationFragment/issues)
 
-##Migration
+## Migration
 
-###From 1.0.0 to 2.0.0
+### From 1.0.0 to 2.0.0
 
-###MAJOR CHANGE:
+### MAJOR CHANGE:
 The package has been changed from
 
 ```groovy 
@@ -41,7 +41,7 @@ In order to ease future development. The update to version 2.0.0 has been a majo
 
 All the present and dismiss methods work as is. In order to perform more advanced functionality (e.g. overriding animations) you will need to call beginPresentation() first and string together the builder patter items to perform the required tasks.
 
-####Presenting a fragment
+#### Presenting a fragment
 
 ```java
 // Basic Presenting has not changed. Just call:
@@ -62,7 +62,7 @@ beginPresentation().setCustomAnimations(int, int, int, int)
     .presentFragment(Fragment);
 ```
 
-####Dismissing a Fragment
+#### Dismissing a Fragment
 
 ```java
 // This have not changed. Just call:
@@ -74,7 +74,7 @@ dismissFragment(Bundle);
 // NOTE: animations must all be set at presentation time now and cannot be overridden before a dismiss.
 ```
 
-####Trasitions
+#### Trasitions
 This implementation of the NavigationManager include support for transitions (API 21 and above). See the Transtions example in the v17 project. At this point I have only added the shared element portion as that is all that is required in the transaction. The rest can be set up in the fragments themselves. (FUTURE implementation will do this all in the transaction once set up as well as allow for default implementations much like the )
 
 ```java
@@ -95,19 +95,19 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 transaction.presentFragment(fragment);
 ```
 
-###Items Removed:
+### Items Removed:
 MasterDetail implementation (this was created as something that I needed for a project. I've removed it so remove excess coding when adding to the interface declaration)
 ListFragment implementation (this is not needed with the recycler view being widely accepted and used and it's been around so long)
 
-##Introduction
+## Introduction
 
 The purpose of this manager is to handle a single stack flow of fragments on the screen so that the developer can easily create flows without having to worry about using the FragmentManager and ChildFragmentManager. The single instance of the NavigationManagerFragment will easily handle the presenting and dismissing of Fragments as they are created and added or removed from the stack.
 
 Every Fragment in the Navigation Stack must extend NavigationFragment in order to properly be displayed and navigated. Every NavigationFragment will have access to the NavigationManagerFragment in order to push and pop Fragments from the stack. Further details below will explain how to use the functionality provided by this Manager.
 
-#Implementation
+# Implementation
 
-##The Stack Fragment Manager
+## The Stack Fragment Manager
 
 Use the Stack Fragment Manager just like a normal fragment. In your activity, add it to the manager with an initial fragment and you are ready to use the Navigation Manager.
 
@@ -165,18 +165,18 @@ public class SampleFragment extends NavigationFragment {
 }
 ```
 
-##Upcoming Plans
+## Upcoming Plans
 See [TODO](TODO.md)
 
-##Change Log
+## Change Log
 
-###2.0.2
+### 2.0.2
 - Updated version for uploading to bintray
 
-###2.0.1
+### 2.0.1
 - Added in missed default animation override in the non-support navigation manager
 
-###2.0.0
+### 2.0.0
 - Package updated from com.dmcapps.navigationfragment to com.github.dmcapps.navigationfragment this is to prepare for the release to maven.
 - Added in Transition support
 - Removed default animations. I shouldn't be overriding the default implementation of android fragment navigation. Instead the programmer of the library should call [`NavigationManager.setDefaultPresentAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/github/dmcapps/navigationfragment/v7/NavigationManagerFragment.java#L79) and [`NavigationManager.setDefaultDismissAnimations(int animIn, int animOut)`](https://github.com/DMCApps/NavigationFragment/blob/master/navigation-fragment/src/main/java/com/github/dmcapps/navigationfragment/v7/NavigationManagerFragment.java#L83)
@@ -184,16 +184,16 @@ NOTE: If you would like to add them back in just call NavigationManager.setDefau
 - Major code refactoring to reduce duplicate implementations across support and non-support versions
 - Refactored code for future expandability for adding other paramters to each presentation
 
-###1.0.0
+### 1.0.0
 - Added in non support fragment manager [Git issue 1](https://github.com/DMCApps/NavigationFragment/issues/1)
 - Updated package names
 - Added in interfaces for all the micromanagers
 - Removed the RetainedChildFragmentManager requirements as the newest version of the support library fixes this
 
-###0.3.1
+### 0.3.1
 - Marked the `INavigationManager` properties in the ManagerConfig as Transient per [Git issue 26](https://github.com/DMCApps/NavigationFragment/issues/26)
 
-###0.3.0
+### 0.3.0
 - Remove Serializable requirement from all classes. There is no need for it anymore and the Navigation Fragment shouldn't make that decision.
 - Updated the method for animations. Depreciated helper methods for `present`/`dismiss` that take in animIn and animOut values. Favoring setting the animation using `overrideNextAnimation(int, int)` much like the fragment manager does it. This is so that we can keep the method signature for preset/dismiss down now that we are adding in the bundle as well.
 - Fixed [Git issue 6](https://github.com/DMCApps/NavigationFragment/issues/6). You can now present and dismiss with a bundle attached using `presentFragment(INavigationFragment fragment, Bundle bundle);` `and dimissFragment(Bundle bundle);`. Bundle is retreived in the Dismissed/Presented Fragment using `Bundle bundle = getNavBundle();`
@@ -209,6 +209,6 @@ In Android Studio Terminal use:
 ./gradlew bintrayUpload
 ```
 
-#License
+# License
 
 Copyright (c) 2016 DMCApps [MIT License](https://opensource.org/licenses/MIT)
